@@ -1,0 +1,812 @@
+<h1 id="计算目的和内容">计算目的和内容</h1>
+<h2 id="计算目的">计算目的</h2>
+<p>巩固用简单推力法计算飞机基本飞行性能、续航性能和起飞着陆性能的计算原理、方法和步骤，培养独立分析和解决工程实际问题的能力，熟练掌握
+MATLAB
+编程在飞行性能计算中的应用，能够对计算结果进行合理分析与验证，形成完整的实验报告。</p>
+<h2 id="计算内容">计算内容</h2>
+<h3>1.2.1 基本飞行性能计算</h3>
+<p>计算某歼击飞机发动机以最大状态工作时，在
+H=0m、1000m、3000m、5000m、8000m、10000m、11000m、12500m、13500m 等 9
+个高度上，M=0.20~1.30（间隔 0.05）等 23 个马赫数下的航迹倾角 γ 和上升率
+Vv，并绘制各高度上 γ 和 Vv 随马赫数变化的曲线。</p>
+<p>计算上述各高度上的最大航迹倾角 γmax 及对应最陡上升马赫数
+Mγ、最快上升率 Vv.max 及对应快升马赫数 Mqc，绘制 γmax 和 Vv.max
+随高度变化的曲线，确定理论升限 Hmax.a 和实用升限 Hmax.s。</p>
+<p>计算各高度上的最大平飞马赫数 Mmax 和最小平飞马赫数 Mmin（含升力限制
+Mmin.a 和推力限制 Mmin.T）。</p>
+<p>绘制由 Mmin~H、Mmax~H、Mγ~H 和 Mqc~H 组成的飞行包线。</p>
+<p>计算飞机从海平面上升到实用升限的最短上升时间 tmin。</p>
+<h3>1.2.2 续航性能计算</h3>
+<p>计算该歼击飞机在特定马赫数 M 和发动机转速 n 下巡航飞行的最大航程
+Rcr.max 和最久航时 tcr.max，确定对应的远航马赫数 MR.max、远航发动机转速
+nR.max 及久航马赫数 Mt.max、久航发动机转速 nt.max。</p>
+<h3>1.2.3 起飞着陆性能计算</h3>
+<p>计算飞机起飞地面滑跑段距离 d1 和时间 t1、起飞空中段距离 d2 和时间 t2
+以及起飞离地速度 Vlo。</p>
+<p>计算飞机着陆空中段距离 d3 和时间 t3、着陆地面滑跑段距离 d4 和时间 t4
+以及着陆接地速度 Vtd，进而得到起飞总距离和着陆总距离。</p>
+<h1 id="计算原理与方法">计算原理与方法</h1>
+<h2 id="发动机可用推力和平飞需用推力">发动机可用推力和平飞需用推力</h2>
+<p>（1）发动机可用推力<span class="math inline"><em>T</em><sub><em>a</em></sub></span>的计算</p>
+<p>当<span class="math inline"><em>H</em> ≤ 11000 ∼ <em>m</em></span>时，<span class="math inline"><em>T</em><sub><em>a</em></sub> = <em>T</em>(1 + <em>Δ</em><em>T̄</em><sub><em>i</em></sub>)(1 + <em>Δ</em><em>T̄</em><sub><em>j</em></sub>)</span></p>
+<p>当<span class="math inline"><em>H</em> &gt; 11000 ∼ <em>m</em></span>时，<span class="math inline">$T_{a} = T_{a.11}\frac{\rho}{\rho_{11}}$</span></p>
+<p>式中，下标11代表11km高度时的相应参数值。</p>
+<p>（2）平飞需用推力<span class="math inline"><em>T</em><sub><em>R</em></sub></span>（平飞阻力<span class="math inline"><em>D</em></span>）的计算</p>
+<p><span class="math display">$$T_{R} = \frac{m_{av}g}{K} =
+\frac{m_{av}gc_{D}}{c_{L}} = \frac{m_{av}g\left( c_{D0} + Ac_{L}^{2}
+\right)}{c_{L}} = \frac{\rho M^{2}a^{2}Sc_{D0}}{2} +
+\frac{2Am_{av}^{2}g^{2}}{\rho M^{2}a^{2}S}$$</span></p>
+<p>（3）剩余推力<span class="math inline"><em>Δ</em><em>T</em></span>的计算</p>
+<p><span class="math display"><em>Δ</em><em>T</em> = <em>T</em><sub><em>a</em></sub> − <em>T</em><sub><em>R</em></sub></span></p>
+<h2 id="最小平飞速度和最大平飞速度">最小平飞速度和最大平飞速度</h2>
+<p>由图一（a）可知，<span class="math inline"><em>T</em><sub><em>a</em></sub></span>曲线与<span class="math inline"><em>T</em><sub><em>R</em></sub></span>曲线的左交点对应推力限制的最小平飞速度<span class="math inline"><em>M</em><sub>min , <em>T</em></sub></span>，右交点对应最大平飞速度<span class="math inline"><em>M</em><sub>max</sub></span>。由图一（b）可知：</p>
+<p>若<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em></sub> &lt; 0</span>，<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em> + 1</sub> &gt; 0</span>，则第<span class="math inline"><em>i</em></span>点和第<span class="math inline"><em>i</em> + 1</span>点之间的<span class="math inline"><em>Δ</em><em>T</em> = 0</span>对应的<span class="math inline"><em>M</em></span>数为<span class="math inline"><em>M</em><sub>min .<em>T</em></sub></span>；</p>
+<p>若<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em></sub> &gt; 0</span>，<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em> + 1</sub> &lt; 0</span>，则第<span class="math inline"><em>i</em></span>点和第<span class="math inline"><em>i</em> + 1</span>点之间的<span class="math inline"><em>Δ</em><em>T</em> = 0</span>对应的<span class="math inline"><em>M</em></span>数为<span class="math inline"><em>M</em><sub>max</sub></span>。</p>
+<p>（可通过两点线性插值求解）</p>
+<p><img loading="lazy" src="/media/fulltext/flight-performance-calculation/image2.png"/></p>
+<p>图1</p>
+<p>注：图一（a）中横坐标为马赫数<span class="math inline"><em>M</em></span>，纵坐标为推力<span class="math inline"><em>T</em></span>，包含可用推力曲线<span class="math inline"><em>T</em><sub><em>a</em></sub></span>和平飞需用推力曲线<span class="math inline"><em>T</em><sub><em>R</em></sub></span>；图一（b）中横坐标为马赫数<span class="math inline"><em>M</em></span>，纵坐标为剩余推力<span class="math inline"><em>Δ</em><em>T</em></span>，标注了<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em></sub> &lt; 0</span>、<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em> + 1</sub> &gt; 0</span>、<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em></sub> &gt; 0</span>、<span class="math inline"><em>Δ</em><em>T</em><sub><em>i</em> + 1</sub> &lt; 0</span>的区间及对应的<span class="math inline"><em>M</em><sub>min .<em>T</em></sub></span>和<span class="math inline"><em>M</em><sub>max</sub></span>位置。</p>
+<p>另外，由升力系数限制的最小平飞速度<span class="math inline"><em>M</em><sub>min .<em>a</em></sub></span>由气动特性确定：</p>
+<p><span class="math display">$$M_{min.a} = \sqrt{\frac{2m_{av}g}{\rho
+a^{2}Sc_{L.a}}}$$</span></p>
+<p>真正的最小平飞速度<span class="math inline"><em>M</em><sub>min</sub></span>取<span class="math inline"><em>M</em><sub>min .<em>a</em></sub></span>和<span class="math inline"><em>M</em><sub>min .<em>T</em></sub></span>（如果存在的话）中大者。</p>
+<h2 id="航迹倾角gamma和上升率v_v">航迹倾角<span class="math inline"><em>γ</em></span>和上升率<span class="math inline"><em>V</em><sub><em>v</em></sub></span></h2>
+<p>航迹倾角<span class="math inline"><em>γ</em></span>和最大航迹倾角<span class="math inline"><em>γ</em><sub>max</sub></span>的计算公式为：</p>
+<p><span class="math display">$$\gamma = \arcsin\left( \frac{\Delta
+T}{m_{av}g} \right)$$</span></p>
+<p><span class="math display">$$\gamma_{\max} = \arcsin\left(
+\frac{\Delta T_{\max}}{m_{av}g} \right)$$</span></p>
+<p>对应<span class="math inline"><em>γ</em><sub>max</sub></span>的<span class="math inline"><em>M</em></span>数为最陡上升<span class="math inline"><em>M</em></span>数<span class="math inline"><em>M</em><sub><em>γ</em></sub></span>。</p>
+<p>上升率<span class="math inline"><em>V</em><sub><em>V</em></sub></span>和最大上升率<span class="math inline"><em>V</em><sub><em>V</em>, max </sub></span>的计算公式为：</p>
+<p><span class="math display">$$V_{V} = \frac{\Delta TV}{m_{av}g} =
+\frac{\Delta TMa}{m_{av}g}$$</span></p>
+<p><span class="math display">$$V_{V \cdot \max} = \frac{(\Delta
+TMa)_{\max}}{m_{av}g}$$</span></p>
+<p>对应<span class="math inline"><em>V</em><sub><em>V</em> ⋅ max </sub></span>的<span class="math inline"><em>M</em></span>数为快升<span class="math inline"><em>M</em></span>数<span class="math inline"><em>M</em><sub><em>q</em><em>c</em></sub></span>。</p>
+<p>所以，求<span class="math inline"><em>γ</em><sub>max</sub></span>和<span class="math inline"><em>V</em><sub><em>V</em> ⋅ max </sub></span>就转化为分别求<span class="math inline"><em>Δ</em><em>T</em><sub>max</sub></span>和<span class="math inline"><em>Δ</em>(<em>T</em><em>M</em><em>a</em>)<sub>max</sub></span>。</p>
+<p>（初略解可通过求离散点最大值求解；较精确解可通过局部多项式拟合后求极值求解）</p>
+<h2 id="最短上升时间">最短上升时间</h2>
+<p>最短上升时间<span class="math inline"><em>t</em><sub>min</sub></span>的计算公式为：</p>
+<p><span class="math display">$$t_{\min} = \sum_{i = 1}^{n}\left(
+\frac{\Delta H}{V_{V,\max}} \right)$$</span></p>
+<p>计算<span class="math inline"><em>t</em><sub>min</sub></span>时，显然当<span class="math inline"><em>n</em></span>越大（即<span class="math inline"><em>Δ</em><em>H</em></span>越小）时计算结果越精确。按前面给的9个高度的<span class="math inline"><em>V</em><sub><em>V</em> ⋅ max </sub></span>和<span class="math inline"><em>Δ</em><em>H</em></span>来决定<span class="math inline"><em>t</em><sub>min</sub></span>误差很大，特别是在升限附近误差更大。建议取<span class="math inline"><em>Δ</em><em>H</em> ≤ 500<em>m</em></span>，补充高度上的<span class="math inline"><em>V</em><sub><em>V</em> ⋅ max </sub></span>值可用现有的9个<span class="math inline"><em>V</em><sub><em>V</em>.max </sub></span>值中相应的三点进行插值，也可从<span class="math inline"><em>T</em><sub><em>a</em></sub></span>和<span class="math inline"><em>T</em><sub><em>R</em></sub></span>开始插值计算出最后结果。</p>
+<h2 id="航程和航时">航程和航时</h2>
+<p>巡航段最大航程<span class="math inline"><em>R</em><sub><em>c</em><em>r</em>.max </sub></span></p>
+<p>计算公式为：</p>
+<p><span class="math display">$$R_{crmax} = \left(
+\frac{\eta_{11}KMa_{11}}{gc_{f11}} \right)_{\max \cdot
+\max}\ln\frac{m_{1}}{m_{2}}$$</span></p>
+<p>式中，<span class="math inline"><em>m</em><sub>1</sub></span>和<span class="math inline"><em>m</em><sub>2</sub></span>分别为巡航起始和结束时的飞机质量；<span class="math inline"><em>η</em><sub>11</sub></span>为11km高度上的推力有效系数，近似取为1.0；耗油率<span class="math inline"><em>c</em><sub><em>f</em>.11</sub></span>和升阻比<span class="math inline"><em>K</em></span>是<span class="math inline"><em>M</em></span>和<span class="math inline"><em>n</em></span>的函数；<span class="math inline"><em>K</em> = <em>c</em><sub><em>L</em></sub>/<em>c</em><sub><em>D</em></sub></span>，其中<span class="math inline"><em>c</em><sub><em>D</em></sub> = 2<em>T</em><sub><em>a</em>.11</sub>(<em>M</em>, <em>n</em>)/(<em>ρ</em><sub>11</sub><em>M</em><sup>2</sup><em>a</em><sub>11</sub><sup>2</sup><em>S</em>)</span>，<span class="math inline">$c_{L} = \sqrt{\left\lbrack c_{D} - c_{D0}\left( H =
+11\sim km,M \right) \right\rbrack/A(M)}$</span>。</p>
+<p>求<span class="math inline"><em>R</em><sub><em>c</em><em>r</em>.max </sub></span>就转化为求<span class="math inline">$\left( \frac{\eta_{11}KMa_{11}}{gc_{f.11}}
+\right)_{\max \cdot \max}$</span>。取一固定的发动机转速值（例如，<span class="math inline"><em>n</em> = 80%<em>n</em><sub><em>额</em><em>定</em></sub></span>），计算马赫数<span class="math inline"><em>M</em> = 0.3</span>，0.4，0.5，……1.5时，对应的<span class="math inline">$\frac{\eta_{11}KMa_{11}}{gc_{f,11}}$</span>值，并通过抛物线插值法从中寻找最大值<span class="math inline">$\left( \frac{\eta_{11}KMa_{11}}{gc_{f11}}
+\right)_{\max}$</span>；依次计算发动机转速<span class="math inline"><em>n</em> = 80%<em>n</em><sub><em>额</em><em>定</em></sub></span>，<span class="math inline">81%<em>n</em><sub><em>额</em><em>定</em></sub></span>，<span class="math inline">82%<em>n</em><sub><em>额</em><em>定</em></sub></span>时，对应的<span class="math inline">$\left( \frac{\eta_{11}KMa_{11}}{gc_{f11}}
+\right)_{\max}$</span>值，并通过抛物线插值法从中寻找最大值<span class="math inline">$\left( \frac{\eta_{11}KMa_{11}}{gc_{f.11}}
+\right)_{\max \cdot \max}$</span>。由此，可得到<span class="math inline"><em>R</em><sub><em>c</em><em>r</em>.max </sub></span>以及与之相对应的<span class="math inline"><em>M</em><sub><em>R</em>, max </sub></span>和<span class="math inline"><em>n</em><sub><em>R</em><em>m</em><em>a</em><em>x</em></sub></span>。</p>
+<p>巡航段最久航时<span class="math inline"><em>t</em><sub><em>c</em><em>r</em>.max </sub></span></p>
+<p>计算公式为：</p>
+<p><span class="math display">$$t_{crmax} = \left(
+\frac{\eta_{11}K}{gc_{f.11}} \right)_{\max \cdot
+\max}\ln\frac{m_{1}}{m_{2}}$$</span></p>
+<p>求<span class="math inline"><em>t</em><sub><em>c</em><em>r</em>.max </sub></span>就转化为求<span class="math inline">$\left( \frac{\eta_{11}K}{gc_{f11}} \right)_{\max
+\cdot \max}$</span>。计算方法与航程计算方法类似，可得到<span class="math inline"><em>t</em><sub><em>c</em><em>r</em>.max </sub></span>以及与之相对应的<span class="math inline"><em>M</em><sub><em>t</em><em>m</em><em>a</em><em>x</em></sub></span>和<span class="math inline"><em>n</em><sub><em>t</em>.max </sub></span>。</p>
+<h2 id="离地速度和接地速度">离地速度和接地速度</h2>
+<p>离地速度<span class="math inline"><em>V</em><sub><em>l</em><em>o</em></sub></span>和接地速度<span class="math inline"><em>V</em><sub><em>t</em><em>d</em></sub></span>的计算公式为：</p>
+<p><span class="math display">$$V_{lo} = \sqrt{\frac{2mg}{\rho
+Sc_{L.lo}}}$$</span></p>
+<p><span class="math display">$$V_{td} = k_{1}\sqrt{\frac{2mg}{\rho
+Sc_{L.td}}}$$</span></p>
+<p>式中，<span class="math inline"><em>c</em><sub><em>L</em>.<em>l</em><em>o</em></sub></span>为离地升力系数，<span class="math inline"><em>c</em><sub><em>L</em>.<em>t</em><em>d</em></sub></span>为接地升力系数，可分别取为最大允许离地升力系数和接地升力系数；<span class="math inline"><em>k</em><sub>1</sub></span>为接地速度修正系数，表明<span class="math inline"><em>V</em><sub><em>t</em><em>d</em></sub></span>小于升力平衡重力时的速度，可取为0.95。</p>
+<h2 id="安全高度处飞行速度">安全高度处飞行速度</h2>
+<p>安全高度取为<span class="math inline"><em>H</em> = 25 ∼ <em>m</em></span>。</p>
+<p>起飞时，飞机上升至安全高度时的速度近似取为<span class="math inline"><em>V</em><sub><em>H</em></sub> = 1.3<em>V</em><sub><em>l</em><em>o</em></sub></span>；</p>
+<p>着陆时，飞机下降至安全高度时的速度近似取为<span class="math inline"><em>V</em><sub><em>H</em></sub> = 1.2<em>V</em><sub><em>t</em><em>d</em></sub></span>。</p>
+<h2 id="起飞地面滑跑段的距离和时间">起飞地面滑跑段的距离和时间</h2>
+<p>起飞地面滑跑段的距离<span class="math inline"><em>d</em><sub>1</sub></span>和时间<span class="math inline"><em>t</em><sub>1</sub></span>的计算公式为：</p>
+<p><span class="math display">$$d_{1} = \frac{V_{lo}^{2}}{2g\left(
+\frac{T_{av}}{mg} - f^{'} \right)}$$</span></p>
+<p><span class="math display">$$t_{1} = \frac{V_{lo}}{g\left(
+\frac{T_{av}}{mg} - f^{'} \right)}$$</span></p>
+<p>式中，<span class="math inline"><em>T</em><sub><em>a</em><em>v</em></sub></span>为起飞地面滑跑段的发动机平均可用推力，近似取为<span class="math inline">0.9<em>T</em><sub><em>a</em>, 0</sub></span>，其中<span class="math inline"><em>T</em><sub><em>a</em>, 0</sub></span>为<span class="math inline"><em>M</em> = 0</span>时发动机以最大状态工作时的可用推力；<span class="math inline"><em>f</em><sup>′</sup> = (<em>f</em> + 1/<em>K</em><sub><em>l</em><em>o</em></sub>)/2</span>，其中，<span class="math inline"><em>f</em></span>为地面对机轮的摩擦系数，近似取为0.03；<span class="math inline"><em>K</em><sub><em>l</em><em>o</em></sub></span>为离地瞬间的升阻比，<span class="math inline"><em>K</em><sub><em>l</em><em>o</em></sub> = <em>c</em><sub><em>L</em>.<em>l</em><em>o</em></sub>/<em>c</em><sub><em>D</em>.<em>l</em><em>o</em></sub></span>，<span class="math inline"><em>c</em><sub><em>L</em>.<em>l</em><em>o</em></sub></span>确定后，<span class="math inline"><em>c</em><sub><em>D</em>.<em>l</em><em>o</em></sub></span>由<span class="math inline"><em>M</em> = 0.2</span>时的起飞极曲线近似计算得到。</p>
+<h2 id="起飞空中段的距离和时间">起飞空中段的距离和时间</h2>
+<p>起飞空中段的距离<span class="math inline"><em>d</em><sub>2</sub></span>和时间<span class="math inline"><em>t</em><sub>2</sub></span>的计算公式为：</p>
+<p><span class="math display">$$d_{2} = \frac{mg}{\Delta T_{av}}\left(
+\frac{V_{H}^{2} - V_{lo}^{2}}{2g} + H \right)$$</span></p>
+<p><span class="math display">$$t_{2} =
+\frac{d_{2}}{V_{av}}$$</span></p>
+<p>式中，<span class="math inline"><em>V</em><sub><em>a</em><em>v</em></sub> = (<em>V</em><sub><em>l</em><em>o</em></sub> + <em>V</em><sub><em>H</em></sub>)/2</span>；<span class="math inline"><em>Δ</em><em>T</em><sub><em>a</em><em>v</em></sub> = [(<em>T</em><sub><em>a</em>.<em>l</em><em>o</em></sub> − <em>D</em><sub><em>l</em><em>o</em></sub>) + (<em>T</em><sub><em>a</em>.<em>H</em></sub> − <em>D</em><sub><em>H</em></sub>)]/2</span>；<span class="math inline"><em>T</em><sub><em>a</em>.<em>l</em><em>o</em></sub></span>和<span class="math inline"><em>T</em><sub><em>a</em><em>H</em></sub></span>分别取为发动机以最大状态工作时，速度达到<span class="math inline"><em>V</em><sub><em>l</em><em>o</em></sub></span>和</p>
+<h2 id="着陆空中段的距离和时间">着陆空中段的距离和时间</h2>
+<p>着陆空中段的距离<span class="math inline"><em>d</em><sub>3</sub></span>和时间<span class="math inline"><em>t</em><sub>3</sub></span>的计算公式为：</p>
+<p><span class="math display">$$d_{3} = K_{av}\left( \frac{V_{H}^{2} -
+V_{td}^{2}}{2g} + H \right)$$</span></p>
+<p><span class="math display">$$t_{3} =
+\frac{d_{3}}{V_{av}}$$</span></p>
+<p>式中，<span class="math inline"><em>V</em><sub><em>a</em><em>v</em></sub> = (<em>V</em><sub><em>t</em><em>d</em></sub> + <em>V</em><sub><em>H</em></sub>)/2</span>；<span class="math inline"><em>K</em><sub><em>a</em><em>v</em></sub> = (<em>K</em><sub><em>t</em><em>d</em></sub> + <em>K</em><sub><em>H</em></sub>)/2</span>，可由<span class="math inline"><em>M</em> = 0.2</span>时的着陆极曲线近似计算，<span class="math inline"><em>c</em><sub><em>L</em>.<em>H</em></sub> = 0.7<em>c</em><sub><em>L</em>.<em>t</em><em>d</em></sub></span>。</p>
+<h2 id="着陆地面滑跑段的距离和时间">着陆地面滑跑段的距离和时间</h2>
+<p>着陆地面滑跑段的距离<span class="math inline"><em>d</em><sub>4</sub></span>和时间<span class="math inline"><em>t</em><sub>4</sub></span>的计算公式为：</p>
+<p><span class="math display">$$d_{4} = \frac{V_{td}^{2}}{g\left( f +
+\frac{1}{K_{td}} \right)}$$</span></p>
+<p><span class="math display">$$t_{4} = \frac{2V_{td}}{g\left( f +
+\frac{1}{K_{td}} \right)}$$</span></p>
+<p>式中，<span class="math inline"><em>f</em></span>为地面对机轮的摩擦系数，包含刹车作用，近似取为0.3；<span class="math inline"><em>K</em><sub><em>t</em><em>d</em></sub></span>为接地瞬间的升阻比，<span class="math inline"><em>K</em><sub><em>t</em><em>d</em></sub> = <em>c</em><sub><em>L</em>, <em>t</em><em>d</em></sub>/<em>c</em><sub><em>D</em>, <em>t</em><em>d</em></sub></span>，由<span class="math inline"><em>M</em> = 0.2</span>时的着陆极曲线近似确定。</p>
+<h1 id="计算过程与结果分析">计算过程与结果分析</h1>
+<h2 id="计算过程">计算过程</h2>
+<p>读取标准大气数据、发动机特性数据、气动特性数据和质量特性数据，建立插值函数实现任意高度和马赫数下参数的线性插值求解。基于
+MATLAB
+编写计算程序，分模块实现基本飞行性能、续航性能和起飞着陆性能的计算，包含数据读取、参数插值、性能计算、结果输出和图形绘制等功能。绘制航迹倾角和上升率随马赫数变化曲线、最大性能参数随高度变化曲线及飞行包线，直观展示计算结果。</p>
+<p>最后将计算结果与理论规律对比，验证方法的正确性和结果的合理性。</p>
+<h2 id="结果分析">结果分析</h2>
+<h3>3.2.1 基本飞行性能结果</h3>
+<p><img loading="lazy" src="/media/fulltext/flight-performance-calculation/image3.png"/></p>
+<p>图 1 各高度上航迹倾角随马赫数变化曲线</p>
+<p><img loading="lazy" src="/media/fulltext/flight-performance-calculation/image4.png"/>图2
+各高度上上升率随马赫数变化曲线</p>
+<p><img loading="lazy" src="/media/fulltext/flight-performance-calculation/image5.png"/></p>
+<p>图3 最大航迹倾角和最大上升率随高度变化<img loading="lazy" src="/media/fulltext/flight-performance-calculation/image6.png"/></p>
+<p>图4 飞行包线</p>
+<p>图1中各高度航迹倾角随马赫数变化曲线中，低高度（0~3000m）航迹倾角整体数值较大，对应马赫数偏低，随着马赫数增大，航迹倾角先增后减。5000~8000m迹倾角整体小于较低高度，对应马赫数较之于低高度有所增大，曲线变化更为平缓，
+10000m 以上航迹倾角整体数值偏小，对应马赫数趋于稳定，马赫数接近 1.0
+时航迹倾角呈现负向变化。</p>
+<p>各高度上升率随马赫数变化呈现同样的分布，低高度上升率整体数值高，曲线上升段斜率大、下降段斜率小，快升对应的马赫数高于同高度最陡上升对应的马赫数，之后上升率整体低于低高度，曲线上升段与下降段斜率相对均衡，过渡区间拓宽，10000m以上上升率整体大幅降低，曲线贴近横轴，马赫数超过
+1.0 时上升率呈现负值。</p>
+<p>最大航迹倾角和最大上升率随高度变化均呈单调递减趋势，最大航迹倾角随高度增加平稳下降，变化速率逐渐放缓；最大上升率随高度增加呈非线性下降，低高度下降较快，中高度下降速率减缓，高高度下降速率进一步降低，结合最大上升率变化可确定实用升限约
+13100m、理论升限约 13500m。</p>
+<p>飞行包线中，最大平飞速度随高度变化呈 “先升后降” 的规律，在
+8000~10000m
+区间达到较高值；最小平飞速度由升力限制和推力限制两条曲线共同构成，5000m
+以上推力限制对应的最小平飞速度超过升力限制对应的数值，且随高度增加快速上升；最陡上升速度和快升速度均随高度增加逐渐增大，最终趋于同一马赫数（0.9）。</p>
+<p>表 1 基本飞行性能计算结果</p>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>高度_m</th>
+<th>最大航迹倾角_deg</th>
+<th>最大上升率_m/s</th>
+<th>最陡上升马赫数</th>
+<th>快升马赫数</th>
+<th>最大平飞马赫数</th>
+<th>升力限制最小马赫数</th>
+<th>推力限制最小马赫数</th>
+<th>最小平飞马赫数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>26.981662</td>
+<td>86.19816</td>
+<td>0.35</td>
+<td>0.75</td>
+<td>0.976269</td>
+<td>0.179101</td>
+<td>-</td>
+<td>0.179101</td>
+</tr>
+<tr class="even">
+<td>1000</td>
+<td>23.534241</td>
+<td>79.98368</td>
+<td>0.35</td>
+<td>0.75</td>
+<td>0.98577</td>
+<td>0.190125</td>
+<td>-</td>
+<td>0.190125</td>
+</tr>
+<tr class="odd">
+<td>3000</td>
+<td>17.697672</td>
+<td>68.445024</td>
+<td>0.45</td>
+<td>0.8</td>
+<td>1.001542</td>
+<td>0.215087</td>
+<td>-</td>
+<td>0.215087</td>
+</tr>
+<tr class="even">
+<td>5000</td>
+<td>13.477478</td>
+<td>55.744587</td>
+<td>0.65</td>
+<td>0.85</td>
+<td>1.010684</td>
+<td>0.244848</td>
+<td>0.215353</td>
+<td>0.244848</td>
+</tr>
+<tr class="odd">
+<td>8000</td>
+<td>8.433829</td>
+<td>37.410848</td>
+<td>0.75</td>
+<td>0.9</td>
+<td>1.021062</td>
+<td>0.301294</td>
+<td>0.318108</td>
+<td>0.318108</td>
+</tr>
+<tr class="even">
+<td>10000</td>
+<td>5.644693</td>
+<td>25.45332</td>
+<td>0.85</td>
+<td>0.9</td>
+<td>1.021598</td>
+<td>0.349398</td>
+<td>0.433359</td>
+<td>0.433359</td>
+</tr>
+<tr class="odd">
+<td>11000</td>
+<td>4.094234</td>
+<td>18.63295</td>
+<td>0.85</td>
+<td>0.9</td>
+<td>1.015721</td>
+<td>0.37748</td>
+<td>0.515656</td>
+<td>0.515656</td>
+</tr>
+<tr class="even">
+<td>12500</td>
+<td>1.826968</td>
+<td>8.466439</td>
+<td>0.9</td>
+<td>0.9</td>
+<td>0.982962</td>
+<td>0.424518</td>
+<td>0.668233</td>
+<td>0.668233</td>
+</tr>
+<tr class="odd">
+<td>13500</td>
+<td>0.449156</td>
+<td>2.081789</td>
+<td>0.9</td>
+<td>0.9</td>
+<td>0.925257</td>
+<td>0.458961</td>
+<td>0.816161</td>
+<td>0.816161</td>
+</tr>
+</tbody>
+</table>
+<p>如表1所示随着高度增加，最大航迹倾角和最大上升率均单调递减，符合大气密度随高度增加而减小的物理规律，发动机推力下降导致上升能力减弱。最陡上升马赫数和快升马赫数随高度增加逐渐增大，在
+12500m 以上均稳定在
+0.9，表明高空需更高马赫数才能实现最优上升性能。最小平飞马赫数随高度增加而增大，且在
+5000m 以上由推力限制主导，低于该高度由升力限制主导。最大平飞马赫数在
+8000~10000m 达到峰值（约 1.02），之后随高度增加略有下降。</p>
+<h3>3.2.2 续航性能结果</h3>
+<p>表 2 续航性能计算结果</p>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>最大航程_km</td>
+<td>2279.456332</td>
+</tr>
+<tr class="even">
+<td>远航马赫数</td>
+<td>0.9</td>
+</tr>
+<tr class="odd">
+<td>远航转速_percent</td>
+<td>90</td>
+</tr>
+<tr class="even">
+<td>最久航时_min</td>
+<td>161.95941</td>
+</tr>
+<tr class="odd">
+<td>久航马赫数</td>
+<td>0.6</td>
+</tr>
+<tr class="even">
+<td>久航转速_percent</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
+<p>远航马赫数（0.9）高于久航马赫数（0.6），符合续航性能一章中所学内容：远航需兼顾速度和燃油效率，久航则以最低燃油消耗为目标，采用更低马赫数。</p>
+<p>远航转速（90%）高于久航转速（80%），因更高转速可提供更大推力，满足远航时的速度需求，而久航需降低转速减少燃油消耗。</p>
+<p>最大航程约 2280km，最久航时约
+162min，符合歼击机的典型续航性能特征。</p>
+<h3>3.2.3 起飞着陆性能结果</h3>
+<p>表 3 起飞着陆性能计算结果</p>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>离地速度_m/s</td>
+<td>91.056778</td>
+</tr>
+<tr class="even">
+<td>起飞滑跑距离_m</td>
+<td>1015.278545</td>
+</tr>
+<tr class="odd">
+<td>起飞滑跑时间_s</td>
+<td>22.299901</td>
+</tr>
+<tr class="even">
+<td>起飞空中段距离_m</td>
+<td>888.935245</td>
+</tr>
+<tr class="odd">
+<td>起飞空中段时间_s</td>
+<td>8.489068</td>
+</tr>
+<tr class="even">
+<td>起飞总距离_m</td>
+<td>1904.21379</td>
+</tr>
+<tr class="odd">
+<td>接地速度_m/s</td>
+<td>73.73464</td>
+</tr>
+<tr class="even">
+<td>着陆空中段距离_m</td>
+<td>544.036149</td>
+</tr>
+<tr class="odd">
+<td>着陆空中段时间_s</td>
+<td>6.707544</td>
+</tr>
+<tr class="even">
+<td>着陆滑跑距离_m</td>
+<td>973.944219</td>
+</tr>
+<tr class="odd">
+<td>着陆滑跑时间_s</td>
+<td>26.417549</td>
+</tr>
+<tr class="even">
+<td>着陆总距离_m</td>
+<td>1517.980369</td>
+</tr>
+</tbody>
+</table>
+<p>离地速度（91.06m/s）高于接地速度（73.73m/s），因着陆时采用更高升力系数和速度修正系数，降低接地速度以缩短着陆距离。</p>
+<p>起飞总距离（1904.21m）大于着陆总距离（1517.98m），符合飞机起降性能中：起飞需克服更大阻力加速至离地速度，着陆时可通过刹车和阻力装置缩短滑跑距离。</p>
+<p>起飞滑跑时间（22.30s）短于着陆滑跑时间（26.42s），因着陆时需控制减速速率。</p>
+<h1 id="总结及感想">总结及感想</h1>
+<p>本次飞机飞行性能计算实验，通过运用简单推力法，系统完成了飞机基本飞行性能、续航性能和起飞着陆性能的计算，不仅巩固了发动机推力、气动阻力、航迹倾角、上升率等核心参数的计算原理，更熟练掌握了
+MATLAB
+编程在数据读取、插值运算、图形绘制和结果分析中的应用技巧。对我而言不仅是《无人机飞行动力学》课程理论知识的实践，更是一次将课堂所学与实践经历互相打通的关系。此前参与大创项目的时候有自己设计过一架固定翼无人机，在性能计算和优化的时候遇到了许多问题：如何在有限的机身重量和发动机功率下，平衡续航里程与爬升能力？为何按经验设定的巡航速度，实际测试时续航总是达不到设计预期？这些设计中的困惑，当时只是简单地找网课和现有的算例与模型来解决，并没有很深刻地理解这其中的联系，但通过本次实验的计算与分析，不仅提高了我运用MATLAB的能力，也让我对飞行动力学的认识更清晰了。</p>
+<p>通过本次实验，我不仅熟练掌握了飞行性能计算的原理和 MATLAB
+编程技巧，更实现了从 “经验主义” 到 “科学计算”
+的思维转变。以前参与无人机设计时，更多是依赖前辈的经验参数和反复试错，不仅效率低下，还容易留下性能隐患。如今能够从推力、阻力、升力等核心力学参数出发，通过计算模型精准预判无人机的飞行性能，再结合实际需求进行参数优化，设计过程更加高效、可靠。这次实验也让我深刻认识到，无人驾驶航空器的设计是理论与实践的高度结合，每一个参数的设定都需要坚实的力学理论支撑。未来，我将把本次实验所学的计算方法和思维方式运用到更多无人机设计项目中。</p>
+<h1 class="unnumbered" id="参考文献">参考文献</h1>
+<p>[1] 方振平，陈万春，张曙光。航空飞行器飞行动力学 [M].
+北京：北京航空航天大学出版社，2015.</p>
+<p>[2] 杨一栋。飞机飞行动力学 [M].
+南京：南京航空航天大学出版社，2012.</p>
+<p>[3] 王正平，李为吉。飞行器性能与计算 [M].
+西安：西北工业大学出版社，2010.</p>
+<p>[4] 谢础。航空概论 [M]. 北京：北京航空航天大学出版社，2018.</p>
+<p>[5] 张志涌. MATLAB 教程：基于 R2018b [M].
+北京：北京航空航天大学出版社，2019.</p>
+<p>[6] 中国民用航空局。民用航空器飞行性能要求 [M].
+北京：中国民航出版社，2016.</p>
+<p>[7] 李军。无人机飞行控制与导航技术 [M].
+北京：国防工业出版社，2017.</p>
+<p>[8] 刘刚，王敏。小型固定翼无人机设计与性能优化 [M].
+西安：西北工业大学出版社，2019..</p>
+<h1 class="unnumbered" id="附录">附录</h1>
+<p>MATLAB代码</p>
+<p>%% 飞机飞行性能计算</p>
+<p>clear; clc; close all;</p>
+<p>%% 数据</p>
+<p>dataFile = '2飞行性能计算原始数据.xlsx';</p>
+<p>atm_data_raw = readmatrix(dataFile, 'Sheet', '1-1_标准大气数据');</p>
+<p>H_atm = atm_data_raw(:, 1);</p>
+<p>rho_atm = atm_data_raw(:, 2);</p>
+<p>a_atm = atm_data_raw(:, 3);</p>
+<p>T_data_raw = readmatrix(dataFile, 'Sheet',
+'2-1_最大状态时的推力特性');</p>
+<p>M_T = T_data_raw(2:end, 1);</p>
+<p>H_T = [0, 1000, 3000, 5000, 8000, 10000, 11000, 12500, 13500];</p>
+<p>T_table = T_data_raw(2:end, 2:end);</p>
+<p>DTi_data_raw = readmatrix(dataFile, 'Sheet',
+'2-2_最大状态时由进气道引起的推力损失系数');</p>
+<p>M_DTi = DTi_data_raw(2:end, 1);</p>
+<p>H_DTi = [0, 1000, 3000, 5000, 8000, 10000, 11000];</p>
+<p>DTi_table = DTi_data_raw(2:end, 2:end);</p>
+<p>if length(M_DTi) &gt;= 22 &amp;&amp; M_DTi(22) == 1.15 &amp;&amp;
+M_DTi(21) == 1.20</p>
+<p>M_DTi(22) = 1.25;</p>
+<p>end</p>
+<p>[M_DTi, unique_idx] = unique(M_DTi, 'stable');</p>
+<p>DTi_table = DTi_table(unique_idx, :);</p>
+<p>DTj_data_raw = readmatrix(dataFile, 'Sheet',
+'2-3_最大状态时尾喷口对推力的影响系数');</p>
+<p>M_DTj = DTj_data_raw(:, 1);</p>
+<p>DTj = DTj_data_raw(:, 2);</p>
+<p>T11_data_raw = readmatrix(dataFile, 'Sheet', '2-4_11km
+高度上的推力特性');</p>
+<p>M_T11 = T11_data_raw(:, 1);</p>
+<p>n_levels = [0.80, 0.85, 0.90, 1.00];</p>
+<p>T11_table = T11_data_raw(:, 2:end);</p>
+<p>cf11_data_raw = readmatrix(dataFile, 'Sheet', '2-5_11km
+高度上的耗油率特性');</p>
+<p>M_cf11 = cf11_data_raw(:, 1);</p>
+<p>cf11_table = cf11_data_raw(:, 2:end);</p>
+<p>CD0_data_raw = readmatrix(dataFile, 'Sheet', '3-1_零升阻力系数');</p>
+<p>M_CD0 = CD0_data_raw(2:end, 1);</p>
+<p>H_CD0 = [0, 1000, 3000, 5000, 8000, 10000, 11000, 12500, 13500];</p>
+<p>CD0_table = CD0_data_raw(2:end, 2:end);</p>
+<p>A_data_raw = readmatrix(dataFile, 'Sheet', '3-2_升致阻力因子');</p>
+<p>M_A = A_data_raw(:, 1);</p>
+<p>A_values = A_data_raw(:, 2);</p>
+<p>CL_data_raw = readmatrix(dataFile, 'Sheet', '3-3_升力系数');</p>
+<p>M_CL = CL_data_raw(:, 1);</p>
+<p>CL_a = CL_data_raw(:, 2);</p>
+<p>CL_lo = 0.56;</p>
+<p>CL_td = 0.52;</p>
+<p>polar_data_raw = readmatrix(dataFile, 'Sheet',
+'3-4_起飞着陆极曲线');</p>
+<p>CD_polar = polar_data_raw(:, 1);</p>
+<p>CL_takeoff = polar_data_raw(:, 2);</p>
+<p>CL_landing = polar_data_raw(:, 3);</p>
+<p>mass_data = readmatrix(dataFile, 'Sheet', '4-1_质量特性数据');</p>
+<p>m_av = mass_data(2, 2:10);</p>
+<p>m1 = mass_data(5, 2);</p>
+<p>m2 = mass_data(6, 2);</p>
+<p>m_takeoff_data = mass_data(9, 2);</p>
+<p>m_landing_data = mass_data(10, 2);</p>
+<p>S = mass_data(13, 2);</p>
+<p>g = 9.80665;</p>
+<p>H_calc = [0, 1000, 3000, 5000, 8000, 10000, 11000, 12500, 13500];</p>
+<p>M_calc = 0.20:0.05:1.30;</p>
+<p>[H_grid_T, M_grid_T] = meshgrid(H_T, M_T);</p>
+<p>F_T = griddedInterpolant(M_grid_T, H_grid_T, T_table, 'linear',
+'linear');</p>
+<p>[H_grid_DTi, M_grid_DTi] = meshgrid(H_DTi, M_DTi);</p>
+<p>F_DTi = griddedInterpolant(M_grid_DTi, H_grid_DTi, DTi_table,
+'linear', 'linear');</p>
+<p>[H_grid_CD0, M_grid_CD0] = meshgrid(H_CD0, M_CD0);</p>
+<p>F_CD0 = griddedInterpolant(M_grid_CD0, H_grid_CD0, CD0_table,
+'linear', 'linear');</p>
+<p>%% 飞行性能计算</p>
+<p>nH = length(H_calc);</p>
+<p>nM = length(M_calc);</p>
+<p>gamma_matrix = zeros(nH, nM);</p>
+<p>Vv_matrix = zeros(nH, nM);</p>
+<p>Ta_matrix = zeros(nH, nM);</p>
+<p>TR_matrix = zeros(nH, nM);</p>
+<p>deltaT_matrix = zeros(nH, nM);</p>
+<p>for i = 1:nH</p>
+<p>H = H_calc(i);</p>
+<p>m_avg = m_av(i);</p>
+<p>rho = interp1(H_atm, rho_atm, H, 'linear', 'extrap');</p>
+<p>a = interp1(H_atm, a_atm, H, 'linear', 'extrap');</p>
+<p>for j = 1:nM</p>
+<p>M = M_calc(j);</p>
+<p>V = M * a;</p>
+<p>if H &lt;= 11000</p>
+<p>T_base = F_T(M, H);</p>
+<p>DTi = F_DTi(M, min(H, 11000));</p>
+<p>DTj_val = interp1(M_DTj, DTj, M, 'linear', 'extrap');</p>
+<p>Ta = T_base * (1 + DTi) * (1 + DTj_val);</p>
+<p>else</p>
+<p>T_base_11 = F_T(M, 11000);</p>
+<p>DTi_11 = F_DTi(M, 11000);</p>
+<p>DTj_val = interp1(M_DTj, DTj, M, 'linear', 'extrap');</p>
+<p>Ta_11 = T_base_11 * (1 + DTi_11) * (1 + DTj_val);</p>
+<p>rho_11 = interp1(H_atm, rho_atm, 11000, 'linear');</p>
+<p>Ta = Ta_11 * (rho / rho_11);</p>
+<p>end</p>
+<p>CD0 = F_CD0(M, H);</p>
+<p>A = interp1(M_A, A_values, M, 'linear', 'extrap');</p>
+<p>q = 0.5 * rho * V^2;</p>
+<p>CL = (m_avg * g) / (q * S);</p>
+<p>CD = CD0 + A * CL^2;</p>
+<p>TR = q * S * CD / g;</p>
+<p>deltaT = Ta - TR;</p>
+<p>sin_gamma = max(min(deltaT / m_avg, 1), -1);</p>
+<p>gamma = asind(sin_gamma);</p>
+<p>Vv = deltaT * g * V / (m_avg * g);</p>
+<p>Ta_matrix(i,j) = Ta;</p>
+<p>TR_matrix(i,j) = TR;</p>
+<p>deltaT_matrix(i,j) = deltaT;</p>
+<p>gamma_matrix(i,j) = gamma;</p>
+<p>Vv_matrix(i,j) = Vv;</p>
+<p>end</p>
+<p>end</p>
+<p>gamma_max = zeros(nH, 1);</p>
+<p>M_gamma = zeros(nH, 1);</p>
+<p>Vv_max = zeros(nH, 1);</p>
+<p>M_qc = zeros(nH, 1);</p>
+<p>M_max = zeros(nH, 1);</p>
+<p>M_min_T = zeros(nH, 1);</p>
+<p>M_min_a = zeros(nH, 1);</p>
+<p>M_min = zeros(nH, 1);</p>
+<p>for i = 1:nH</p>
+<p>H = H_calc(i);</p>
+<p>m_avg = m_av(i);</p>
+<p>rho = interp1(H_atm, rho_atm, H, 'linear', 'extrap');</p>
+<p>a = interp1(H_atm, a_atm, H, 'linear', 'extrap');</p>
+<p>[gamma_max(i), idx_gamma] = max(gamma_matrix(i,:));</p>
+<p>M_gamma(i) = M_calc(idx_gamma);</p>
+<p>[Vv_max(i), idx_Vv] = max(Vv_matrix(i,:));</p>
+<p>M_qc(i) = M_calc(idx_Vv);</p>
+<p>deltaT_row = deltaT_matrix(i,:);</p>
+<p>M_max_found = false;</p>
+<p>for j = 1:nM-1</p>
+<p>if deltaT_row(j) &gt; 0 &amp;&amp; deltaT_row(j+1) &lt; 0</p>
+<p>M_max(i) = M_calc(j) + (0 - deltaT_row(j)) * (M_calc(j+1) -
+M_calc(j)) / (deltaT_row(j+1) - deltaT_row(j));</p>
+<p>M_max_found = true;</p>
+<p>break;</p>
+<p>end</p>
+<p>end</p>
+<p>if ~M_max_found</p>
+<p>M_max(i) = M_calc(end);</p>
+<p>end</p>
+<p>M_min_T_found = false;</p>
+<p>for j = 1:nM-1</p>
+<p>if deltaT_row(j) &lt; 0 &amp;&amp; deltaT_row(j+1) &gt; 0</p>
+<p>M_min_T(i) = M_calc(j) + (0 - deltaT_row(j)) * (M_calc(j+1) -
+M_calc(j)) / (deltaT_row(j+1) - deltaT_row(j));</p>
+<p>M_min_T_found = true;</p>
+<p>break;</p>
+<p>end</p>
+<p>end</p>
+<p>if ~M_min_T_found</p>
+<p>M_min_T(i) = NaN;</p>
+<p>end</p>
+<p>CL_allow = interp1(M_CL, CL_a, M_calc, 'linear', 'extrap');</p>
+<p>M_min_a(i) = sqrt(2 * m_avg * g / (rho * a^2 * S *
+max(CL_allow)));</p>
+<p>if isnan(M_min_T(i))</p>
+<p>M_min(i) = M_min_a(i);</p>
+<p>else</p>
+<p>M_min(i) = max(M_min_a(i), M_min_T(i));</p>
+<p>end</p>
+<p>end</p>
+<p>H_fine = 0:100:15000;</p>
+<p>Vv_max_interp = interp1(H_calc, Vv_max, H_fine, 'pchip');</p>
+<p>idx_theory = find(Vv_max_interp &lt;= 0, 1, 'first');</p>
+<p>H_max_theory = H_fine(min(idx_theory, length(H_fine)));</p>
+<p>idx_practical = find(Vv_max_interp &lt;= 5, 1, 'first');</p>
+<p>H_max_practical = H_fine(min(idx_practical, length(H_fine)));</p>
+<p>H_climb = 0:500:H_max_practical;</p>
+<p>Vv_climb = interp1(H_calc, Vv_max, H_climb, 'pchip');</p>
+<p>Vv_climb = max(Vv_climb, 0.1);</p>
+<p>t_min = 0;</p>
+<p>for k = 1:length(H_climb)-1</p>
+<p>dH = H_climb(k+1) - H_climb(k);</p>
+<p>Vv_avg = (Vv_climb(k) + Vv_climb(k+1)) / 2;</p>
+<p>t_min = t_min + dH / Vv_avg;</p>
+<p>end</p>
+<p>%% 续航性能计算</p>
+<p>H_cruise = 11000;</p>
+<p>rho_11 = interp1(H_atm, rho_atm, H_cruise, 'linear');</p>
+<p>a_11 = interp1(H_atm, a_atm, H_cruise, 'linear');</p>
+<p>eta_11 = 1.0;</p>
+<p>[n_grid_T11, M_grid_T11] = meshgrid(n_levels, M_T11);</p>
+<p>F_T11 = griddedInterpolant(M_grid_T11, n_grid_T11, T11_table,
+'linear', 'linear');</p>
+<p>F_cf11 = griddedInterpolant(M_grid_T11, n_grid_T11, cf11_table,
+'linear', 'linear');</p>
+<p>n_range = 0.80:0.01:1.00;</p>
+<p>M_range = 0.3:0.1:1.5;</p>
+<p>R_param_max_max = 0; M_R_max = 0; n_R_max = 0;</p>
+<p>t_param_max_max = 0; M_t_max = 0; n_t_max = 0;</p>
+<p>for n_idx = 1:length(n_range)</p>
+<p>n = n_range(n_idx);</p>
+<p>R_param_max = 0; t_param_max = 0;</p>
+<p>M_R_temp = 0; M_t_temp = 0;</p>
+<p>for M_idx = 1:length(M_range)</p>
+<p>M = M_range(M_idx);</p>
+<p>V = M * a_11;</p>
+<p>if M &lt; min(M_T11) || M &gt; max(M_T11), continue; end</p>
+<p>T_11 = F_T11(M, n);</p>
+<p>cf_11 = F_cf11(M, n);</p>
+<p>if T_11 &lt;= 0 || cf_11 &lt;= 0, continue; end</p>
+<p>CD0_11 = F_CD0(M, H_cruise);</p>
+<p>A_11 = interp1(M_A, A_values, M, 'linear', 'extrap');</p>
+<p>CD = 2 * T_11 * g / (rho_11 * V^2 * S);</p>
+<p>CL_sq = (CD - CD0_11) / A_11;</p>
+<p>if CL_sq &lt; 0, continue; end</p>
+<p>CL = sqrt(CL_sq);</p>
+<p>K = CL / CD;</p>
+<p>R_param = eta_11 * K * M * a_11 / (cf_11 / 3600);</p>
+<p>t_param = eta_11 * K / (cf_11 / 3600);</p>
+<p>if R_param &gt; R_param_max, R_param_max = R_param; M_R_temp = M;
+end</p>
+<p>if t_param &gt; t_param_max, t_param_max = t_param; M_t_temp = M;
+end</p>
+<p>end</p>
+<p>if R_param_max &gt; R_param_max_max</p>
+<p>R_param_max_max = R_param_max; M_R_max = M_R_temp; n_R_max = n;</p>
+<p>end</p>
+<p>if t_param_max &gt; t_param_max_max</p>
+<p>t_param_max_max = t_param_max; M_t_max = M_t_temp; n_t_max = n;</p>
+<p>end</p>
+<p>end</p>
+<p>R_cr_max = R_param_max_max * log(m1 / m2) / 1000;</p>
+<p>t_cr_max = t_param_max_max * log(m1 / m2) / 3600;</p>
+<p>%% 起飞着陆性能计算</p>
+<p>rho_0 = rho_atm(1);</p>
+<p>a_0 = a_atm(1);</p>
+<p>m_takeoff = m_takeoff_data;</p>
+<p>m_landing = m_landing_data;</p>
+<p>f_takeoff = 0.03;</p>
+<p>f_landing = 0.30;</p>
+<p>H_safe = 25;</p>
+<p>V_lo = sqrt(2 * m_takeoff * g / (rho_0 * S * CL_lo));</p>
+<p>M_lo = V_lo / a_0;</p>
+<p>V_H_takeoff = 1.3 * V_lo;</p>
+<p>valid_takeoff = ~isnan(CL_takeoff) &amp; ~isnan(CD_polar);</p>
+<p>CD_lo = interp1(CL_takeoff(valid_takeoff), CD_polar(valid_takeoff),
+CL_lo, 'linear', 'extrap');</p>
+<p>K_lo = CL_lo / CD_lo;</p>
+<p>T_a0 = F_T(0.2, 0);</p>
+<p>DTi_0 = F_DTi(0.2, 0);</p>
+<p>DTj_0 = interp1(M_DTj, DTj, 0.2, 'linear', 'extrap');</p>
+<p>T_av_takeoff = 0.9 * T_a0 * (1 + DTi_0) * (1 + DTj_0);</p>
+<p>f_prime = (f_takeoff + 1/K_lo) / 2;</p>
+<p>thrust_weight_ratio = T_av_takeoff / m_takeoff;</p>
+<p>d1 = V_lo^2 / (2 * g * (thrust_weight_ratio - f_prime));</p>
+<p>t1 = V_lo / (g * (thrust_weight_ratio - f_prime));</p>
+<p>T_a_lo = F_T(M_lo, 0) * (1 + F_DTi(M_lo, 0)) * (1 + interp1(M_DTj,
+DTj, M_lo, 'linear', 'extrap'));</p>
+<p>D_lo = CD_lo * 0.5 * rho_0 * V_lo^2 * S / g;</p>
+<p>M_H = V_H_takeoff / a_0;</p>
+<p>T_a_H = F_T(min(M_H, max(M_T)), 0) * (1 + F_DTi(min(M_H, max(M_DTi)),
+0)) * (1 + interp1(M_DTj, DTj, min(M_H, max(M_DTj)), 'linear',
+'extrap'));</p>
+<p>CL_H = m_takeoff * g / (0.5 * rho_0 * V_H_takeoff^2 * S);</p>
+<p>CD_H = interp1(CL_takeoff(valid_takeoff), CD_polar(valid_takeoff),
+CL_H, 'linear', 'extrap');</p>
+<p>D_H = CD_H * 0.5 * rho_0 * V_H_takeoff^2 * S / g;</p>
+<p>deltaT_av = ((T_a_lo - D_lo) + (T_a_H - D_H)) / 2;</p>
+<p>V_av_takeoff = (V_lo + V_H_takeoff) / 2;</p>
+<p>d2 = m_takeoff / deltaT_av * ((V_H_takeoff^2 - V_lo^2) / (2*g) +
+H_safe);</p>
+<p>t2 = d2 / V_av_takeoff;</p>
+<p>V_td = 0.95 * sqrt(2 * m_landing * g / (rho_0 * S * CL_td));</p>
+<p>M_td = V_td / a_0;</p>
+<p>V_H_landing = 1.2 * V_td;</p>
+<p>valid_landing = ~isnan(CL_landing) &amp; ~isnan(CD_polar);</p>
+<p>CD_td = interp1(CL_landing(valid_landing), CD_polar(valid_landing),
+CL_td, 'linear', 'extrap');</p>
+<p>K_td = CL_td / CD_td;</p>
+<p>CL_H_land = 0.7 * CL_td;</p>
+<p>CD_H_land = interp1(CL_landing(valid_landing),
+CD_polar(valid_landing), CL_H_land, 'linear', 'extrap');</p>
+<p>K_H_land = CL_H_land / CD_H_land;</p>
+<p>K_av = (K_td + K_H_land) / 2;</p>
+<p>V_av_landing = (V_td + V_H_landing) / 2;</p>
+<p>d3 = K_av * ((V_H_landing^2 - V_td^2) / (2*g) + H_safe);</p>
+<p>t3 = d3 / V_av_landing;</p>
+<p>d4 = V_td^2 / (g * (f_landing + 1/K_td));</p>
+<p>t4 = 2 * V_td / (g * (f_landing + 1/K_td));</p>
+<p>%% 图</p>
+<p>set(0, 'DefaultAxesFontName', 'SimHei');</p>
+<p>set(0, 'DefaultTextFontName', 'SimHei');</p>
+<p>colors = lines(nH);</p>
+<p>figure('Position', [100, 100, 900, 600]);</p>
+<p>hold on;</p>
+<p>for i = 1:nH</p>
+<p>plot(M_calc, gamma_matrix(i,:), 'LineWidth', 1.5, 'Color',
+colors(i,:), 'DisplayName', sprintf('H=%dm', H_calc(i)));</p>
+<p>end</p>
+<p>hold off;</p>
+<p>xlabel('马赫数 M'); ylabel('航迹倾角 \gamma (°)');</p>
+<p>title('各高度上航迹倾角随马赫数变化曲线');</p>
+<p>legend('Location', 'northeast'); grid on; xlim([0.2, 1.3]);</p>
+<p>saveas(gcf, '图1_航迹倾角曲线.png');</p>
+<p>figure('Position', [100, 100, 900, 600]);</p>
+<p>hold on;</p>
+<p>for i = 1:nH</p>
+<p>plot(M_calc, Vv_matrix(i,:), 'LineWidth', 1.5, 'Color', colors(i,:),
+'DisplayName', sprintf('H=%dm', H_calc(i)));</p>
+<p>end</p>
+<p>hold off;</p>
+<p>xlabel('马赫数 M'); ylabel('上升率 V_v (m/s)');</p>
+<p>title('各高度上升率随马赫数变化曲线');</p>
+<p>legend('Location', 'northeast'); grid on; xlim([0.2, 1.3]);</p>
+<p>saveas(gcf, '图2_上升率曲线.png');</p>
+<p>figure('Position', [100, 100, 900, 500]);</p>
+<p>subplot(1,2,1);</p>
+<p>plot(gamma_max, H_calc/1000, 'b-o', 'LineWidth', 2, 'MarkerSize',
+6);</p>
+<p>xlabel('最大航迹倾角 \gamma_{max} (°)'); ylabel('高度 H (km)');</p>
+<p>title('最大航迹倾角随高度变化'); grid on;</p>
+<p>subplot(1,2,2);</p>
+<p>plot(Vv_max, H_calc/1000, 'r-o', 'LineWidth', 2, 'MarkerSize',
+6);</p>
+<p>hold on;</p>
+<p>yline(H_max_practical/1000, 'k--', sprintf('实用升限 %.0fm',
+H_max_practical), 'LineWidth', 1.5);</p>
+<p>yline(H_max_theory/1000, 'k:', sprintf('理论升限 %.0fm',
+H_max_theory), 'LineWidth', 1.5);</p>
+<p>hold off;</p>
+<p>xlabel('最大上升率 V_{v,max} (m/s)'); ylabel('高度 H (km)');</p>
+<p>title('最大上升率随高度变化'); grid on;</p>
+<p>sgtitle('最大航迹倾角和最大上升率随高度变化');</p>
+<p>saveas(gcf, '图3_最大性能参数曲线.png');</p>
+<p>figure('Position', [100, 100, 1000, 700]);</p>
+<p>hold on;</p>
+<p>H_plot = H_calc / 1000;</p>
+<p>plot(M_max, H_plot, 'b-', 'LineWidth', 2.5, 'DisplayName', 'M_{max}
+(最大平飞速度)');</p>
+<p>plot(M_min_a, H_plot, 'r--', 'LineWidth', 2, 'DisplayName',
+'M_{min,a} (升力限制)');</p>
+<p>valid_idx = ~isnan(M_min_T);</p>
+<p>if sum(valid_idx) &gt; 1</p>
+<p>plot(M_min_T(valid_idx), H_plot(valid_idx), 'r:', 'LineWidth', 2,
+'DisplayName', 'M_{min,T} (推力限制)');</p>
+<p>end</p>
+<p>plot(M_gamma, H_plot, 'g-', 'LineWidth', 2, 'DisplayName', 'M_\gamma
+(最陡上升速度)');</p>
+<p>plot(M_qc, H_plot, 'm-', 'LineWidth', 2, 'DisplayName', 'M_{qc}
+(快升速度)');</p>
+<p>yline(H_max_practical/1000, 'k--', 'LineWidth', 1.5,
+'HandleVisibility', 'off');</p>
+<p>text(0.9, H_max_practical/1000 + 0.3, sprintf('实用升限
+H_{max,s}=%.0fm', H_max_practical), 'FontSize', 10);</p>
+<p>hold off;</p>
+<p>xlabel('马赫数 M'); ylabel('高度 H (km)');</p>
+<p>title('飞行包线', 'FontSize', 16, 'FontWeight', 'bold');</p>
+<p>legend('Location', 'southeast'); grid on;</p>
+<p>xlim([0, 1.5]); ylim([0, 15]);</p>
+<p>saveas(gcf, '图4_飞行包线.png');</p>
+<p>%% 结果</p>
+<p>results_basic = table(H_calc', gamma_max, Vv_max, M_gamma, M_qc,
+M_max, M_min_a, M_min_T, M_min, ...</p>
+<p>'VariableNames', {'高度_m', '最大航迹倾角_deg', '最大上升率_m_s',
+'最陡上升马赫数', ...</p>
+<p>'快升马赫数', '最大平飞马赫数', '升力限制最小马赫数',
+'推力限制最小马赫数', '最小平飞马赫数'});</p>
+<p>writetable(results_basic, '飞行性能计算结果.xlsx', 'Sheet',
+'基本性能');</p>
+<p>results_cruise = table([R_cr_max; M_R_max; n_R_max*100; t_cr_max*60;
+M_t_max; n_t_max*100], ...</p>
+<p>'VariableNames', {'数值'}, 'RowNames', {'最大航程_km', '远航马赫数',
+'远航转速_percent', ...</p>
+<p>'最久航时_min', '久航马赫数', '久航转速_percent'});</p>
+<p>writetable(results_cruise, '飞行性能计算结果.xlsx', 'Sheet',
+'续航性能', 'WriteRowNames', true);</p>
+<p>results_takeoff_landing = table([V_lo; d1; t1; d2; t2; d1+d2; V_td;
+d3; t3; d4; t4; d3+d4], ...</p>
+<p>'VariableNames', {'数值'}, 'RowNames', {'离地速度_m_s',
+'起飞滑跑距离_m', '起飞滑跑时间_s', ...</p>
+<p>'起飞空中段距离_m', '起飞空中段时间_s', '起飞总距离_m',
+'接地速度_m_s', '着陆空中段距离_m', ...</p>
+<p>'着陆空中段时间_s', '着陆滑跑距离_m', '着陆滑跑时间_s',
+'着陆总距离_m'});</p>
+<p>writetable(results_takeoff_landing, '飞行性能计算结果.xlsx', 'Sheet',
+'起降性能', 'WriteRowNames', true);</p>

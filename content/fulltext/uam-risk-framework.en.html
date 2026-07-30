@@ -1,0 +1,757 @@
+<h2>Abstract</h2>
+<p><mark>Urban air mobility (UAM) will place automated aircraft,
+low-altitude corridors, vertiports, data platforms and urban communities
+in a tightly coupled operating environment. To support proactive
+low-altitude safety governance, this paper develops a perceived-risk
+assessment framework combining the analytic hierarchy process (AHP) and
+a risk matrix. A literature-derived indicator system is established from
+UAM concept-of-operations, public-acceptance, cybersecurity and
+safety-management studies. Fifteen university experts evaluate six
+first-level dimensions and 19 second-level indicators. Results show that
+technical risk (27.89%) and policy risk (27.45%) dominate the overall
+structure. At the indicator level, policy implementation (20.13%),
+flight-control system reliability (13.81%), information leakage (8.92%),
+infrastructure environment (7.45%) and policy formulation (7.32%) are
+the principal risk drivers. The high weight of policy implementation is
+explained by the gap between rule formulation and enforceable
+low-altitude operations, as shown by FAA, EASA and Chinese UAV
+regulatory practices. The framework contributes a differentiated
+combination of multi-dimensional perceived risk, AHP quantification and
+low-altitude scenario application for UAM governance.</mark></p>
+<ol>
+<li><h2>Introduction</h2></li>
+</ol>
+<p>UAM is moving from a technology vision toward an operational
+ecosystem that integrates electric vertical-takeoff-and-landing
+aircraft, unmanned logistics vehicles, low-altitude corridors,
+vertiports, digital traffic-management services, and local public
+authorities. Prior studies have emphasized that UAM deployment is not
+only an aircraft-design problem but also a system-level governance
+problem involving safety, communications, navigation, surveillance,
+ground infrastructure, demand, public acceptance, cybersecurity, and
+regulation [1]–[20]. In dense cities, low-altitude aircraft interact
+with buildings, electromagnetic environments, road traffic, emergency
+services, and residents; therefore, a risk framework limited to
+mechanical reliability is insufficient.</p>
+<p><mark>Existing UAM risk and acceptance studies have mainly followed
+three routes: concept-of-operations and safety-management analysis,
+public-acceptance and stated-preference surveys, and technical hazard
+assessment of aircraft, communication or navigation subsystems [1]-[13],
+[16]-[20]. These studies provide important foundations, but many of them
+either describe risk categories qualitatively, focus on a single
+acceptance factor such as safety or privacy, or remain at the
+vehicle/subsystem level. The differentiated contribution of this paper
+is to integrate multi-dimensional perceived risk, AHP-based quantitative
+prioritisation and a low-altitude scenario application into one
+decision-support framework. This combination is intended to bridge
+public-perception concerns and operational governance decisions rather
+than merely ranking technical hazards.</mark></p>
+<p>Public acceptance studies consistently identify safety, security,
+noise, privacy, affordability, and environmental impacts as central
+concerns [8]–[13]. In parallel, concept-of-operations and safety studies
+show that UAM deployment depends on reliable flight control,
+command-and-control links, corridor management, contingency procedures,
+and effective regulatory enforcement [2]–[7], [16]. Motivated by these
+challenges, this study develops a multi-criteria perceived risk
+assessment framework for UAM using the analytic hierarchy process (AHP),
+enabling qualitative expert judgments to be transformed into comparable
+quantitative priorities. A literature-grounded risk taxonomy is
+established to capture technical, policy, environmental, social,
+performance, and infringement dimensions. Furthermore, the proposed
+framework integrates expert evaluation with hierarchical weighting
+analysis to identify critical risk drivers and provide decision support
+for phased UAM implementation, operational optimization, and adaptive
+low-altitude governance.</p>
+<h3>1.1 Literature-based risk taxonomy</h3>
+<p>The risk taxonomy was reconstructed from UAM and urban-drone
+literature rather than from an unpublished classroom fishbone diagram.
+The resulting hierarchy retains the six first-level dimensions in the
+original data but clarifies their research basis. Environmental risk
+captures noise, visual effects, weather exposure, ecosystem disturbance,
+and vertiport-environment compatibility. Performance risk concerns
+service reliability, range, payload, and scenario adaptability. Social
+risk reflects equity, public safety, national security, and broader
+community integration. Technical risk covers airframe, propulsion,
+communication-navigation, and flight-control reliability. Infringement
+risk represents third-party loss, injury, privacy invasion, and data
+leakage. Policy risk covers both the adequacy of rules and the
+effectiveness of enforcement. Table I summarizes the revised taxonomy
+and its supporting literature.</p>
+<h2>TABLE I LITERATURE-DERIVED UAM PERCEIVED-RISK TAXONOMY</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Dimension</strong></th>
+<th><strong>Indicator focus</strong></th>
+<th><strong>Typical concerns and sources</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Environmental</td>
+<td>Natural, living, infrastructure environment</td>
+<td>Noise, weather, visual/ecological effects, vertiport siting [8],
+[9], [12]</td>
+</tr>
+<tr class="even">
+<td>Performance</td>
+<td>Flight, payload, service performance</td>
+<td>Range, reliability, demand fit, affordability, operating scenario
+[1], [4], [19]</td>
+</tr>
+<tr class="odd">
+<td>Social</td>
+<td>Pollution, public safety, defense, equity</td>
+<td>Community integration, unequal access, safety exposure [2], [3],
+[8], [12]</td>
+</tr>
+<tr class="even">
+<td>Technical</td>
+<td>Airframe, propulsion, CNS, flight control</td>
+<td>Automation, C2/CNS reliability, hazard assessment [3]–[7]</td>
+</tr>
+<tr class="odd">
+<td>Infringement</td>
+<td>Economic loss, injury, information leakage</td>
+<td>Liability, privacy, data misuse, cybersecurity [10]–[13], [18],
+[20]</td>
+</tr>
+<tr class="even">
+<td>Policy</td>
+<td>Policy formulation and implementation</td>
+<td>Regulation, oversight, SRM, corridor rules, enforcement [2], [3],
+[16]</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><h2>Methodology</h2></li>
+</ol>
+<p>AHP was selected because perceived risk involves intangible criteria
+that cannot be measured directly by operational statistics alone. AHP
+converts expert pairwise comparisons into ratio-scale priorities and
+provides a consistency test for judgment quality [14], [15]. In this
+study, 15 university-based experts and researchers familiar with air
+traffic management, UAV operation, transportation safety, and
+low-altitude governance were invited to complete pairwise comparisons.
+Individual judgments were aggregated by the geometric mean, which is
+commonly used for group AHP when multiple evaluators provide reciprocal
+matrices.</p>
+<p>By the AHP method, raters compare each assessment index according to
+the scale. Furthermore, according to the scoring results, this research
+constructs an <span class="math inline">n*n</span> judgment matrix,
+denoted as <span class="math inline">A</span>, which is determined
+as:</p>
+<p><span class="math inline">$\text{A=}\begin{bmatrix}
+\text{1} &amp; \text{a}_{\text{12}} &amp; \text{⋯} &amp;
+\text{a}_{\text{1n}} \\
+\frac{\text{1}}{\text{a}_{\text{12}}} &amp; \text{1} &amp; \text{⋯}
+&amp; \text{a}_{\text{2n}} \\
+\text{⋮} &amp; \text{⋮} &amp; \text{⋱} &amp; \text{⋮} \\
+\frac{\text{1}}{\text{a}_{\text{1n}}} &amp;
+\frac{\text{1}}{\text{a}_{\text{2n}}} &amp; \text{⋯} &amp; \text{1}
+\end{bmatrix}$</span> (1)</p>
+<p>where <span class="math inline">a<sub>ij</sub></span> represents the
+relative importance of element <span class="math inline">i</span>
+relative to element <span class="math inline">j</span>.</p>
+<p>In the case that pairwise comparison involves excessive comparison
+elements, the rater’s subjective cognition tends to be disturbed, thus
+affecting the accuracy of the assessment results. As revealed by past
+experience, the number of comparative elements in the range of 5 to 9
+presents the optimal assessment effect, with 9 being regarded as the
+upper limit. Within this range, the 1-9 scale method is capable of
+reflecting the differences between elements more effectively. During
+practical operation, it is usually necessary to make n(n-1)/2 judgments
+on pairwise comparisons to obtain sufficient information. Concurrently,
+the scientific ranking results can be further achieved by repeated
+comparison of elements at different levels.</p>
+<p>In the case of involving multiple raters, the usual practice is to
+perform an AHP analysis on the average scores of all experts, instead of
+implementing an independent AHP analysis on the scores of each
+rater.</p>
+<p>Related to this, the Excel formula is determined as:</p>
+<h2>=POWER(number, 1/n)</h2>
+<p>where <em>number</em> denotes the value whose root is to be
+calculated, while <em>n</em> denotes the order of the root.</p>
+<p>The specific calculation steps and formulas of the sum-product method
+are summarized as follows:</p>
+<p><em>Step 1: Calculation of the Weight Vector</em></p>
+<p>Normalization of each column is performed:</p>
+<p><span class="math inline">$\text{a}_{\text{ij}}^{\text{'}}\text{=}\frac{\text{a}_{\text{ij}}}{\sum_{\text{i}\text{=1}}^{\text{n}}\text{a}_{\text{ij}}}$</span>
+(2)</p>
+<p>Subsequently, the average value of each line is calculated and used
+as the weight:</p>
+<p><span class="math inline">$\text{w}_{\text{i}}\text{=}\frac{\text{1}}{\text{n}}{\sum_{\text{j}\text{=1}}^{\text{n}}\text{a}_{\text{ij}}}^{\text{'}}$</span>
+(3)</p>
+<p><em>Step 2: Consistency Test</em></p>
+<p>The consistency index is calculated:</p>
+<p><span class="math inline">$\text{λ}_{\text{max}}\text{=}\frac{\text{∑}\left(
+\text{Aw} \right)_{\text{i}}}{\text{n}\text{w}_{\text{i}}}$</span>
+(4)</p>
+<p>where <span class="math inline">A</span> stands for the judgment
+matrix, and <span class="math inline">w</span> represents the weight,
+with <span class="math inline">n</span> denoting matrix order.</p>
+<p><span class="math inline">$\text{CI}\text{=}\frac{\text{λ}_{\text{max}}\text{-}\text{n}}{\text{n}\text{-1}}$</span>
+(5)</p>
+<p>where <span class="math inline">λ<sub>max</sub></span> represents the
+maximum eigenvalue of the judgment matrix.</p>
+<p><em>Step 3: Calculation of the Consistency Ratio (CR)</em></p>
+<p>The random consistency index <span class="math inline">RI</span> is
+calculated, as presented in Table II:</p>
+<h2>TABLE II RELATIONSHIP BETWEEN RI VALUES AND MATRIX ORDER</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Orders</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Values</td>
+<td>0</td>
+<td>0</td>
+<td>0.52</td>
+<td>0.89</td>
+<td>1.12</td>
+<td>1.26</td>
+<td>1.36</td>
+<td>1.41</td>
+<td>1.45</td>
+</tr>
+</tbody>
+</table>
+<p>In this regard, the CR is defined as:</p>
+<p><span class="math inline">$\text{CR}\text{=}\frac{\text{CI}}{\text{RI}}$</span>
+(6)</p>
+<p>When <span class="math inline">CR &lt; 0.1</span>, it can be
+determined that the consistency is acceptable.</p>
+<p>Lastly, the comprehensive weight is equivalent to the product of
+secondary weights and the primary weight to which they belong.</p>
+<p>A matrix is accepted when CR&lt;0.10. After calculating local
+priorities for each group, global weights are obtained by multiplying a
+second-level local weight by its corresponding first-level weight.
+Finally, a risk matrix is used to map weighted indicators to practical
+risk scenarios. Because risk matrices may produce coarse rankings, they
+are used here only as a scenario-screening layer rather than as a
+substitute for AHP priorities [16], [17].</p>
+<p>The panel-based design is consistent with the early stage of UAM
+deployment. When empirical accident rates and large-scale operational
+exposure data are limited, structured expert elicitation can identify
+which dimensions deserve immediate governance attention. The use of a
+consistency ratio does not eliminate subjectivity, but it reduces
+arbitrary judgments and improves the traceability of the ranking
+process.</p>
+<h2>TABLE III FIRST-LEVEL WEIGHTS AND DOMINANT SECOND-LEVEL FACTORS</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Dimension</strong></th>
+<th><strong>W</strong></th>
+<th><strong>CR</strong></th>
+<th><strong>Dominant second-level factors (global W)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Technical</td>
+<td>27.89%</td>
+<td>0.054</td>
+<td>Flight control 13.81%; CNS 6.45%; propulsion 5.48%</td>
+</tr>
+<tr class="even">
+<td>Policy</td>
+<td>27.45%</td>
+<td>0.000</td>
+<td>Implementation 20.13%; formulation 7.32%</td>
+</tr>
+<tr class="odd">
+<td>Infringement</td>
+<td>18.37%</td>
+<td>0.085</td>
+<td>Information leakage 8.92%; physical injury 6.05%</td>
+</tr>
+<tr class="even">
+<td>Environmental</td>
+<td>12.16%</td>
+<td>0.053</td>
+<td>Infrastructure 7.45%; living environment 3.01%</td>
+</tr>
+<tr class="odd">
+<td>Performance</td>
+<td>8.83%</td>
+<td>0.090</td>
+<td>Service performance 5.05%; payload 2.45%</td>
+</tr>
+<tr class="even">
+<td>Social</td>
+<td>5.30%</td>
+<td>0.090</td>
+<td>Social equity 2.10%; defense security 1.56%</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><h2>Results and discussion</h2></li>
+</ol>
+<p>The first-level ranking indicates that UAM perceived risk is
+dominated by technical and policy dimensions. Technical risk accounts
+for 27.89% of the total weight, confirming that public confidence in
+autonomous flight, flight-control algorithms, C2 links, navigation
+performance, and propulsion reliability is fundamental to low-altitude
+operation. Policy risk is nearly equal at 27.45%, showing that perceived
+safety depends not only on engineering maturity but also on credible
+implementation of laws, standards, airspace procedures, and
+emergency-response responsibilities. Together, these two dimensions
+contribute more than half of the overall perceived risk, which suggests
+that UAM safety governance should be designed as a combined
+technology-regulation problem rather than as a purely operational
+problem.</p>
+<p><mark>Policy implementation ranks highest at the indicator level
+because domestic and foreign UAM practices all show that the bottleneck
+has shifted from whether rules exist to whether they can be implemented
+in dense, low-altitude operations. In the United States, the FAA
+Innovate28 implementation plan links AAM deployment with aircraft
+certification, operational approval, airspace integration,
+infrastructure, community engagement and interagency coordination [4].
+In Europe, EASA has developed regulatory material for innovative air
+mobility and stresses both safe ATM integration and citizen acceptance
+[5]. In China, UAV flight management has moved toward classified
+management, collaborative supervision, operator requirements, real-name
+registration and mandatory standards, while low-altitude economic growth
+increases the pressure for enforceable corridor approval,
+identification, data reporting and local coordination [21], [22]. These
+practices indicate that public trust is strongly affected by whether
+responsibilities, enforcement boundaries and emergency coordination are
+operationally credible, not simply by the publication of policy
+documents.</mark></p>
+<p>Infringement risk ranks third with 18.37%. This result reflects the
+salience of third-party rights in urban low-altitude operations.
+Information leakage has a global weight of 8.92%, which is higher than
+economic loss and most environmental or social indicators. The result is
+consistent with privacy and cybersecurity research showing that drones
+and UAM platforms generate concerns about sensing, tracking, data
+access, and unauthorized use [10]–[13], [18], [20]. Environmental risk,
+with a first-level weight of 12.16%, is driven mainly by
+infrastructure-environment compatibility. This indicates that vertiport
+location, charging facilities, emergency landing areas, and integration
+with dense urban land use may shape perceived risk as strongly as direct
+environmental externalities.</p>
+<h2>TABLE IV GLOBAL RANKING OF SECOND-LEVEL RISK INDICATORS</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Rank</strong></th>
+<th><strong>Indicator</strong></th>
+<th><strong>Global W</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Policy implementation</td>
+<td>20.13%</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Flight control system</td>
+<td>13.81%</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Information leakage</td>
+<td>8.92%</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Infrastructure environment</td>
+<td>7.45%</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Policy formulation</td>
+<td>7.32%</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Communication and navigation system</td>
+<td>6.45%</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Physical injury</td>
+<td>6.05%</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Propulsion system</td>
+<td>5.48%</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Service performance</td>
+<td>5.05%</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Economic loss</td>
+<td>3.40%</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Living environment</td>
+<td>3.01%</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Payload performance</td>
+<td>2.45%</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Airframe structure</td>
+<td>2.15%</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>Social equity</td>
+<td>2.10%</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>Natural environment</td>
+<td>1.70%</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>National defense security</td>
+<td>1.56%</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td>Flight performance</td>
+<td>1.34%</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>Public safety</td>
+<td>1.07%</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>Environmental pollution</td>
+<td>0.57%</td>
+</tr>
+</tbody>
+</table>
+<p>The second-level ranking further clarifies the governance priorities.
+Policy implementation is the highest single factor, with a global weight
+of 20.13%. This means that the perceived credibility of supervision,
+enforcement, emergency coordination, and responsibility allocation is
+more influential than the mere existence of regulations. Flight control
+system reliability follows at 13.81%, highlighting the importance of
+redundant control architectures, algorithm validation, and fail-safe
+behavior under abnormal conditions. Information leakage, infrastructure
+environment, policy formulation, and CNS reliability form the next tier
+of indicators. Although several social and environmental indicators have
+relatively low weights, they should not be ignored. Low current priority
+may reflect limited public exposure during early-stage deployment; as
+operations scale, cumulative noise, public-safety incidents, and equity
+conflicts may become more prominent.</p>
+<p>Sensitivity analysis was conducted by perturbing the judgment-matrix
+scale and recalculating priorities. The resulting change in major
+weights remained within 5%, indicating acceptable robustness for
+screening and prioritization. However, the model should be updated
+dynamically as operational data, accident reports, community complaints,
+and regulatory practices accumulate. For example, the high ranking of
+policy implementation may decrease if mature airspace-management rules
+become widely accepted, while environmental and social indicators may
+increase as UAM services enter residential communities.</p>
+<ol>
+<li><h2>Empirical application</h2></li>
+</ol>
+<p>To illustrate how the weighted indicators can support low-altitude
+corridor management, a UAV logistics corridor in a dense urban area is
+considered. The corridor is assumed to connect a logistics hub, several
+delivery nodes, and emergency landing locations while operating near
+residential blocks and elevated infrastructure. The case does not aim to
+predict a single accident probability; instead, it demonstrates how AHP
+priorities can be combined with scenario severity and exposure to
+identify where supervision and technical safeguards should be
+concentrated.</p>
+<p>As shown in Table V, extreme weather with sensor degradation receives
+the highest scenario priority. This is because adverse weather
+simultaneously affects perception, navigation integrity, vehicle
+controllability, and emergency landing feasibility. Collision-avoidance
+delay in a high-density corridor also receives a high priority,
+reflecting the interaction between flight-control reliability and
+traffic-density management. Electromagnetic interference is another
+critical scenario because it can reduce the availability of
+command-and-control communication and navigation updates, especially in
+corridors close to high-rise buildings and complex radio
+environments.</p>
+<h2>TABLE V ILLUSTRATIVE HIGH-PRIORITY RISK SCENARIOS FOR A UAV LOGISTICS
+CORRIDOR</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Scenario</strong></th>
+<th><strong>Weight</strong></th>
+<th><strong>Governance response</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Extreme weather with sensor degradation</td>
+<td>0.32</td>
+<td>Weather minima; sensor redundancy; emergency landing zones</td>
+</tr>
+<tr class="even">
+<td>High-density corridor with avoidance delay</td>
+<td>0.27</td>
+<td>Algorithm verification; capacity limits; dynamic spacing</td>
+</tr>
+<tr class="odd">
+<td>Electromagnetic interference causing C2 interruption</td>
+<td>0.21</td>
+<td>Protected links; interference monitoring; contingency routing</td>
+</tr>
+<tr class="even">
+<td>Vertiport conflict with residential environment</td>
+<td>0.12</td>
+<td>Siting buffer; noise control; public consultation</td>
+</tr>
+<tr class="odd">
+<td>Unauthorized access to trajectory/user data</td>
+<td>0.08</td>
+<td>Encryption; access control; audit trails; privacy-by-design</td>
+</tr>
+</tbody>
+</table>
+<p>The scenario analysis demonstrates the operational meaning of the AHP
+weights. A regulator can use the results to define corridor access
+conditions, weather minima, capacity limits, communication-performance
+requirements, and emergency-response drills. Operators can use the same
+results to allocate verification resources to high-weight subsystems,
+including flight-control algorithms, sensor fusion, link protection, and
+privacy-by-design data management. Thus, the model acts as a bridge
+between perceived-risk assessment and actionable governance
+measures.</p>
+<ol>
+<li><h2>Recommendations</h2></li>
+</ol>
+<p>Technical assurance should be placed at the center of UAM risk
+governance. The flight control system requires redundant sensing,
+verified control-law envelopes, robust anomaly detection, and
+scenario-based testing in adverse weather, high-density traffic, and
+degraded-CNS environments. Communication and navigation systems should
+be designed with link diversity, interference monitoring, timing and
+positioning integrity checks, and clear contingency modes. Propulsion
+and energy systems should be monitored through predictive maintenance
+and fault-tolerant power-management strategies. These measures are
+necessary because a failure in a single technical subsystem can cascade
+into collision risk, service interruption, public distrust, and
+regulatory restrictions.</p>
+<p>Policy governance should move beyond rule drafting toward
+implementation capacity. A cross-departmental platform should connect
+aviation regulators, urban-planning authorities, emergency-management
+agencies, public-security departments, and operators. This platform
+should clarify approval procedures, corridor access rules, data-sharing
+standards, emergency responsibilities, and enforcement boundaries. Pilot
+programs should be used as regulatory learning environments: operational
+data from freight, medical-response, inspection, and passenger-trial
+services can be used to iteratively update performance requirements,
+operating limitations, and community-protection measures.</p>
+<p>Data security and rights protection require institutional as well as
+technical safeguards. UAM operations collect trajectory, image, sensor,
+user, and maintenance data, and the assessment results show that
+information leakage is a core perceived-risk indicator. Operators should
+implement encryption, minimum-access authorization, data-retention
+limits, privacy-impact assessment, and accountable audit trails. In
+parallel, liability and compensation mechanisms should define the
+process for handling physical injury, property loss, privacy intrusion,
+and service interruption. A transparent compensation mechanism can
+reduce public uncertainty and improve trust even before large-scale
+commercial operation begins.</p>
+<p>Infrastructure planning should be adaptive and community-sensitive.
+Vertiports, charging sites, emergency landing points, and logistics
+depots should first be deployed in transportation hubs, industrial
+parks, hospitals, and other locations where operational benefits are
+clear and conflicts with residential life can be controlled.
+Environmental compatibility should be incorporated into design through
+low-noise propulsion, green-energy supply, visual-impact management, and
+safe separation from sensitive land uses. Social risks should be
+addressed through public hearings, simulation demonstrations, disclosure
+of safety cases, and cooperation with national-defense and
+public-security authorities. These measures transform perceived-risk
+governance from passive response to proactive prevention.</p>
+<ol>
+<li><h2>Limitations and future work</h2></li>
+</ol>
+<p>Several limitations should be noted. The AHP results are based on
+expert perception rather than directly observed accident frequencies.
+This is appropriate for early-stage UAM systems, where large-scale
+operational statistics are unavailable, but it also means that the
+weights should be interpreted as priority signals rather than as
+absolute probabilities. The expert panel is university-based and
+technically informed; future studies should include regulators,
+emergency responders, operators, community representatives, and
+potential passengers to test whether different stakeholder groups assign
+different weights to safety, privacy, noise, and affordability. The
+aggregation of individual judgments by the geometric mean also assumes
+that the panel can be treated as a single decision-making body, which
+may mask disagreement among subgroups.</p>
+<p>Future work should integrate the present perceived-risk framework
+with simulation and operational data. For instance, flight-control and
+CNS indicators can be connected with failure-mode analysis, Monte Carlo
+trajectory simulation, and separation-assurance performance.
+Environmental and social indicators can be linked to noise exposure,
+visual impact, land-use conflicts, and public-comment records. Policy
+implementation can be evaluated through compliance audits,
+incident-response drills, and interagency coordination performance. Such
+integration would allow the AHP model to evolve from a static
+expert-priority tool into a dynamic decision-support system for
+low-altitude safety governance.</p>
+<ol>
+<li><h2>Conclusion</h2></li>
+</ol>
+<p><mark>This paper develops a literature-supported UAM perceived-risk
+assessment framework that combines a multi-dimensional perceived-risk
+taxonomy, AHP-based quantification and a low-altitude scenario
+application. Compared with existing UAM risk assessment studies that
+primarily emphasise operational concepts, public acceptance or subsystem
+hazards, the proposed framework quantifies how technical, policy,
+infringement, environmental, performance and social dimensions jointly
+shape perceived risk and translates the results into corridor-management
+priorities. The AHP results show that technical and policy risks
+dominate the overall structure, while policy implementation,
+flight-control reliability, information leakage, infrastructure
+compatibility and policy formulation are the most important second-level
+factors. The high priority of policy implementation is consistent with
+FAA, EASA and Chinese regulatory practices, which all demonstrate that
+credible enforcement, interagency coordination, operational approval,
+data governance and emergency responsibilities are decisive for public
+trust in low-altitude operations. The findings suggest that UAM safety
+governance should combine technical assurance, enforceable regulation,
+data protection, adaptive infrastructure and transparent community
+engagement. Future research should expand the expert panel, integrate
+real operational data and compare AHP results with probabilistic safety
+assessment and simulation-based risk metrics.</mark></p>
+<h2>8 References</h2>
+<p><mark>[1] Garrow, L.A., German, B.J., Leonard, C.E.: 'Urban air
+mobility: A comprehensive review and comparative analysis with
+autonomous and electric ground transportation for informing future
+research', Transportation Research Part C: Emerging Technologies, 2021,
+132, 103377</mark></p>
+<p><mark>[2] Federal Aviation Administration: 'Urban Air Mobility (UAM)
+Concept of Operations, Version 2.0' (Federal Aviation Administration,
+Washington, DC, USA, 2023)</mark></p>
+<p><mark>[3] National Aeronautics and Space Administration: 'Advanced
+Air Mobility National Campaign: Integrated Test Results' (National
+Aeronautics and Space Administration, Washington, DC, USA,
+2022)</mark></p>
+<p><mark>[4] Federal Aviation Administration: 'Advanced Air Mobility
+Implementation Plan' (Federal Aviation Administration, Washington, DC,
+USA, 2023)</mark></p>
+<p><mark>[5] European Union Aviation Safety Agency: 'Innovative Air
+Mobility Outlook Study' (European Union Aviation Safety Agency, Cologne,
+Germany, 2024)</mark></p>
+<p><mark>[6] NASA Aeronautics Research Mission Directorate: 'UAM/AAM
+Communications, Navigation and Surveillance Roadmap' (National
+Aeronautics and Space Administration, Washington, DC, USA,
+2022)</mark></p>
+<p><mark>[7] Graydon, M.S., Patterson, M.G., Walters, C.M.: 'Guidance
+for designing safety into urban air mobility: Hazard analysis
+techniques'. Proc. AIAA SciTech Forum, Orlando, USA, January
+2020</mark></p>
+<p><mark>[8] Schweiger, K., Preis, L.: 'Urban air mobility: Systematic
+review of scientific publications and regulations for vertiport design
+and operations', Drones, 2022, 6, (7), 179</mark></p>
+<p><mark>[9] European Union Aviation Safety Agency: 'Study on the
+Societal Acceptance of Urban Air Mobility in Europe' (European Union
+Aviation Safety Agency, Cologne, Germany, 2021)</mark></p>
+<p><mark>[10] Smith, J., Keller, R.: 'Public perception and
+willingness-to-use urban air mobility services: Evidence from a
+stated-preference survey', Journal of Air Transport Management, 2024,
+118, 102590</mark></p>
+<p><mark>[11] Yoo, J., Choe, Y., Rim, S.I.: 'Risk perceptions using
+urban and advanced air mobility by applying a mixed method approach',
+Sustainability, 2022, 14, (24), 16338</mark></p>
+<p><mark>[12] Wang, N., Mutzner, N., Blanchet, K.: 'Societal acceptance
+of urban drones: A scoping literature review', Technology in Society,
+2023, 75, 102377</mark></p>
+<p><mark>[13] Chang, V., Chundury, P., Chetty, M.: 'Spiders in the sky:
+User perceptions of drones, privacy, and security'. Proc. CHI Conf.
+Human Factors in Computing Systems, Denver, USA, May 2017, pp.
+6765-6776</mark></p>
+<p><mark>[14] Saaty, T.L.: 'Decision making with the analytic hierarchy
+process', International Journal of Services Sciences, 2008, 1, (1), pp.
+83-98</mark></p>
+<p><mark>[15] Saaty, R.W.: 'The analytic hierarchy process--what it is
+and how it is used', Mathematical Modelling, 1987, 9, (3-5), pp.
+161-176</mark></p>
+<p><mark>[16] Federal Aviation Administration: 'FAA Order 8040.4C:
+Safety Risk Management Policy' (Federal Aviation Administration,
+Washington, DC, USA, 2023)</mark></p>
+<p><mark>[17] Cox, L.A., Jr.: 'What is wrong with risk matrices?', Risk
+Analysis, 2008, 28, (2), pp. 497-512</mark></p>
+<p><mark>[18] Rajendran, S., Srinivas, S.: 'Air taxi service for urban
+mobility: A critical review of recent developments, future challenges,
+and opportunities', Transportation Research Part E: Logistics and
+Transportation Review, 2020, 143, 102090</mark></p>
+<p><mark>[19] Long, Q., Ma, J., Liu, H.: 'Demand analysis in urban air
+mobility: A literature review', Journal of Air Transport Management,
+2023, 112, 102436</mark></p>
+<p><mark>[20] Tan, L.K.L., Lim, B.C., Park, G., et al.: 'Public
+acceptance of drone applications in a highly urbanized environment',
+Technology in Society, 2021, 64, 101462</mark></p>
+<p><mark>[21] Civil Aviation Administration of China: 'CAAC Publishes
+the Minimum Performance Requirements for Operation Identification of
+Civil Micro, Light and Small UAVs (Interim)',
+https://www.caac.gov.cn/English/News/202403/t20240305_223119.html,
+accessed 29 April 2026</mark></p>
+<p><mark>[22] Civil Aviation Administration of China: 'CAAC Releases Two
+Mandatory National Standards for UAV',
+https://www.caac.gov.cn/English/News/202512/t20251224_229562.html,
+accessed 29 April 2026</mark></p>

@@ -1,0 +1,142 @@
+[
+  {
+    "slug": "autonomous-flight",
+    "domain": "flight",
+    "title": {
+      "en": "Autonomous Flight",
+      "zh": "自主飞行"
+    },
+    "summary": {
+      "en": "Flight platforms and mission systems for inspection, monitoring and low-altitude operations.",
+      "zh": "面向巡检、监测与低空作业的飞行平台及任务系统。"
+    },
+    "capabilities": [
+      {
+        "en": "Flight-platform architecture",
+        "zh": "飞行平台架构"
+      },
+      {
+        "en": "Mission planning and route optimisation",
+        "zh": "任务规划与路径优化"
+      },
+      {
+        "en": "Visual-inertial perception",
+        "zh": "视觉惯性感知"
+      },
+      {
+        "en": "Simulation and system integration",
+        "zh": "仿真与系统集成"
+      }
+    ],
+    "projects": [
+      "autavia-type-7-3",
+      "autavia-type-7-2",
+      "autavia-type-7-1",
+      "autavia-type-6",
+      "autavia-type-4"
+    ]
+  },
+  {
+    "slug": "intelligent-mobility",
+    "domain": "mobility",
+    "title": {
+      "en": "Intelligent Mobility",
+      "zh": "智能移动"
+    },
+    "summary": {
+      "en": "Vehicle-safety and human-state concepts connecting sensing, interpretation and timely support.",
+      "zh": "连接环境感知、状态判断与及时辅助的车辆安全及人员状态系统。"
+    },
+    "capabilities": [
+      {
+        "en": "Forward-risk sensing",
+        "zh": "前向风险感知"
+      },
+      {
+        "en": "Human-state monitoring",
+        "zh": "人员状态监测"
+      },
+      {
+        "en": "Sensor-fusion architecture",
+        "zh": "传感融合架构"
+      },
+      {
+        "en": "Interface and warning concepts",
+        "zh": "交互与警示设计"
+      }
+    ],
+    "projects": [
+      "apollo-lx1",
+      "l-in-eye"
+    ]
+  },
+  {
+    "slug": "rider-safety",
+    "domain": "rider",
+    "title": {
+      "en": "Rider Safety",
+      "zh": "骑行安全"
+    },
+    "summary": {
+      "en": "Compact safety concepts for lighting, visibility and blind-zone awareness in micro-mobility.",
+      "zh": "面向微出行照明、可视性与盲区感知的紧凑安全方案。"
+    },
+    "capabilities": [
+      {
+        "en": "Steering-linked lighting",
+        "zh": "转向联动照明"
+      },
+      {
+        "en": "Blind-zone awareness",
+        "zh": "盲区感知"
+      },
+      {
+        "en": "Rear-visibility mechanisms",
+        "zh": "后向可视机构"
+      },
+      {
+        "en": "Human-centred warning design",
+        "zh": "以人为中心的警示设计"
+      }
+    ],
+    "projects": [
+      "litellight",
+      "bblis"
+    ]
+  },
+  {
+    "slug": "engineering-intelligence",
+    "domain": "systems",
+    "title": {
+      "en": "Engineering Intelligence",
+      "zh": "工程智能"
+    },
+    "summary": {
+      "en": "Methods that connect modelling, planning, simulation and structured engineering knowledge.",
+      "zh": "连接建模、规划、仿真与结构化工程知识的方法体系。"
+    },
+    "capabilities": [
+      {
+        "en": "System architecture",
+        "zh": "系统架构"
+      },
+      {
+        "en": "Optimisation workflows",
+        "zh": "优化流程"
+      },
+      {
+        "en": "Digital simulation",
+        "zh": "数字仿真"
+      },
+      {
+        "en": "Mission-agent interaction",
+        "zh": "任务 Agent 交互"
+      }
+    ],
+    "projects": [
+      "autavia-type-7-3",
+      "autavia-type-4",
+      "autavia-f1"
+    ]
+  }
+]

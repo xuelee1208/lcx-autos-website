@@ -1,0 +1,688 @@
+<h1 id="摘要">摘要</h1>
+<p>森林消防巡检通常面临巡检面积大、地形起伏明显、火险点分布不均和响应时间紧等问题。传统人工巡护、固定监测点以及普通多旋翼无人机在大范围连续巡查中，容易受到续航、覆盖效率和地形适应性的限制。本文以本人设计制造的
+CTK-3
+倾转旋翼无人机为任务平台，围绕森林消防“早发现、勤巡查、重重点”的任务需求，建立只巡检、不投放的多约束路径规划模型。模型中将火险巡检优先级、地形坡度、风场代价和禁飞区分别参数化，并以航程、航时、速度和避障条件作为主要约束。在计算方法上，本文设计并对比三种方案：普通弓字形巡检、普通
+A* + 固定航点、风险加权航点生成 + GA-2opt + 改进 A* + B
+样条平滑。仿真结果表明，普通弓字形方案覆盖均匀但航程负担较大，固定航点方案航程较短但对重点火险区域覆盖不足；综合算法方案能够在安全航程和安全航时范围内提高高火险区域覆盖率，并降低综合飞行代价。研究结果说明，在森林消防巡检任务中，路径规划不应只追求最短航程或最大均匀覆盖，而应根据火险分布将有限航程优先分配给重点区域。</p>
+<h2>关键词：倾转旋翼无人机；森林消防巡检；覆盖路径规划；改进
+A*；遗传算法；B 样条</h2>
+<h1 id="引言">1 引言</h1>
+<p>近年来，无人机在森林消防、应急巡查、灾情侦察和低空监测中的应用逐渐增多。森林火灾在早期往往火点小、位置分散，但一旦受到高温、干旱、强风和复杂地形影响，火势扩散速度会明显加快。因此，对于林区消防而言，巡检任务的关键并不是在某两个点之间飞出一条最短路线，而是在有限航程内尽早覆盖重点区域，并保持足够的返航余量和飞行安全。</p>
+<p>本人前期围绕倾转旋翼消防无人机的构型设计、气动布局、动力系统匹配和结构材料开展了设计研究，并已形成公开发表论文</p>
+<p>从路径规划理论看，覆盖路径规划（Coverage Path Planning,
+CPP）关注移动机器人或无人机如何经过目标区域中的有效观测位置。Cabreira
+等针对无人机覆盖路径规划进行了综述，指出 UAV
+覆盖任务常见于监测、测绘、灾害管理和野火跟踪等场景，且需要综合考虑区域形状、障碍物和覆盖指标
+[2]。Choset 对机器人覆盖路径规划的基本思想进行了较早的系统总结
+[3]，Galceran 和 Carreras
+进一步梳理了分解式、网格式、启发式等覆盖路径规划方法
+[4]。对于固定翼或复合翼无人机，Coombes
+等强调了风场、转弯和飞行时间对航测覆盖路径的重要影响
+[5]。这些研究说明，森林消防巡检不能简单地把问题理解为“起点到终点的最短路径”，而应该把覆盖率、重点区域优先级、航程航时和航迹可飞性统一建模。</p>
+<p>基于上述分析，本文将研究问题确定为：</p>
+<p>（1）建立森林消防巡检环境模型，将火险优先级、地形坡度、风场代价和禁飞区分别参数化；</p>
+<ol>
+<li><p>设计三种巡检任务规划方案，并通过同一评价指标进行对比；</p>
+<p>（3）提出风险加权航点生成、GA-2opt 航点排序、改进 A* 避障搜索和 B
+样条平滑相结合的算法流程；</p>
+<p>（4）利用 MATLAB
+生成二维对比图、三维航迹图、收敛曲线和指标柱状图，对算法效果进行解释。</p></li>
+</ol>
+<h1 id="ctk-3-倾转旋翼无人机与巡检任务边界">2 CTK-3
+倾转旋翼无人机与巡检任务边界</h1>
+<h2 id="平台特点">2.1 平台特点</h2>
+<p>CTK-3
+是本人设计制造的一款面向消防巡检与低空应急监测的小型倾转旋翼无人机。它采用倾转旋翼构型，在起降阶段能够依靠旋翼升力完成垂直起降，在巡航阶段通过旋翼倾转并利用机翼升力降低巡航功耗。与普通多旋翼相比，该构型更适合较大范围巡检；与普通固定翼相比，它对起降场地要求较低，适合林区管理中心、临时空地或山地边缘快速部署。因此，在只巡检任务中，CTK-3
+的主要优势体现在快速部署、较长航程巡航和对复杂起降环境的适应性上。</p>
+<h2>表1 CTK-3 巡检任务规划参数</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>参数</strong></th>
+<th><strong>取值</strong></th>
+<th><strong>本文中的用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>最大航程</td>
+<td>72 km</td>
+<td>作为路径总长度上限的基础</td>
+</tr>
+<tr class="even">
+<td>最大航时</td>
+<td>1 h / 60 min</td>
+<td>作为任务持续时间上限的基础</td>
+</tr>
+<tr class="odd">
+<td>最大飞行速度</td>
+<td>20 m/s</td>
+<td>作为速度约束上限</td>
+</tr>
+<tr class="even">
+<td>最大起飞重量</td>
+<td>8 kg</td>
+<td>说明平台尺度；本文不建立投放载荷模型</td>
+</tr>
+<tr class="odd">
+<td>巡检速度</td>
+<td>15 m/s（仿真设定）</td>
+<td>用于计算任务时间</td>
+</tr>
+<tr class="even">
+<td>安全航程</td>
+<td>57.6 km（0.8×72）</td>
+<td>预留 20% 电量、风场扰动与返航安全裕度</td>
+</tr>
+<tr class="odd">
+<td>安全航时</td>
+<td>48 min（0.8×60）</td>
+<td>预留 20% 任务时间安全裕度</td>
+</tr>
+<tr class="even">
+<td>离地安全高度</td>
+<td>150 m（仿真设定）</td>
+<td>用于三维航迹显示和地形安全裕度</td>
+</tr>
+</tbody>
+</table>
+<p>需要说明的是，表1中的最大航程、航时、速度和起飞重量来自本人样机设计指标；巡检速度、传感器覆盖半径和安全高度为本文仿真参数。二者在文中分开表述，避免把课程仿真设定误写为外场实测数据。</p>
+<h2 id="任务边界">2.2 任务边界 </h2>
+<p>本文不研究灭火弹投放、烟弹标记或物资运输，只讨论巡检航迹规划。这样处理主要有两点考虑：一是本无人机任务规划更强调路径、约束、模型和仿真评价，巡检问题能够直接体现这些内容；二是投放任务需要额外建立悬停稳定性、风速补偿、落点散布和载荷释放模型，会使问题重点偏离巡检路径本身。因此，本文中的火险区域表示需要重点观察的区域，而不是投放目标点。</p>
+<p>本文任务可描述为：无人机从林区管理中心或临时起降点出发，在给定时间和航程内对山地林区进行巡检，优先经过高火险区域的可观测位置，避开禁飞区、障碍区和飞行代价较高区域，最后返回基地。</p>
+<h1 id="模型建立">3 模型建立</h1>
+<h2 id="问题提出与建模思路">3.1 问题提出与建模思路</h2>
+<p>本文将森林消防巡检抽象为带有风险权重的单机闭合路径规划问题。设无人机基地为
+p0，候选巡检航点集合为
+P={p1,p2,...,pn}，完整航迹由相邻航点之间的局部路径拼接得到。与普通点到点导航不同，本问题需要同时回答四个问题：巡检哪些区域、按什么顺序巡检、相邻航点之间怎样避障、最终航迹是否适合无人机执行。</p>
+<p>在建模时，我将火险高低与飞行风险分开处理：火险高的区域并不是障碍物，而是巡检收益更高的区域；禁飞区、障碍区、强风区边缘和坡度变化剧烈区域才会增加飞行代价或直接禁止穿越。这一处理对模型很关键。如果把火险高的区域直接作为障碍物，算法会主动避开火险区域，与消防巡检目标相矛盾。</p>
+<h2 id="无人机性能约束">3.2 无人机性能约束</h2>
+<p>考虑 CTK-3 的最大航程和最大航时，本文在任务规划中采用 80%
+安全裕度。外场巡检时可能出现风场变化、航迹修正、通信延迟和返航等待等情况，若在仿真中直接使用极限性能，规划结果会缺少必要的余量。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image3.png"/> （1）</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image4.png"/> （2）</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image5.png"/> （3）</p>
+<p>式（1）表示航程安全约束，式（2）将路径长度换算为巡检时间，式（3）给出巡检速度与最大速度之间的关系。由于本文研究的是任务规划层面的路径生成，没有进一步建立电池放电曲线、推力功率曲线和气动阻力模型，因此航程与航时采用总航迹长度和总飞行时间进行约束。</p>
+<h2 id="栅格环境模型">3.3 栅格环境模型</h2>
+<p>任务区域被离散为二维栅格，并叠加三维地形高度。每个栅格 m(i,j)
+保存五类信息：地形高度 H(i,j)、火险巡检优先级 R(i,j)、障碍/禁飞标志
+O(i,j)、风场代价 W(i,j) 和地形坡度代价 G(i,j)。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image6.png"/> （4）</p>
+<p>其中，R(i,j) 的取值归一化到
+[0,1]，数值越大表示越需要重点巡检；O(i,j)=1 表示该栅格不可穿越；W(i,j)
+表示风场或局部环境扰动造成的附加飞行代价；G(i,j)
+由地形高度梯度归一化得到。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image7.png"/> （5）</p>
+<p>式（5）中的 ε
+用于避免分母为零。地形坡度代价并不表示无人机一定无法飞越，而是表示在地形突变或山谷边缘附近飞行时需要更谨慎，因此在改进
+A* 中提高这类区域的路径代价。</p>
+<h2 id="巡检覆盖模型">3.4 巡检覆盖模型</h2>
+<p>巡检效果由航迹对有效栅格的覆盖情况衡量。若航迹点到某一有效栅格中心的距离不超过传感器等效覆盖半径
+rs，则认为该栅格被完成一次巡检。在代码中，rs 取 0.38 km。该参数用于在 12
+km × 8 km
+的仿真场景中比较三种方案的覆盖差异，不作为相机实物标定值使用。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image8.png"/> （6）</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image9.png"/> （7）</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image10.png"/> （8）</p>
+<p>式（6）表示总体覆盖率，式（7）表示高火险区域覆盖率，式（8）给出高火险区域集合的定义。本文没有只用总体覆盖率评价路径，因为普通弓字形方法天然会覆盖更多低风险区域，但这并不必然代表消防巡检效率更高。</p>
+<h2 id="综合飞行代价模型">3.5 综合飞行代价模型</h2>
+<p>为了让局部路径规划不仅避开硬障碍，还能尽量远离强风、坡度突变和障碍边缘区域，本文构建综合飞行代价
+Cflight。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image11.png"/> （9）</p>
+<p>式（9）中 B(i,j)
+为障碍缓冲代价，越靠近禁飞区或障碍区，其取值越大。与只判断“可走/不可走”的普通
+A*
+相比，综合飞行代价使算法在多个可行方向中优先选择环境代价较低的路径。</p>
+<h2 id="优化目标与约束条件">3.6 优化目标与约束条件</h2>
+<p>最终评价函数综合考虑航程、航时、总体覆盖不足、高火险覆盖不足、转弯代价和平均飞行代价。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image12.png"/> （10）</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image13.png"/> （11）</p>
+<p>式（10）中的权重为仿真评价参数，不作为外场实测标定值使用。其中，高火险覆盖不足项的权重大于总体覆盖不足项，体现了本文对森林消防巡检任务的理解：在航程有限时，应优先保障重点火险区域被巡检，而不是机械追求全区域均匀覆盖。式（11）给出航程、航时、避障和速度约束。</p>
+<h1 id="计算方法与算法实现">4 计算方法与算法实现</h1>
+<h2 id="总体算法结构">4.1 总体算法结构</h2>
+<p>本文的计算流程按照“环境建模—航点生成—访问顺序优化—局部路径搜索—航迹平滑—指标评价”的顺序展开。为了避免只根据单一路径图判断算法优劣，本文在同一仿真环境下设置三种方案，并采用相同指标进行比较。</p>
+<h2>表2 三种巡检规划方案</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>方案</strong></th>
+<th><strong>名称</strong></th>
+<th><strong>主要方法</strong></th>
+<th><strong>适用性分析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>方案1</td>
+<td>普通弓字形巡检</td>
+<td>固定航带间距，按往复航线覆盖区域，再用基础 A* 避障连接</td>
+<td>覆盖均匀，但容易产生低价值航程</td>
+</tr>
+<tr class="even">
+<td>方案2</td>
+<td>普通 A* + 固定航点</td>
+<td>人工设置重点航点，使用基础 A* 连接</td>
+<td>路径较短，但依赖航点经验</td>
+</tr>
+<tr class="odd">
+<td>方案3</td>
+<td>风险加权航点 + 改进 A* + B 样条</td>
+<td>高火险航点生成、GA-2opt 排序、改进 A* 避障、B 样条平滑</td>
+<td>更适合高火险重点巡检</td>
+</tr>
+</tbody>
+</table>
+<h2 id="方案1普通弓字形巡检">4.2 方案1：普通弓字形巡检</h2>
+<p>弓字形巡检是覆盖路径规划中最常见的基础方法，常用于测绘、农业植保和规则区域巡查。其基本思想是按固定航带间距将任务区域分割为若干平行航带，无人机沿相邻航带往复飞行。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image14.png"/> （12）</p>
+<p>该方法实现简单、覆盖均匀，适合规则区域的小范围巡检；但它不考虑火险优先级，在大范围林区中会把大量航程消耗在低风险区域。对于
+CTK-3 这样的单架次平台，固定航带方法在区域较大时容易超过安全航程。</p>
+<h2 id="方案2普通-a-固定航点">4.3 方案2：普通 A* + 固定航点</h2>
+<p>方案2先设置若干固定巡检航点，再利用 A*
+算法在栅格地图中连接相邻航点。A* 算法由 Hart、Nilsson 和 Raphael
+提出，其核心评价函数为 [6]：</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image15.png"/> （13）</p>
+<p>其中，g(n) 为从起点到当前节点 n 的累计代价，h(n)
+为当前节点到目标点的启发式估计距离。本文中的基础 A* 只避开 O(i,j)=1
+的障碍和禁飞区，不额外考虑火险优先级、风场代价和转弯代价。该方案能够得到较短的可行路径，但巡检效果高度依赖人工航点布设。</p>
+<h2 id="方案3风险加权航点生成">4.4 方案3：风险加权航点生成</h2>
+<p>方案3首先根据火险优先级自动生成巡检航点。具体做法是：在有效区域内按照
+R(i,j)
+从高到低选择候选点，并设置最小距离约束，避免航点过密；随后加入少量中低风险覆盖点，防止路径完全聚集在少数热点附近。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image16.png"/> （14）</p>
+<p>式（14）表示在有效区域内优先选取火险优先级较高的航点，同时要求任意两个已选航点之间的距离不小于
+dmin。dmin
+本质上是航点密度控制参数：若取值过小，航点会过密，后续路径变长且转弯增多；若取值过大，高火险区域可能只保留少量航点，巡检密度不足。因此，本文在程序中将高风险候选点最小间距设为
+0.75 km，并用少量覆盖点补充中低风险区域。</p>
+<p>这种航点生成方式反映了巡检任务的实际需求：巡检并不是把每一处区域平均看一遍，而是在航程受限时将更多观测资源分配给更可能发生火情或更需要关注的区域。</p>
+<h2 id="ga-2opt-航点访问顺序优化">4.5 GA-2opt 航点访问顺序优化</h2>
+<p>风险加权航点生成后，还需要确定访问顺序。若直接按航点生成顺序飞行，路径容易出现交叉、绕行和重复折返。因此，本文将航点排序看作类似旅行商问题的排列优化：基地为固定起点和终点，中间航点的访问顺序由遗传算法搜索。遗传算法通过选择、交叉和变异逐代保留较优个体，Goldberg
+的著作对其搜索与优化思想进行了系统介绍 [8]。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image17.png"/> （15）</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image18.png"/> （16）</p>
+<p>式（15）为染色体编码，σ
+表示航点访问顺序。式（16）为航点排序阶段的快速评价函数。为了降低计算量，遗传算法迭代过程中没有每次都调用完整
+A*，而是采用航点间直线采样代价进行近似评价。Cobs
+用于惩罚直线穿越障碍区的顺序，Cconstraint
+用于惩罚超出安全航程或安全航时的路线。</p>
+<p>为了进一步减少交叉绕行，本文在遗传算法中加入 2-opt 局部改进。2-opt
+的操作是随机选取路径中的两个位置 i 和
+j，将二者之间的片段反转；若反转后总代价降低，则保留该变化。该步骤实现简单，但对减少路径交叉较有效。本文设置种群规模为
+80，最大迭代代数为 120，交叉概率为 0.85，变异概率为 0.22，每 5
+代对优秀个体执行一次 2-opt。</p>
+<h2 id="改进-a-局部路径规划">4.6 改进 A* 局部路径规划</h2>
+<p>航点访问顺序确定后，需要在相邻航点之间生成可行的避障路径。基础 A*
+只考虑距离和硬障碍，而森林消防巡检还应考虑风场、地形坡度、障碍缓冲和转弯。因此，本文在
+A* 的单步代价中加入环境代价与航向变化惩罚。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image19.png"/> （17）</p>
+<p>式（17）中 dij 为相邻栅格之间的距离，Cflight(nj)
+为目标栅格的综合飞行代价，Δψ
+为从父节点到当前节点再到候选节点的航向角变化。加入航向变化惩罚后，路径不再只追求栅格距离最短，而会倾向于减少连续急转弯。对于倾转旋翼无人机来说，这一点较为重要，因为固定翼巡航段虽然可以转弯，但频繁急转会增加能耗并降低航迹稳定性。</p>
+<p>改进 A*
+的启发式函数仍采用欧氏距离，用于保持搜索方向朝目标点推进；实际累计代价则由距离、环境代价和转弯惩罚共同决定。这样，算法在接近禁飞区边缘、强风代价区和地形变化剧烈区时，会倾向于选择综合代价较低的绕行路径。</p>
+<h2 id="b-样条航迹平滑">4.7 B 样条航迹平滑</h2>
+<p>A*
+输出的路径本质上是栅格折线，通常存在较多小角度折转，不能直接作为适合无人机执行的连续航迹。因此，方案3在最后加入三次均匀
+B 样条平滑。B
+样条曲线由控制点和基函数共同决定，具有局部可控和曲线连续的特点，Piegl 和
+Tiller 对 NURBS 与 B 样条理论进行了系统总结 [10]。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image20.png"/> （18）</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image21.png"/> （19）</p>
+<p>式（18）中 Pi 为控制点，Ni,3(u) 为三次 B
+样条基函数。式（19）给出固定翼巡航段常用的最小转弯半径估算关系，其中 v
+为巡航速度，φmax 为最大允许滚转角。本文没有在代码中强制生成 Dubins
+曲线，而是通过转弯惩罚和 B
+样条平滑减少急转，原因是本文重点在任务规划层面的算法组合与可视化验证；在后续实机验证中，可进一步加入更严格的曲率、爬升率和姿态约束。</p>
+<h2 id="matlab-程序实现与运行视频">4.8 MATLAB 程序实现与运行视频</h2>
+<p>本文程序实现为一个MATLAB 单文件脚本。脚本不依赖 Robotics Toolbox 或
+Mapping Toolbox，主要函数包括
+createDemoMap、generateLawnmowerWaypoints、generateFixedWaypoints、generateRiskWeightedWaypoints、optimizeWaypointOrderGA、AStarRisk、smoothPathBSpline
+和 evaluateMission。</p>
+<p>程序运行后会自动创建 CTK3_Inspection_Output
+文件夹，并输出环境地图、三方案二维对比图、三方案分图、方案3三维航迹图、GA
+收敛曲线和指标柱状图。运行视频可按以下顺序录制：打开 MATLAB
+主程序并说明关键参数；运行脚本；展示命令窗口输出的三种方案指标；依次打开六张结果图；最后结合高火险覆盖率、航程和综合代价解释方案3的优势。</p>
+<h1 id="案例研究与实验仿真">5 案例研究与实验仿真</h1>
+<h2 id="情景建立">5.1 情景建立</h2>
+<p>案例研究采用山地林区消防巡检场景。任务区域设置为 12 km × 8
+km，栅格分辨率为 0.1 km，基地坐标为 (0.75 km, 0.75
+km)。区域内设置多个火险优先级热点，用于模拟古建筑周边林区、居民活动区附近林带、景区邻近林带以及森林深处火险易发区等需要重点巡检的区域。</p>
+<p>需要强调的是，本文仿真地图是根据山地林区消防巡检特点构造的任务规划场景，并不是某一真实地理区域的精确复刻。这样处理可以避免在缺少真实
+DEM、实时气象和火险指数数据的情况下虚构外场结论，同时仍能完整展示建模、计算和对比过程。</p>
+<h2>表3 仿真参数设置</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>类别</strong></th>
+<th><strong>参数</strong></th>
+<th><strong>取值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>任务区域</td>
+<td>范围</td>
+<td>12 km × 8 km</td>
+</tr>
+<tr class="even">
+<td>栅格地图</td>
+<td>分辨率</td>
+<td>0.1 km</td>
+</tr>
+<tr class="odd">
+<td>基地</td>
+<td>坐标</td>
+<td>(0.75 km, 0.75 km)</td>
+</tr>
+<tr class="even">
+<td>无人机</td>
+<td>巡检速度</td>
+<td>15 m/s</td>
+</tr>
+<tr class="odd">
+<td>无人机</td>
+<td>安全航程/安全航时</td>
+<td>57.6 km / 48 min</td>
+</tr>
+<tr class="even">
+<td>传感器</td>
+<td>等效覆盖半径</td>
+<td>0.38 km</td>
+</tr>
+<tr class="odd">
+<td>航迹高度</td>
+<td>离地安全高度</td>
+<td>150 m</td>
+</tr>
+<tr class="even">
+<td>GA 参数</td>
+<td>种群/迭代/交叉/变异</td>
+<td>80 / 120 / 0.85 / 0.22</td>
+</tr>
+</tbody>
+</table>
+<h2 id="仿真流程">5.2 仿真流程</h2>
+<p>仿真流程分为六步。第一步，在 MATLAB
+中生成地形高度图、火险优先级图、风场代价图、障碍/禁飞区和障碍缓冲代价。第二步，分别生成三种方案对应的航点集合。第三步，对方案3执行
+GA-2opt 航点访问顺序优化，并记录每一代最优综合代价。第四步，利用基础 A*
+或改进 A* 连接相邻航点。第五步，对方案3航迹进行 B
+样条平滑和碰撞校验。第六步，计算总航程、飞行时间、总体覆盖率、高火险覆盖率、转弯代价和综合代价，并输出图像。</p>
+<h2 id="仿真图像结果">5.3 仿真图像结果</h2>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image22.png"/></p>
+<p>图1 火险巡检优先级地图与综合飞行代价地图</p>
+<p>在图 1
+中，左侧为火险巡检优先级地图，颜色越亮表示越需要重点巡检；右侧为综合飞行代价地图，包含风场代价、地形坡度代价和障碍缓冲代价。禁飞区以黑色区域表示，是路径规划中不可穿越的硬约束。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image23.png"/></p>
+<p>图2 三种森林消防巡检任务规划方案二维对比</p>
+<p>在图 2
+中，我将三种方案绘制在同一火险优先级地图上。方案1沿固定航带往复覆盖，规律性较强；方案2由固定航点构成，路径较集中；方案3围绕高火险热点和必要覆盖点展开，同时避开禁飞区域。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image24.png"/></p>
+<p>图3 三种巡检方案分图对比</p>
+<p>图 3
+进一步展示三种方案的结构差异。普通弓字形方案覆盖面较大，但必须穿越大量低风险区域；固定航点方案路径更短，但对高火险热点覆盖不足；风险加权方案将航点布设与火险优先级结合，使有限航程更多服务于重点区域巡检。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image25.png"/></p>
+<p>图4 方案3三维地形巡检航迹</p>
+<p>图 4
+为方案3的三维地形航迹。地形曲面由程序生成，颜色表示火险优先级，黄色航迹为经过
+B
+样条平滑后的巡检路径。可以看到，航迹在空间上绕开禁飞区，并在高火险区域附近形成较集中的巡检分布。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image26.png"/></p>
+<p>图5 GA-2opt 航点访问顺序优化收敛曲线</p>
+<p>图 5 显示 GA-2opt 在 120
+代迭代中的最优代价变化。收敛曲线前期下降较快，说明航点访问顺序被明显改进；后期趋于平缓，说明继续迭代带来的收益减少。该结果符合遗传算法在排列优化问题中的常见表现。</p>
+<p><img loading="lazy" src="/media/fulltext/forest-inspection-planning/image27.png"/></p>
+<p>图6 三种巡检方案指标柱状对比</p>
+<p>图 6
+从总航程、飞行时间、总体覆盖率、高火险覆盖率和综合代价五个方面对三种方案进行比较。方案1覆盖均匀但航程和航时明显偏大，方案2路径较短但高火险覆盖不足，方案3在安全约束内取得最高高火险覆盖率和最低综合代价。</p>
+<h1 id="结果分析">6 结果分析</h1>
+<h2 id="指标统计">6.1 指标统计</h2>
+<p>根据 MATLAB
+输出图像和评价函数统计结果，三种方案指标如表4所示。由于柱状图中的数值由程序仿真得到，表中保留“约”字，表示这些数据用于任务规划方法比较，而非外场飞行测试结果。</p>
+<h2>表4 三种方案仿真指标对比</h2>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>方案</strong></th>
+<th><strong>航程/km</strong></th>
+<th><strong>航时/min</strong></th>
+<th><strong>总体覆盖率/%</strong></th>
+<th><strong>高火险覆盖率/%</strong></th>
+<th><strong>综合代价 J</strong></th>
+<th><strong>安全约束</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>方案1 普通弓字形巡检</td>
+<td>约 74.5</td>
+<td>约 82.8</td>
+<td>约 48.0</td>
+<td>约 64.5</td>
+<td>约 70.5</td>
+<td>超出</td>
+</tr>
+<tr class="even">
+<td>方案2 普通 A* + 固定航点</td>
+<td>约 30.8</td>
+<td>约 34.2</td>
+<td>约 23.0</td>
+<td>约 56.0</td>
+<td>约 53.5</td>
+<td>满足</td>
+</tr>
+<tr class="odd">
+<td>方案3 风险加权 + 改进 A* + B 样条</td>
+<td>约 34.0</td>
+<td>约 37.8</td>
+<td>约 25.5</td>
+<td>约 85.5</td>
+<td>约 45.0</td>
+<td>满足</td>
+</tr>
+</tbody>
+</table>
+<h2 id="航程与航时分析">6.2 航程与航时分析</h2>
+<p>从航程和航时看，方案1为了实现均匀覆盖，路径长度接近 75 km，超过 CTK-3
+在本文中设置的安全航程 57.6 km 和安全航时 48
+min，不适合单架次执行。这说明普通弓字形方法虽然直观，但在大范围山地林区巡检中容易出现“覆盖面大、航程消耗大、重点不突出”的问题。方案2和方案3均满足安全约束，说明在有限航程条件下，航点式巡检更符合
+CTK-3 的任务边界。</p>
+<h2 id="覆盖率与高火险覆盖率分析">6.3 覆盖率与高火险覆盖率分析</h2>
+<p>从总体覆盖率看，方案1最高，这是固定航带覆盖方法的固有优势。但森林消防巡检不应只追求总体覆盖率，因为等距离覆盖会消耗大量航程在低风险区域。方案2虽然航程较短，但固定航点没有根据火险图自动调整，高火险覆盖率最低。方案3的总体覆盖率低于方案1，但高火险覆盖率最高，说明风险加权航点生成能够把有限巡检资源集中到更重要的区域。</p>
+<p>这一结果也说明，消防巡检中的“好路径”不一定是覆盖面积最大的路径，而是在安全航程内对关键区域覆盖最充分、对低价值区域重复最少的路径。这个判断是本文建模区别于普通最短路问题的核心。</p>
+<h2 id="综合代价与航迹可飞性分析">6.4 综合代价与航迹可飞性分析</h2>
+<p>从综合代价看，方案3最低。其原因可以从三个层面解释。第一，GA-2opt
+降低了航点访问顺序中的交叉和绕行；第二，改进 A*
+在局部路径搜索中考虑了风场、坡度和障碍缓冲，避免路径贴近禁飞区或穿越高代价区域；第三，B
+样条平滑减少了 A*
+栅格路径中的折线转弯，使三维航迹更连续、更适合倾转旋翼无人机巡航段执行。</p>
+<p>对于 CTK-3
+倾转旋翼无人机而言，垂直起降能力解决的是部署问题，固定翼巡航能力解决的是大范围巡检效率问题。路径规划如果频繁急转或大量往复折返，就无法充分发挥倾转旋翼构型的优势。方案3通过“先决定重点巡哪里，再决定怎样安全飞过去”的方式，使路径形态与平台特点更加一致。</p>
+<h2 id="局限性与改进方向">6.5 局限性与改进方向</h2>
+<p>本文仍存在若干局限。第一，仿真地图由程序构造，尚未接入真实
+DEM、实时气象和历史火险指数数据；第二，能耗模型采用航程和代价函数近似，没有建立电池、电机、螺旋桨和气动阻力之间的真实功率模型；第三，本文只研究单机巡检，没有考虑多机协同、通信覆盖和在线重规划；第四，B
+样条平滑虽然改善了路径连续性，但尚未严格约束所有航迹点的最小转弯半径和爬升率。后续研究可进一步接入真实地形和风场数据，并在
+Gazebo 或实机平台上验证路径可执行性。</p>
+<h1 id="结语">7 结语</h1>
+<p>本文围绕森林消防巡检任务，基于本人设计制造的 CTK-3
+倾转旋翼无人机，建立了只巡检、不投放的多约束任务规划模型，并在 MATLAB
+中实现三种路径规划方案对比。通过建模和仿真可以看出，森林消防巡检路径规划的关键不在于单纯缩短路径，也不在于机械追求最大覆盖面积，而在于根据火险优先级将有限航程分配给更重要的区域。</p>
+<p>实验结果表明，普通弓字形巡检适合小范围均匀覆盖，但在 12 km × 8 km
+的山地林区场景中容易超过单架次安全航程；普通 A* +
+固定航点方案能够控制航程，但对高火险区域覆盖不足；风险加权航点生成 +
+GA-2opt + 改进 A* + B
+样条平滑方案在安全航程和安全航时内获得了更高的高火险覆盖率和更低的综合代价。该方案更符合
+CTK-3
+倾转旋翼无人机“快速部署、固定翼巡航、重点巡检、返回基地”的任务特点。</p>
+<p>本文的不足在于仿真环境仍为构造场景，尚未完成真实林区数据接入和实机验证。通过本次建模与编程，我对无人机任务规划中的环境建模、约束设置、算法组合和结果评价有了更清楚的认识。后续将继续把样机设计、路径规划和实飞验证结合起来，使
+CTK-3
+不仅停留在构型设计层面，也能够在真实低空巡检任务中形成可复现、可评估的任务规划流程。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] 李承啸, 奚羽尘, “一种采用倾转旋翼的新型消防无人机的设计与研发,”
+《时代教育》, 2025 年第 1 期, p. 171, 2025.</p>
+<p>[2] T. M. Cabreira, L. B. Brisolara, and P. R. Ferreira Jr., “Survey
+on coverage path planning with unmanned aerial vehicles,” Drones, vol.
+3, no. 1, Art. no. 4, Jan. 2019, doi: 10.3390/drones3010004.</p>
+<p>[3] H. Choset, “Coverage for robotics—A survey of recent results,”
+Annals of Mathematics and Artificial Intelligence, vol. 31, no. 1–4, pp.
+113–126, 2001, doi: 10.1023/A:1016639210559.</p>
+<p>[4] E. Galceran and M. Carreras, “A survey on coverage path planning
+for robotics,” Robotics and Autonomous Systems, vol. 61, no. 12, pp.
+1258–1276, Dec. 2013, doi: 10.1016/j.robot.2013.09.004.</p>
+<p>[5] M. Coombes, T. Fletcher, W.-H. Chen, and C. Liu, “Optimal polygon
+decomposition for UAV survey coverage path planning in wind,” Sensors,
+vol. 18, no. 7, Art. no. 2132, 2018, doi: 10.3390/s18072132.</p>
+<p>[6] P. E. Hart, N. J. Nilsson, and B. Raphael, “A formal basis for
+the heuristic determination of minimum cost paths,” IEEE Transactions on
+Systems Science and Cybernetics, vol. 4, no. 2, pp. 100–107, Jul. 1968,
+doi: 10.1109/TSSC.1968.300136.</p>
+<p>[7] B. K. Patle, G. Babu L, A. Pandey, D. R. K. Parhi, and A.
+Jagadeesh, “A review: On path planning strategies for navigation of
+mobile robot,” Defence Technology, vol. 15, no. 4, pp. 582–606, Aug.
+2019, doi: 10.1016/j.dt.2019.04.011.</p>
+<p>[8] D. E. Goldberg, Genetic Algorithms in Search, Optimization, and
+Machine Learning. Reading, MA, USA: Addison-Wesley, 1989.</p>
+<p>[9] A. E. Eiben and J. E. Smith, Introduction to Evolutionary
+Computing, 2nd ed. Berlin, Germany: Springer, 2015, doi:
+10.1007/978-3-662-44874-8.</p>
+<p>[10] L. Piegl and W. Tiller, The NURBS Book, 2nd ed. Berlin, Germany:
+Springer, 1997.</p>
+<p>[11] S. M. LaValle, Planning Algorithms. Cambridge, U.K.: Cambridge
+University Press, 2006, doi: 10.1017/CBO9780511546877.</p>
+<h1 id="附录-a-主要-matlab-计算代码">附录 A 主要 MATLAB 计算代码</h1>
+<p>以下代码为本次仿真的主流程与关键函数片段。</p>
+<p>%% CTK-3倾转旋翼无人机森林消防巡检任务规划仿真</p>
+<p>% 文件名：CTK3_UAV_Inspection_PathPlanning_Demo.m</p>
+<p>%</p>
+<p>% 方案1：普通弓字形巡检</p>
+<p>% 方案2：普通 A* + 固定航点</p>
+<p>% 方案3：风险加权航点生成 + GA-2opt + 改进 A* + B样条平滑</p>
+<p>%</p>
+<p>clear; clc; close all;</p>
+<p>rng(7);</p>
+<p>outDir = fullfile(pwd, 'CTK3_Inspection_Output');</p>
+<p>if exist(outDir, 'dir') ~= 7</p>
+<p>mkdir(outDir);</p>
+<p>end</p>
+<p>set(0, 'DefaultAxesFontName', 'Microsoft YaHei');</p>
+<p>set(0, 'DefaultTextFontName', 'Microsoft YaHei');</p>
+<p>set(0, 'DefaultLineLineWidth', 1.8);</p>
+<p>uav.name = 'CTK-3 Tiltrotor UAV';</p>
+<p>uav.rangeMax_km = 72;</p>
+<p>uav.timeMax_min = 60;</p>
+<p>uav.speedMax_ms = 20;</p>
+<p>uav.inspectSpeed_ms = 15;</p>
+<p>uav.safeRange_km = 0.80*uav.rangeMax_km;</p>
+<p>uav.safeTime_min = 0.80*uav.timeMax_min;</p>
+<p>uav.sensorRadius_km = 0.38;</p>
+<p>uav.safeAltitude_m = 150;</p>
+<p>fprintf('\n================ CTK-3 森林消防巡检任务规划仿真
+================\n');</p>
+<p>fprintf('最大航程 %.1f km，安全航程 %.1f km；最大航时 %.1f
+min，安全航时 %.1f min。\n', ...</p>
+<p>uav.rangeMax_km, uav.safeRange_km, uav.timeMax_min,
+uav.safeTime_min);</p>
+<p>map = createDemoMap();</p>
+<p>base = map.base;</p>
+<p>fprintf('\n[方案1] 普通弓字形巡检路径规划中...\n');</p>
+<p>wp1 = generateLawnmowerWaypoints(map, base, 1.05);</p>
+<p>path1_raw = connectWaypointsByAStar(map, wp1, 'basic');</p>
+<p>path1 = path1_raw;</p>
+<p>res1 = evaluateMission(path1, map, uav, '方案1 普通弓字形巡检');</p>
+<p>fprintf('[方案2] 普通 A* + 固定航点路径规划中...\n');</p>
+<p>wp2 = generateFixedWaypoints(map, base);</p>
+<p>path2_raw = connectWaypointsByAStar(map, wp2, 'basic');</p>
+<p>path2 = path2_raw;</p>
+<p>res2 = evaluateMission(path2, map, uav, '方案2 普通A*+固定航点');</p>
+<p>fprintf('[方案3] 风险加权航点生成中...\n');</p>
+<p>wp3_candidate = generateRiskWeightedWaypoints(map, base, 18);</p>
+<p>fprintf('[方案3] GA-2opt 航点访问顺序优化中...\n');</p>
+<p>gaParam.popSize = 80;</p>
+<p>gaParam.maxGen = 120;</p>
+<p>gaParam.pc = 0.85;</p>
+<p>gaParam.pm = 0.22;</p>
+<p>gaParam.eliteNum = 4;</p>
+<p>gaParam.do2optEvery = 5;</p>
+<p>[wp3_ordered, convCurve] = optimizeWaypointOrderGA(wp3_candidate,
+map, uav, gaParam);</p>
+<p>fprintf('[方案3] 改进 A* 局部路径规划中...\n');</p>
+<p>path3_raw = connectWaypointsByAStar(map, wp3_ordered,
+'improved');</p>
+<p>fprintf('[方案3] B样条平滑与安全性校验中...\n');</p>
+<p>path3 = smoothPathBSpline(path3_raw, map);</p>
+<p>res3 = evaluateMission(path3, map, uav, '方案3
+风险加权+改进A*+B样条');</p>
+<p>results = [res1; res2; res3];</p>
+<p>printResults(results, uav);</p>
+<p>plotEnvironment(map, outDir);</p>
+<p>plotAllPlans2D(map, path1, path2, path3, wp1, wp2, wp3_ordered,
+outDir);</p>
+<p>plotPlanComparisonSubplots(map, path1, path2, path3, wp1, wp2,
+wp3_ordered, outDir);</p>
+<p>plotPlan3D(map, path3, wp3_ordered, uav, outDir);</p>
+<p>plotConvergenceCurve(convCurve, outDir);</p>
+<p>plotMetricBars(results, outDir);</p>
+<p>fprintf('\n图片已保存到文件夹：%s\n', outDir);</p>
+<p>fprintf('仿真图像输出完成。\n');</p>
+<p>fprintf('============================ 仿真结束
+============================\n');</p>
+<p>function map = createDemoMap()</p>
+<p>map.dx = 0.10;</p>
+<p>map.xVec = 0:map.dx:12;</p>
+<p>map.yVec = 0:map.dx:8;</p>
+<p>[X, Y] = meshgrid(map.xVec, map.yVec);</p>
+<p>map.X = X; map.Y = Y;</p>
+<p>% ……中间代码略，完整脚本随电子版提交……</p>
+<p>wind = 0.30 + 0.35*(sin(0.65*X+0.8*Y)+1)/2 ...</p>
+<p>+ 0.55*exp(-((X-7.3).^2+(Y-2.0).^2)/1.6);</p>
+<p>wind = normalize01(wind);</p>
+<p>map.wind = wind;</p>
+<p>[gy, gx] = gradient(terrain, map.dx, map.dx);</p>
+<p>slope = sqrt(gx.^2 + gy.^2);</p>
+<p>slope = normalize01(slope);</p>
+<p>map.slope = slope;</p>
+<p>bufferCost = zeros(size(X));</p>
+<p>for k = 1:size(map.obstacles,1)</p>
+<p>cx = map.obstacles(k,1); cy = map.obstacles(k,2); r =
+map.obstacles(k,3);</p>
+<p>dist = sqrt((X-cx).^2 + (Y-cy).^2) - r;</p>
+<p>dist(dist &lt; 0) = 0;</p>
+<p>bufferCost = max(bufferCost, exp(-dist/0.28));</p>
+<p>end</p>
+<p>bufferCost(obs) = 1;</p>
+<p>map.bufferCost = bufferCost;</p>
+<p>flightCost = 1 + 1.25*map.wind + 1.15*map.slope +
+2.2*map.bufferCost;</p>
+<p>flightCost(obs) = inf;</p>
+<p>map.flightCost = flightCost;</p>
+<p>end</p>
+<p>function z = normalize01(z)</p>
+<p>zmin = min(z(:)); zmax = max(z(:));</p>
+<p>z = (z - zmin) / (zmax - zmin + eps);</p>
+<p>end</p>
+<p>function wp = generateLawnmowerWaypoints(map, base, spacing)</p>
+<p>xLeft = 0.85; xRight = 11.35;</p>
+<p>yMin = 1.05; yMax = 7.25;</p>
+<p>ys = yMin:spacing:yMax;</p>
+<p>wp = base;</p>
+<p>reverseFlag = false;</p>
+<p>for i = 1:numel(ys)</p>
+<p>if ~reverseFlag</p>
+<p>pA = [xLeft, ys(i)]; pB = [xRight, ys(i)];</p>
+<p>else</p>
+<p>pA = [xRight, ys(i)]; pB = [xLeft, ys(i)];</p>
+<p>end</p>
+<p>pA = snapToFreeXY(map, pA);</p>
+<p>pB = snapToFreeXY(map, pB);</p>
+<p>wp = [wp; pA; pB];</p>
+<p>reverseFlag = ~reverseFlag;</p>
+<p>end</p>
+<p>wp = [wp; base];</p>
+<p>end</p>
+<p>function wp = generateFixedWaypoints(map, base)</p>
+<p>p = [</p>
+<h3>1.25, 6.85;</h3>
+<h3>3.55, 6.10;</h3>
+<h3>5.30, 6.85;</h3>
+<h3>8.25, 5.65;</h3>
+<h3>10.75, 5.10;</h3>
+<h3>10.25, 2.05;</h3>
+<h3>7.15, 1.35;</h3>
+<h3>4.15, 2.10</h3>
+<p>];</p>
+<p>wp = base;</p>
+<p>for i = 1:size(p,1)</p>
+<p>wp = [wp; snapToFreeXY(map, p(i,:))];</p>
+<p>end</p>
+<p>wp = [wp; base];</p>
+<p>end</p>
+<p>function wp = generateRiskWeightedWaypoints(map, base, nPoint)</p>
+<p>priority = map.priority;</p>
+<p>obs = map.obstacle;</p>
+<p>candidate = [];</p>
+<p>p2 = priority;</p>
+<p>p2(obs) = -inf;</p>
+<p>[~, idxSort] = sort(p2(:), 'descend');</p>
+<p>minDist = 0.75;</p>
+<p>for k = 1:numel(idxSort)</p>
+<p>[r, c] = ind2sub(size(p2), idxSort(k));</p>
+<p>xy = [map.xVec(c), map.yVec(r)];</p>
+<p>if xy(1) &lt; 0.7 || xy(1) &gt; 11.4 || xy(2) &lt; 0.7 || xy(2) &gt;
+7.4</p>
+<p>continue;</p>
+<p>% ……中间代码略，完整脚本随电子版提交……</p>
+<p>allPts = [candidate; coveragePts];</p>
+<p>selected = [];</p>
+<p>for i = 1:size(allPts,1)</p>
+<p>xy = allPts(i,:);</p>
+<p>if isempty(selected)</p>
+<p>selected = xy;</p>
+<p>else</p>
+<p>d = sqrt(sum((selected - xy).^2, 2));</p>
+<p>if min(d) &gt;= 0.45</p>
+<p>selected = [selected; xy];</p>
+<p>end</p>
+<p>end</p>
+<p>if size(selected,1) &gt;= nPoint</p>
+<p>break;</p>
+<p>end</p>
+<p>end</p>
+<p>wp = [base; selected; base];</p>
+<p>end</p>
+<p>function [wpOrdered, convCurve] = optimizeWaypointOrderGA(wp, map,
+uav, param)</p>
+<p>base = wp(1,:);</p>
+<p>pts = wp(2:end-1,:);</p>
+<p>n = size(pts,1);</p>
+<p>popSize = param.popSize;</p>
+<p>maxGen = param.maxGen;</p>
+<p>pop = zeros(popSize, n);</p>
+<p>for i = 1:popSize</p>
+<p>pop(i,:) = randperm(n);</p>
+<p>end</p>
+<p>bestCost = inf;</p>
+<p>bestChrom = pop(1,:);</p>
+<p>convCurve = zeros(maxGen,1);</p>
+<p>for gen = 1:maxGen</p>
+<p>cost = zeros(popSize,1);</p>
+<p>for i = 1:popSize</p>
+<p>route = [base; pts(pop(i,:),:); base];</p>
+<p>cost(i) = routeOrderingCost(route, map, uav);</p>
+<p>end</p>
+<p>[costSorted, idx] = sort(cost, 'ascend');</p>
+<p>pop = pop(idx,:);</p>
+<p>if costSorted(1) &lt; bestCost</p>
+<p>bestCost = costSorted(1);</p>
+<p>bestChrom = pop(1,:);</p>
+<p>end</p>
+<p>convCurve(gen) = bestCost;</p>
+<p>注：完整可运行脚本已与论文电子版一并提交，本附录保留主程序与关键函数片段，便于说明算法复现过程。</p>
+<h1 id="附录-b-学术规范与数据说明">附录 B 学术规范与数据说明</h1>
+<p>本文中 CTK-3
+平台性能参数来自本人样机设计指标和课程仿真设定；公开文献只用于支撑倾转旋翼消防无人机设计思路、覆盖路径规划、A*
+搜索、遗传算法和 B
+样条方法。未公开的项目展示资料不作为普通期刊论文列入参考文献，只作为本人设计背景和参数整理依据。仿真地图、火险优先级和风场代价均为课程仿真构造，不代表真实林区实时数据。</p>

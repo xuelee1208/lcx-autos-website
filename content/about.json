@@ -1,0 +1,91 @@
+{
+  "identity": {
+    "name": "Sebastian Lee",
+    "role": {
+      "en": "Founder & Chief Engineer",
+      "zh": "创始人兼总工程师"
+    },
+    "email": "18221668367@163.com"
+  },
+  "intro": {
+    "en": "LCX AUTOS is an independent engineering studio focused on autonomous flight, intelligent mobility and future engineering systems.",
+    "zh": "LCX AUTOS 是专注自主飞行、智能移动与未来工程系统的独立工程工作室。"
+  },
+  "mission": {
+    "en": "Transform engineering imagination into practical systems.",
+    "zh": "将工程构想转化为可实践的系统。"
+  },
+  "philosophy": {
+    "en": "Work from mission definition to architecture, prototype, validation and clear technical communication.",
+    "zh": "从任务定义出发，推进架构、原型、验证与清晰的技术表达。"
+  },
+  "collaboration": [
+    {
+      "en": "Engineering system development",
+      "zh": "工程系统开发"
+    },
+    {
+      "en": "Research and technical studies",
+      "zh": "研究与技术课题"
+    },
+    {
+      "en": "Concept validation and prototyping",
+      "zh": "概念验证与原型开发"
+    },
+    {
+      "en": "Technology communication",
+      "zh": "技术交流"
+    }
+  ],
+  "journey": [
+    {
+      "year": "2018",
+      "title": {
+        "en": "Litellight and first complete engineering delivery",
+        "zh": "Litellight 与首次完整工程交付"
+      }
+    },
+    {
+      "year": "2019",
+      "title": {
+        "en": "BBLIS rider-safety studies",
+        "zh": "BBLIS 骑行安全研究"
+      }
+    },
+    {
+      "year": "2020",
+      "title": {
+        "en": "Apollo vehicle-safety concept",
+        "zh": "Apollo 车辆安全构想"
+      }
+    },
+    {
+      "year": "2022",
+      "title": {
+        "en": "L-IN EYE human-state systems",
+        "zh": "L-IN EYE 人员状态系统"
+      }
+    },
+    {
+      "year": "2023",
+      "title": {
+        "en": "Autavia Type 4 autonomous-flight integration",
+        "zh": "Autavia Type 4 自主飞行集成"
+      }
+    },
+    {
+      "year": "2024",
+      "title": {
+        "en": "Autavia fixed-wing and Type 7 development",
+        "zh": "Autavia 固定翼与 Type 7 研发"
+      }
+    },
+    {
+      "year": "2026",
+      "title": {
+        "en": "Mission-oriented engineering intelligence",
+        "zh": "面向任务的工程智能"
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "version": "0.5",
+  "updated": "2026-07-30",
+  "brand": {
+    "name": "LCX AUTOS",
+    "tagline": {
+      "en": "Engineering Intelligence for Future Mobility",
+      "zh": "以工程智能，构建未来移动"
+    }
+  },
+  "publicIdentity": {
+    "name": "Sebastian Lee",
+    "role": {
+      "en": "Founder & Chief Engineer",
+      "zh": "创始人兼总工程师"
+    }
+  },
+  "contact": {
+    "email": "18221668367@163.com"
+  },
+  "language": {
+    "default": "en",
+    "supported": [
+      "en",
+      "zh"
+    ],
+    "workflow": "Chinese master copy followed by professional English rewriting"
+  },
+  "domains": {
+    "preferred": "lcxautos.com",
+    "alternative": "lcx-autos.com",
+    "status": "Pending availability and registration"
+  },
+  "profileExclusions": [
+    "school",
+    "major",
+    "employment history",
+    "awards",
+    "CV download",
+    "job-search status"
+  ],
+  "publicEditorialRules": [
+    "Use direct and restrained engineering language.",
+    "Do not display internal evidence labels, disclosure levels or review states.",
+    "Do not present design targets or simulation outputs as field-tested performance.",
+    "Avoid exaggerated claims and repetitive contrast constructions."
+  ]
+}

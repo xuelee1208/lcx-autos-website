@@ -1,0 +1,274 @@
+[
+  {
+    "slug": "wingtip-vortices-engineering-note",
+    "year": "2024",
+    "category": "Aerodynamics",
+    "title": {
+      "en": "Wingtip vortices: where lift leaves a visible trace",
+      "zh": "翼尖涡：升力留下的可见轨迹"
+    },
+    "summary": {
+      "en": "An engineering note on pressure difference, induced flow, wake structure and the operational significance of wingtip vortices.",
+      "zh": "从压力差、诱导流、尾流结构与运行影响出发理解翼尖涡。"
+    },
+    "body": [
+      {
+        "en": "A wing produces lift through a pressure difference between its upper and lower surfaces. Near the tip, air moves around the wing edge and rolls into a rotating wake.",
+        "zh": "机翼通过上下表面的压力差产生升力。接近翼尖时，气流绕过翼缘并卷入旋转尾流。"
+      },
+      {
+        "en": "The resulting vortex connects aerodynamic theory with practical topics including induced drag, separation spacing and formation flight.",
+        "zh": "翼尖涡将气动理论与诱导阻力、航空器间隔及编队飞行等实践问题连接起来。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-6",
+      "autavia-type-7-2"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "wingtip-vortices-engineering-note.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "formula-one-2010",
+    "year": "2020",
+    "category": "Motorsport",
+    "title": {
+      "en": "The 2010 Formula One championship: four drivers, one final race",
+      "zh": "2010 年 F1 冠军争夺：四位车手与最后一站"
+    },
+    "summary": {
+      "en": "A retrospective analysis of a championship shaped by performance, reliability, strategy and pressure.",
+      "zh": "回顾一场由性能、可靠性、策略与压力共同塑造的世界冠军争夺。"
+    },
+    "body": [
+      {
+        "en": "The 2010 season reached its final round with four drivers still in contention. The result depended on more than outright speed: reliability, pit strategy and traffic management all shaped the outcome.",
+        "zh": "2010 赛季进入收官战时仍有四位车手保留争冠可能。最终结果不仅取决于速度，也受到可靠性、进站策略与交通管理影响。"
+      },
+      {
+        "en": "The season remains a useful case study in complex competition, where local decisions accumulate into a system-level result.",
+        "zh": "这一赛季提供了复杂竞争的典型案例：局部决策不断累积，最终形成系统层面的结果。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-f1"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "formula-one-2010.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "tu-334-history",
+    "year": "2023",
+    "category": "Aviation History",
+    "title": {
+      "en": "Tu-334: an aircraft shaped by a changing industrial system",
+      "zh": "图-334：产业体系变化中的一型客机"
+    },
+    "summary": {
+      "en": "A historical article examining how aircraft design, industrial capability and programme timing influenced the Tu-334.",
+      "zh": "从飞机设计、产业能力与项目时机审视图-334 的发展历程。"
+    },
+    "body": [
+      {
+        "en": "Aircraft programmes develop inside industrial systems. Supply chains, certification, market timing and institutional continuity can be as decisive as aerodynamic design.",
+        "zh": "飞机项目始终处于产业体系之中。供应链、适航、市场时机与组织连续性可能与气动设计同样关键。"
+      },
+      {
+        "en": "The Tu-334 story illustrates the distance between a technically coherent design and a sustainable commercial programme.",
+        "zh": "图-334 的历程呈现了技术方案与可持续商业项目之间的距离。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-6"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "tu-334-history.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "sl01h-concept",
+    "year": "2018",
+    "category": "Engineering Education",
+    "title": {
+      "en": "SL-01H: defining a first complete engineering concept",
+      "zh": "SL-01H：建立首个完整工程概念"
+    },
+    "summary": {
+      "en": "A project note on turning an early racing-car idea into a coordinated design, manufacturing and presentation package.",
+      "zh": "记录早期赛车构想如何发展为设计、制造与展示协同的完整方案。"
+    },
+    "body": [
+      {
+        "en": "The first complete project required decisions across geometry, materials, manufacturing sequence and visual presentation.",
+        "zh": "首个完整项目需要同时处理几何、材料、制造顺序与视觉展示。"
+      },
+      {
+        "en": "The value of SL-01H lies in the workflow it established: define, model, manufacture, test, communicate and revise.",
+        "zh": "SL-01H 的价值在于建立了定义、建模、制造、测试、沟通与修订的工作流程。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-f1"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "sl01h-concept.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "sl22h-design-release",
+    "year": "2022",
+    "category": "Engineering Education",
+    "title": {
+      "en": "SL-22H design release: integrating product and team language",
+      "zh": "SL-22H 设计发布：连接产品与团队语言"
+    },
+    "summary": {
+      "en": "A design-release note covering vehicle form, visual identity, manufacturing and public presentation.",
+      "zh": "围绕赛车形态、视觉识别、制造与公开展示展开的设计发布记录。"
+    },
+    "body": [
+      {
+        "en": "A mature engineering delivery needs consistency between the physical product and the way it is explained.",
+        "zh": "成熟的工程交付需要实体产品与对外表达保持一致。"
+      },
+      {
+        "en": "SL-22H brought vehicle geometry, team graphics and presentation material into a shared design direction.",
+        "zh": "SL-22H 将赛车几何、团队图形与展示材料纳入统一设计方向。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-f1"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "sl22h-design-release.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "mobility-memory-and-safety",
+    "year": "2023",
+    "category": "Mobility",
+    "title": {
+      "en": "Mobility, memory and the design of everyday safety",
+      "zh": "移动记忆与日常安全设计"
+    },
+    "summary": {
+      "en": "A reflective essay connecting personal mobility experience with attention to lighting, visibility and road safety.",
+      "zh": "从个人移动体验出发，讨论照明、可见性与道路安全设计。"
+    },
+    "body": [
+      {
+        "en": "Everyday transport systems are experienced through small details: a dark corner, a missed rear-side vehicle, a poorly timed warning or an uncertain line of sight.",
+        "zh": "日常交通系统常通过细节被感知：暗处转弯、后侧来车、提示时机与不稳定视野。"
+      },
+      {
+        "en": "These observations became early inputs to Litellight, BBLIS and later vehicle-safety studies.",
+        "zh": "这些观察逐步成为 Litellight、BBLIS 与后续车辆安全研究的早期输入。"
+      }
+    ],
+    "relatedProjects": [
+      "litellight",
+      "bblis",
+      "apollo-lx1"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "mobility-memory-and-safety.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "human-state-as-system-input",
+    "year": "2024",
+    "category": "Human Systems",
+    "title": {
+      "en": "Human state as a system input",
+      "zh": "将人员状态纳入系统输入"
+    },
+    "summary": {
+      "en": "A technical note on why attention, fatigue and operating context belong inside intelligent-system design.",
+      "zh": "讨论注意力、疲劳与操作情境为何应进入智能系统设计。"
+    },
+    "body": [
+      {
+        "en": "Automation still operates through a relationship with people. Attention, fatigue and workload influence the safety and timing of system intervention.",
+        "zh": "自动化始终与人形成关系。注意力、疲劳与工作负荷会影响系统干预的安全性与时机。"
+      },
+      {
+        "en": "Human-state monitoring provides an additional input for adaptive interfaces, warnings and shared-control strategies.",
+        "zh": "人员状态监测可为自适应界面、警示与共享控制策略提供额外输入。"
+      }
+    ],
+    "relatedProjects": [
+      "l-in-eye",
+      "apollo-lx1"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "human-state-as-system-input.zh.html",
+        "en": "human-state-as-system-input.en.html"
+      },
+      "origin": "editorial"
+    }
+  },
+  {
+    "slug": "autonomous-mission-systems",
+    "year": "2026",
+    "category": "Autonomous Systems",
+    "title": {
+      "en": "From autonomous flight to autonomous missions",
+      "zh": "从自主飞行走向自主任务"
+    },
+    "summary": {
+      "en": "An engineering note on the shift from stabilising an aircraft to coordinating a complete mission system.",
+      "zh": "讨论研发重点如何从飞行稳定扩展到完整任务系统协同。"
+    },
+    "body": [
+      {
+        "en": "A flight controller keeps an aircraft stable. A mission system must also interpret objectives, constraints, environment, resources and operator intent.",
+        "zh": "飞控负责保持航空器稳定，任务系统还需要理解目标、约束、环境、资源与操作者意图。"
+      },
+      {
+        "en": "This shift changes the architecture: planning, perception, communications and human supervision become first-class system elements.",
+        "zh": "这一变化推动架构扩展，规划、感知、通信与人在回路监督成为核心系统要素。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-7-3",
+      "autavia-type-7-2",
+      "autavia-type-7-1"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "autonomous-mission-systems.zh.html",
+        "en": "autonomous-mission-systems.en.html"
+      },
+      "origin": "editorial"
+    }
+  }
+]

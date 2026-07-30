@@ -1,0 +1,2389 @@
+[
+  {
+    "slug": "autavia-type-7-3",
+    "family": "Autavia",
+    "domain": "flight",
+    "year": "2026",
+    "stage": {
+      "en": "System prototype",
+      "zh": "系统原型"
+    },
+    "title": {
+      "en": "Autavia Type 7-3",
+      "zh": "Autavia Type 7-3"
+    },
+    "subtitle": {
+      "en": "Mission-oriented tilt-rotor system",
+      "zh": "面向任务的倾转旋翼系统"
+    },
+    "summary": {
+      "en": "A system platform connecting vertical take-off, efficient cruise, mission planning, perception and human-supervised autonomy for low-altitude inspection.",
+      "zh": "面向低空巡检，将垂直起降、高效巡航、任务规划、环境感知与人在回路的自主能力连接为一体化系统。"
+    },
+    "hero": "autavia-type7-3.webp",
+    "facts": [
+      {
+        "label": {
+          "en": "Series",
+          "zh": "所属系列"
+        },
+        "value": {
+          "en": "Autavia Type 7 Series",
+          "zh": "Autavia Type 7 Series"
+        }
+      },
+      {
+        "label": {
+          "en": "Platform",
+          "zh": "平台类型"
+        },
+        "value": {
+          "en": "Tilt-rotor / distributed electric propulsion",
+          "zh": "倾转旋翼 / 分布式电推进"
+        }
+      },
+      {
+        "label": {
+          "en": "Primary scenario",
+          "zh": "主要场景"
+        },
+        "value": {
+          "en": "Low-altitude inspection and emergency monitoring",
+          "zh": "低空巡检与应急监测"
+        }
+      },
+      {
+        "label": {
+          "en": "Project role",
+          "zh": "项目定位"
+        },
+        "value": {
+          "en": "Mission-oriented integrated system",
+          "zh": "面向任务的一体化系统"
+        }
+      },
+      {
+        "label": {
+          "en": "Development scope",
+          "zh": "发展范围"
+        },
+        "value": {
+          "en": "Architecture · Planning · Prototype",
+          "zh": "架构 · 规划 · 原型"
+        }
+      },
+      {
+        "label": {
+          "en": "Legacy alias",
+          "zh": "历史代号"
+        },
+        "value": {
+          "en": "CTK-3",
+          "zh": "CTK-3"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "From vertical take-off to mission integration.",
+          "zh": "从垂直起降，走向任务集成。"
+        },
+        "lead": [
+          {
+            "en": "Project Overview",
+            "zh": "项目概览"
+          },
+          {
+            "en": "Autavia Type 7-3 is the mission-oriented iteration of the Type 7 Series. It connects airframe, propulsion, flight control, perception, planning and ground interaction within one integrated system architecture.",
+            "zh": "Autavia Type 7-3 是 Type 7 系列中面向任务的一代，将机体、动力、飞控、感知、规划与地面交互连接为一体化系统架构。"
+          },
+          {
+            "en": "Current development focuses on low-altitude inspection and mission planning, with platform integration and validation progressing through simulation, software prototypes and physical development records.",
+            "zh": "当前研发聚焦低空巡检与任务规划，并通过仿真、软件原型与实体研发记录推进平台集成与验证。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "mission",
+        "title": {
+          "en": "Prioritise the areas with the greatest risk.",
+          "zh": "优先覆盖 风险更高的区域。"
+        },
+        "lead": [
+          {
+            "en": "Inspection as a constrained system",
+            "zh": "将巡检视为约束系统"
+          },
+          {
+            "en": "Forest inspection is modeled as a closed-route problem with risk priority, no-fly constraints, obstacle buffers, terrain cost and return margin.",
+            "zh": "森林巡检被建模为包含风险优先级、禁飞约束、障碍缓冲、地形代价与返航余量的闭合航迹问题。"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Deploy",
+              "zh": "部署"
+            },
+            "body": {
+              "en": "Vertical take-off expands deployment options near complex terrain.",
+              "zh": "垂直起降扩展复杂地形边缘的部署选择。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Prioritize",
+              "zh": "优先"
+            },
+            "body": {
+              "en": "Risk-weighted waypoint generation allocates resources to higher-value regions.",
+              "zh": "风险加权航点生成将资源优先分配给更高价值区域。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Navigate",
+              "zh": "航行"
+            },
+            "body": {
+              "en": "Terrain, wind cost, obstacles and no-fly regions are modeled separately.",
+              "zh": "地形、风场代价、障碍与禁飞区域分别建模。"
+            }
+          },
+          {
+            "label": "04",
+            "title": {
+              "en": "Return",
+              "zh": "返航"
+            },
+            "body": {
+              "en": "Route and time margins keep planning away from theoretical limits.",
+              "zh": "航程与航时余量避免规划贴近理论极限。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "architecture",
+        "title": {
+          "en": "One mission. Six connected layers.",
+          "zh": "一个任务， 六层系统协同。"
+        },
+        "lead": [
+          {
+            "en": "Six connected layers",
+            "zh": "六层系统协同"
+          },
+          {
+            "en": "The architecture presents system boundaries, subsystem responsibilities and the information flow that connects mission intent with flight execution.",
+            "zh": "该架构呈现系统边界、子系统职责，以及连接任务意图与飞行执行的信息流。"
+          }
+        ],
+        "items": [
+          {
+            "label": "MISSION INTERFACE",
+            "title": {
+              "en": "Human-supervised intent",
+              "zh": "人在回路的任务意图"
+            },
+            "body": {
+              "en": "The operator defines the mission, boundary and priorities; the system translates them into traceable planning inputs.",
+              "zh": "操作人员定义任务、边界与优先级；系统将其转化为可追溯的规划输入。"
+            }
+          },
+          {
+            "label": "PLANNING & SAFETY",
+            "title": {
+              "en": "Risk-weighted routing",
+              "zh": "风险加权路径规划"
+            },
+            "body": {
+              "en": "Waypoint generation, route optimization, obstacle avoidance and return margins are managed as distinct planning functions.",
+              "zh": "航点生成、路径优化、避障与返航余量作为不同规划功能管理。"
+            }
+          },
+          {
+            "label": "PERCEPTION",
+            "title": {
+              "en": "Observe the environment",
+              "zh": "观测环境"
+            },
+            "body": {
+              "en": "Perception provides terrain, obstacle and mission-observation inputs for planning and operator awareness.",
+              "zh": "感知层为任务规划与操作人员态势理解提供地形、障碍和任务观测输入。"
+            }
+          },
+          {
+            "label": "FLIGHT CONTROL",
+            "title": {
+              "en": "Execute feasible motion",
+              "zh": "执行可行运动"
+            },
+            "body": {
+              "en": "Flight-control logic converts mission-level commands into platform-level actions within defined system limits.",
+              "zh": "飞控逻辑在明确系统边界内，将任务级指令转化为平台级动作。"
+            }
+          },
+          {
+            "label": "FLIGHT PLATFORM",
+            "title": {
+              "en": "Configuration as a system",
+              "zh": "将构型视为系统"
+            },
+            "body": {
+              "en": "Airframe, propulsion, energy and payload interfaces form the physical boundary of the mission system.",
+              "zh": "机体、动力、能源与载荷接口构成任务系统的物理边界。"
+            }
+          },
+          {
+            "label": "VALIDATION LAYER",
+            "title": {
+              "en": "Connect model, simulation and testing",
+              "zh": "连接模型、仿真与测试"
+            },
+            "body": {
+              "en": "Digital models, software prototypes and physical tests form a continuous validation workflow.",
+              "zh": "数字模型、软件原型与实体测试共同构成连续验证流程。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "intelligence",
+        "title": {
+          "en": "Turn risk into a traceable route.",
+          "zh": "将风险转化为 可追溯航迹。"
+        },
+        "lead": [
+          {
+            "en": "Planning workflow",
+            "zh": "规划工作流"
+          },
+          {
+            "en": "The research workflow connects a risk map, candidate waypoints, route optimization, obstacle-aware local planning and path smoothing.",
+            "zh": "研究工作流连接风险地图、候选航点、路径优化、障碍感知局部规划与航迹平滑。"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Risk map",
+              "zh": "风险地图"
+            },
+            "body": {
+              "en": "Construct priority, cost and exclusion layers.",
+              "zh": "构建优先级、代价与排除图层。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Waypoint generation",
+              "zh": "航点生成"
+            },
+            "body": {
+              "en": "Place observable candidates around higher-value regions.",
+              "zh": "在高价值区域周边布置可观测候选点。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Route optimization",
+              "zh": "路径优化"
+            },
+            "body": {
+              "en": "Compare route-order strategies under common metrics.",
+              "zh": "在统一指标下比较航点排序策略。"
+            }
+          },
+          {
+            "label": "04",
+            "title": {
+              "en": "Local planning",
+              "zh": "局部规划"
+            },
+            "body": {
+              "en": "Introduce obstacle buffers and local feasibility.",
+              "zh": "引入障碍缓冲与局部可行性。"
+            }
+          },
+          {
+            "label": "05",
+            "title": {
+              "en": "Smoothing",
+              "zh": "平滑"
+            },
+            "body": {
+              "en": "Reduce unnecessary heading changes in the planned path.",
+              "zh": "减少规划航迹中的不必要航向变化。"
+            }
+          },
+          {
+            "label": "06",
+            "title": {
+              "en": "Human review",
+              "zh": "人工审查"
+            },
+            "body": {
+              "en": "Keep mission assumptions and limits visible to the operator.",
+              "zh": "向操作人员持续展示任务假设与边界。"
+            }
+          }
+        ],
+        "media": [
+          {
+            "asset": "risk-map.webp",
+            "caption": {
+              "en": "Constructed risk scenario",
+              "zh": "构造风险场景"
+            }
+          },
+          {
+            "asset": "route-comparison.webp",
+            "caption": {
+              "en": "Route comparison",
+              "zh": "路径对比"
+            }
+          },
+          {
+            "asset": "route-3d.webp",
+            "caption": {
+              "en": "3D route model",
+              "zh": "三维航迹模型"
+            }
+          }
+        ]
+      },
+      {
+        "id": "process",
+        "title": {
+          "en": "Make the complete development process visible.",
+          "zh": "让完整研发过程 清晰可见。"
+        },
+        "lead": [
+          {
+            "en": "From concept to validation",
+            "zh": "从概念到验证"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Mission",
+              "zh": "任务"
+            },
+            "body": {
+              "en": "Define inspection value, operating boundaries and mission priorities.",
+              "zh": "定义巡检价值、运行边界与任务优先级。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Configuration",
+              "zh": "构型"
+            },
+            "body": {
+              "en": "Explore tilt-rotor geometry and distributed propulsion.",
+              "zh": "探索倾转旋翼几何与分布式推进。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Architecture",
+              "zh": "架构"
+            },
+            "body": {
+              "en": "Define interfaces across platform, control, perception and planning.",
+              "zh": "定义平台、控制、感知与规划之间的接口。"
+            }
+          },
+          {
+            "label": "04",
+            "title": {
+              "en": "Simulation",
+              "zh": "仿真"
+            },
+            "body": {
+              "en": "Build repeatable mission models and common evaluation criteria.",
+              "zh": "构建可复现任务模型与统一评价指标。"
+            }
+          },
+          {
+            "label": "05",
+            "title": {
+              "en": "Prototype",
+              "zh": "原型"
+            },
+            "body": {
+              "en": "Connect physical records with a mission-agent demonstrator.",
+              "zh": "将实体记录与任务 Agent 演示原型连接。"
+            }
+          },
+          {
+            "label": "06",
+            "title": {
+              "en": "Next validation",
+              "zh": "下一步验证"
+            },
+            "body": {
+              "en": "Extend toward real terrain, energy models and flight execution.",
+              "zh": "扩展至真实地形、能耗模型与实飞执行。"
+            }
+          }
+        ],
+        "media": [
+          {
+            "asset": "prototype-wing.webp",
+            "caption": {
+              "en": "Prototype component",
+              "zh": "原型部件"
+            }
+          },
+          {
+            "asset": "prototype-exhibit.webp",
+            "caption": {
+              "en": "Prototype exhibition",
+              "zh": "原型展示"
+            }
+          },
+          {
+            "asset": "prototype-team.webp",
+            "caption": {
+              "en": "Engineering communication",
+              "zh": "工程交流"
+            }
+          }
+        ]
+      }
+    ],
+    "relatedResearch": [
+      "forest-inspection-planning",
+      "uam-risk-framework"
+    ],
+    "relatedInsights": [
+      "autonomous-mission-systems"
+    ]
+  },
+  {
+    "slug": "autavia-type-7-2",
+    "family": "Autavia",
+    "domain": "flight",
+    "year": "2025",
+    "stage": {
+      "en": "Prototype & research",
+      "zh": "原型与研究"
+    },
+    "title": {
+      "en": "Autavia Type 7-2",
+      "zh": "Autavia Type 7-2"
+    },
+    "subtitle": {
+      "en": "Tilt-rotor firefighting research platform",
+      "zh": "倾转旋翼消防任务研究平台"
+    },
+    "summary": {
+      "en": "A physical prototype linking configuration design, aerodynamic analysis, onboard integration and fire-response research.",
+      "zh": "连接构型设计、气动分析、机载集成与消防任务研究的实体原型平台。"
+    },
+    "hero": "autavia-type7-2-flight.webp",
+    "facts": [],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "From configuration study to a physical flight platform.",
+          "zh": "从构型研究， 走向实体飞行平台。"
+        },
+        "lead": [
+          {
+            "en": "Project Direction",
+            "zh": "项目方向"
+          },
+          {
+            "en": "Type 7-2 advances the Autavia tilt-rotor line through airframe design, aerodynamic analysis, prototype manufacture, onboard integration and field-flight records. The same project archive also develops a firefighting mission layer covering fire-source perception, route planning and collaborative operation.",
+            "zh": "Type 7-2 推进了 Autavia 倾转旋翼路线，覆盖机体设计、气动分析、原型制造、机载集成与外场飞行记录。同一项目档案还延伸出消防任务研究，包括火源感知、路径规划与协同作业。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "platform",
+        "title": {
+          "en": "A compound-wing platform built as one system.",
+          "zh": "复合翼平台， 以系统方式完成集成。"
+        },
+        "lead": [
+          {
+            "en": "Platform Architecture",
+            "zh": "平台架构"
+          },
+          {
+            "en": "The physical platform connects configuration, propulsion, avionics and mission interfaces within a shared airframe.",
+            "zh": "实体平台在同一机体内连接构型、动力、航电与任务接口。"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Airframe & tilt system",
+              "zh": "机体与倾转系统"
+            },
+            "body": {
+              "en": "Fixed-wing cruise geometry, vertical-lift propulsion and tilt-vector integration define the core configuration.",
+              "zh": "固定翼巡航布局、垂直升力动力与倾转矢量集成共同构成核心构型。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Aerodynamic study",
+              "zh": "气动研究"
+            },
+            "body": {
+              "en": "XFLR5 and configuration studies supported wing, control-surface and operating-envelope decisions.",
+              "zh": "XFLR5 与构型分析用于支持机翼、控制面与运行包线设计。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Onboard integration",
+              "zh": "机载集成"
+            },
+            "body": {
+              "en": "Flight-control, power, communications and payload interfaces were assembled around the prototype platform.",
+              "zh": "飞控、供电、通信与载荷接口围绕原型平台完成集成。"
+            }
+          },
+          {
+            "label": "04",
+            "title": {
+              "en": "Mission interface",
+              "zh": "任务接口"
+            },
+            "body": {
+              "en": "The platform architecture reserves a clear path for sensing, fire-response payloads and cooperative planning.",
+              "zh": "平台架构为感知、消防任务载荷与协同规划预留了清晰接口。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "mission",
+        "title": {
+          "en": "Perception, planning and coordinated action.",
+          "zh": "感知、规划 与协同行动。"
+        },
+        "lead": [
+          {
+            "en": "Fire Response System",
+            "zh": "消防任务系统"
+          },
+          {
+            "en": "The research layer combines visual, infrared and LiDAR information with fire-source recognition and route-planning methods. Swarm coordination and precision deployment are explored as a broader mission-system direction.",
+            "zh": "研究层将视觉、红外与激光雷达信息连接至火源识别和路径规划方法，并进一步探索集群协同与精准投放的任务系统方向。"
+          }
+        ],
+        "items": [
+          {
+            "label": "PERCEPTION",
+            "title": {
+              "en": "Fire-source recognition",
+              "zh": "火源识别"
+            },
+            "body": {
+              "en": "An improved YOLO-based research route addresses small targets and complex fire backgrounds.",
+              "zh": "改进的 YOLO 研究路线面向小目标与复杂火场背景。"
+            }
+          },
+          {
+            "label": "FUSION",
+            "title": {
+              "en": "Multi-sensor context",
+              "zh": "多传感器环境信息"
+            },
+            "body": {
+              "en": "Visual, infrared and LiDAR data provide complementary environmental inputs.",
+              "zh": "视觉、红外与激光雷达数据提供互补的环境输入。"
+            }
+          },
+          {
+            "label": "PLANNING",
+            "title": {
+              "en": "Cooperative routing",
+              "zh": "协同路径规划"
+            },
+            "body": {
+              "en": "Route optimisation considers task priority, obstacle avoidance and coordinated movement.",
+              "zh": "路径优化综合考虑任务优先级、障碍规避与协同运动。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "development",
+        "title": {
+          "en": "Design decisions become manufacturing decisions.",
+          "zh": "设计决策逐步转化为 制造与集成决策。"
+        },
+        "lead": [
+          {
+            "en": "Engineering Development",
+            "zh": "工程研发"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Configuration definition",
+              "zh": "构型定义"
+            },
+            "body": {
+              "en": "Tilt-rotor geometry and compound-wing arrangement established the platform direction.",
+              "zh": "倾转旋翼几何关系与复合翼布局确定了平台方向。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Aerodynamic analysis",
+              "zh": "气动分析"
+            },
+            "body": {
+              "en": "Simulation results supported wing and control-surface refinement.",
+              "zh": "仿真结果用于支持机翼与控制面优化。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Prototype manufacture",
+              "zh": "原型制造"
+            },
+            "body": {
+              "en": "Airframe construction, wiring and propulsion integration produced a complete physical record.",
+              "zh": "机体制造、线束布置与动力集成形成了完整实体记录。"
+            }
+          },
+          {
+            "label": "04",
+            "title": {
+              "en": "Ground & field activity",
+              "zh": "地面与外场活动"
+            },
+            "body": {
+              "en": "Ground assembly and field-flight imagery document the transition from workshop to open-air operation.",
+              "zh": "地面装配与外场飞行影像记录了从工作台到开放场地的推进过程。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "gallery",
+        "title": {
+          "en": "Platform, analysis and field activity.",
+          "zh": "平台、分析 与外场活动。"
+        },
+        "lead": [
+          {
+            "en": "Selected Development Record",
+            "zh": "精选研发记录"
+          }
+        ],
+        "items": [],
+        "media": [
+          {
+            "asset": "autavia-type7-2-render.webp",
+            "caption": {
+              "en": "Configuration render",
+              "zh": "构型效果图"
+            }
+          },
+          {
+            "asset": "type72-xflr.webp",
+            "caption": {
+              "en": "Aerodynamic study",
+              "zh": "气动分析"
+            }
+          },
+          {
+            "asset": "type72-build-close.webp",
+            "caption": {
+              "en": "Prototype construction",
+              "zh": "原型制造"
+            }
+          },
+          {
+            "asset": "type72-field-ground.webp",
+            "caption": {
+              "en": "Field ground record",
+              "zh": "外场地面记录"
+            }
+          },
+          {
+            "asset": "type72-field-static.webp",
+            "caption": {
+              "en": "Field flight record",
+              "zh": "外场飞行记录"
+            }
+          }
+        ]
+      }
+    ],
+    "relatedResearch": [
+      "tiltrotor-vibration-sensor"
+    ],
+    "relatedInsights": [
+      "autonomous-mission-systems"
+    ]
+  },
+  {
+    "slug": "autavia-type-7-1",
+    "family": "Autavia",
+    "domain": "flight",
+    "year": "2024",
+    "stage": {
+      "en": "Concept architecture",
+      "zh": "概念架构"
+    },
+    "title": {
+      "en": "Autavia Type 7-1",
+      "zh": "Autavia Type 7-1"
+    },
+    "subtitle": {
+      "en": "First-generation Type 7 configuration study",
+      "zh": "Type 7 首代构型研究"
+    },
+    "summary": {
+      "en": "The first Type 7 iteration established the series configuration language, mission boundary and system decomposition for later tilt-rotor development.",
+      "zh": "Type 7 首代方案用于建立系列构型语言、任务边界与系统分解，为后续倾转旋翼平台迭代提供基础。"
+    },
+    "hero": "autavia-type7-1.webp",
+    "facts": [
+      {
+        "label": {
+          "en": "Series",
+          "zh": "所属系列"
+        },
+        "value": {
+          "en": "Autavia Type 7 Series",
+          "zh": "Autavia Type 7 Series"
+        }
+      },
+      {
+        "label": {
+          "en": "Platform",
+          "zh": "平台类型"
+        },
+        "value": {
+          "en": "Tilt-rotor concept",
+          "zh": "倾转旋翼概念平台"
+        }
+      },
+      {
+        "label": {
+          "en": "Role",
+          "zh": "项目定位"
+        },
+        "value": {
+          "en": "Configuration and architecture definition",
+          "zh": "构型与架构定义"
+        }
+      },
+      {
+        "label": {
+          "en": "Development",
+          "zh": "研发范围"
+        },
+        "value": {
+          "en": "Concept · CAD · System planning",
+          "zh": "概念 · CAD · 系统规划"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "Defining the Type 7 design language.",
+          "zh": "建立 Type 7 系列设计语言。"
+        },
+        "lead": [
+          {
+            "en": "Project Overview",
+            "zh": "项目概览"
+          },
+          {
+            "en": "Autavia Type 7-1 began as a configuration and system-architecture study. It defined the relationship between vertical take-off, forward flight, distributed propulsion and mission equipment.",
+            "zh": "Autavia Type 7-1 起始于构型与系统架构研究，重点梳理垂直起降、前飞、分布式动力与任务载荷之间的关系。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "configuration",
+        "title": {
+          "en": "A platform organised around transition flight.",
+          "zh": "围绕过渡飞行组织平台构型。"
+        },
+        "lead": [
+          {
+            "en": "Configuration Study",
+            "zh": "构型研究"
+          },
+          {
+            "en": "The concept explored a tilt-rotor arrangement with a fixed centre wing, distributed electric propulsion and a modular fuselage volume.",
+            "zh": "方案探索倾转旋翼布局、固定中央翼、分布式电推进与模块化机身空间。"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Vertical deployment",
+              "zh": "垂直部署"
+            },
+            "body": {
+              "en": "Rotor placement supports compact take-off and landing operations.",
+              "zh": "旋翼布置服务于紧凑场地的起降需求。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Forward flight",
+              "zh": "前向飞行"
+            },
+            "body": {
+              "en": "Wing-borne cruise provides the aerodynamic basis for longer-range missions.",
+              "zh": "机翼升力为更长航程任务提供气动基础。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Modular payload",
+              "zh": "模块载荷"
+            },
+            "body": {
+              "en": "The central body reserves space for sensing, communication and mission equipment.",
+              "zh": "中央机体预留感知、通信与任务设备空间。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "architecture",
+        "title": {
+          "en": "From aircraft configuration to a connected system.",
+          "zh": "从飞行器构型扩展至系统协同。"
+        },
+        "lead": [
+          {
+            "en": "System Boundary",
+            "zh": "系统边界"
+          },
+          {
+            "en": "The first-generation study separated the platform into propulsion, energy, flight control, mission payload and ground interaction layers.",
+            "zh": "首代研究将平台划分为动力、能源、飞控、任务载荷与地面交互层。"
+          }
+        ],
+        "items": [
+          {
+            "label": "A",
+            "title": {
+              "en": "Flight platform",
+              "zh": "飞行平台"
+            },
+            "body": {
+              "en": "Airframe, wing and propulsion arrangement.",
+              "zh": "机体、机翼与动力布局。"
+            }
+          },
+          {
+            "label": "B",
+            "title": {
+              "en": "Control layer",
+              "zh": "控制层"
+            },
+            "body": {
+              "en": "Attitude control, transition management and actuator coordination.",
+              "zh": "姿态控制、过渡管理与执行机构协同。"
+            }
+          },
+          {
+            "label": "C",
+            "title": {
+              "en": "Mission layer",
+              "zh": "任务层"
+            },
+            "body": {
+              "en": "Payload interface, communication and ground-side planning.",
+              "zh": "载荷接口、通信与地面任务规划。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "evolution",
+        "title": {
+          "en": "A reference point for later Type 7 iterations.",
+          "zh": "后续 Type 7 迭代的起点。"
+        },
+        "lead": [
+          {
+            "en": "Series Evolution",
+            "zh": "系列演进"
+          },
+          {
+            "en": "Type 7-2 advanced the concept toward a physical prototype. Type 7-3 expanded the system around mission planning and integrated autonomy.",
+            "zh": "Type 7-2 将构想推进至实体原型，Type 7-3 进一步围绕任务规划与集成自主能力展开。"
+          }
+        ],
+        "items": [],
+        "media": []
+      }
+    ],
+    "relatedResearch": [],
+    "relatedInsights": [
+      "autonomous-mission-systems"
+    ]
+  },
+  {
+    "slug": "autavia-type-6",
+    "family": "Autavia",
+    "domain": "flight",
+    "year": "2024",
+    "stage": {
+      "en": "Design study",
+      "zh": "设计研究"
+    },
+    "title": {
+      "en": "Autavia Type 6",
+      "zh": "Autavia Type 6"
+    },
+    "subtitle": {
+      "en": "Long-endurance fixed-wing reconnaissance study",
+      "zh": "长航时固定翼侦察系统研究"
+    },
+    "summary": {
+      "en": "A fixed-wing system study developed around sustained observation, field deployment and integrated mission sensing.",
+      "zh": "围绕持续观测、野外部署与任务感知集成开展的固定翼系统研究。"
+    },
+    "hero": "autavia-type6.webp",
+    "facts": [
+      {
+        "label": {
+          "en": "Platform",
+          "zh": "平台"
+        },
+        "value": {
+          "en": "Fixed-wing / pusher / V-tail",
+          "zh": "固定翼 / 尾推 / V 型尾翼"
+        }
+      },
+      {
+        "label": {
+          "en": "Mission",
+          "zh": "任务"
+        },
+        "value": {
+          "en": "Long-endurance reconnaissance",
+          "zh": "长航时侦察"
+        }
+      },
+      {
+        "label": {
+          "en": "Stage",
+          "zh": "阶段"
+        },
+        "value": {
+          "en": "Design study",
+          "zh": "设计研究"
+        }
+      },
+      {
+        "label": {
+          "en": "Source date",
+          "zh": "资料时间"
+        },
+        "value": {
+          "en": "June 2025",
+          "zh": "2025 年 6 月"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "Sustained observation from a deployable platform.",
+          "zh": "以可部署的平台，支持持续空中观测。"
+        },
+        "lead": [
+          {
+            "en": "The project explores disaster survey, environmental monitoring and regional information collection through a small gasoline-powered fixed-wing platform.",
+            "zh": "项目探索通过小型油动固定翼平台开展灾情勘测、环境监测与区域信息采集。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "configuration",
+        "title": {
+          "en": "A conventional layout refined for the mission.",
+          "zh": "以任务需求为依据，完成常规布局优化。"
+        },
+        "lead": [
+          {
+            "en": "Mid-wing, tapered wing, V-tail, pusher propulsion and net or hook recovery form the selected design architecture.",
+            "zh": "中单翼、梯形翼、V 型尾翼、尾推动力，以及阻拦网或天钩回收构成选定设计架构。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "aerodynamics",
+        "title": {
+          "en": "Airfoil selection, wing sizing and stability.",
+          "zh": "翼型选择、机翼尺度与稳定性分析。"
+        },
+        "lead": [
+          {
+            "en": "Profili and XFLR5 support the preliminary NACA 2415 wing and operating-characteristic study.",
+            "zh": "项目使用 Profili 与 XFLR5 支持 NACA 2415 机翼与运行特性的初步研究。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "systems",
+        "title": {
+          "en": "Airframe, avionics and mission intelligence.",
+          "zh": "机体、航电与任务智能。"
+        },
+        "lead": [
+          {
+            "en": "The system study includes flight control, data link, power distribution, actuation, target recognition and route planning.",
+            "zh": "系统研究覆盖飞控、数据链、供电、执行、目标识别与路径规划。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "development",
+        "title": {
+          "en": "A complete design study ready for the next engineering loop.",
+          "zh": "完整设计研究，进入下一轮工程迭代。"
+        },
+        "lead": [
+          {
+            "en": "Prototype manufacture, structural testing, CFD refinement and flight validation form the next development stage.",
+            "zh": "原型制造、结构试验、CFD 优化与飞行验证构成下一阶段研发任务。"
+          }
+        ],
+        "items": [],
+        "media": []
+      }
+    ],
+    "relatedResearch": [
+      "flight-performance-calculation",
+      "flight-simulation-simulink"
+    ],
+    "relatedInsights": [
+      "wingtip-vortices-engineering-note"
+    ]
+  },
+  {
+    "slug": "autavia-type-4",
+    "family": "Autavia",
+    "domain": "flight",
+    "year": "2023",
+    "stage": {
+      "en": "Course prototype",
+      "zh": "课程原型"
+    },
+    "title": {
+      "en": "Autavia Type 4",
+      "zh": "Autavia Type 4"
+    },
+    "subtitle": {
+      "en": "Autonomous multirotor flight platform",
+      "zh": "自主多旋翼飞行平台"
+    },
+    "summary": {
+      "en": "A multirotor integration project connecting PX4 flight control, onboard computing, visual-inertial sensing, trajectory generation and closed-loop control.",
+      "zh": "连接 PX4 飞控、机载计算、视觉惯性感知、轨迹生成与闭环控制的多旋翼集成项目。"
+    },
+    "hero": "autavia-type4.webp",
+    "facts": [
+      {
+        "label": {
+          "en": "Platform",
+          "zh": "平台类型"
+        },
+        "value": {
+          "en": "Multirotor UAV",
+          "zh": "多旋翼无人机"
+        }
+      },
+      {
+        "label": {
+          "en": "Flight stack",
+          "zh": "飞行栈"
+        },
+        "value": {
+          "en": "PX4 · ROS · MAVROS",
+          "zh": "PX4 · ROS · MAVROS"
+        }
+      },
+      {
+        "label": {
+          "en": "Onboard computing",
+          "zh": "机载计算"
+        },
+        "value": {
+          "en": "Jetson Xavier NX",
+          "zh": "Jetson Xavier NX"
+        }
+      },
+      {
+        "label": {
+          "en": "Perception",
+          "zh": "感知"
+        },
+        "value": {
+          "en": "RealSense D435i · VINS-Fusion",
+          "zh": "RealSense D435i · VINS-Fusion"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "A compact platform for autonomous-flight integration.",
+          "zh": "面向自主飞行集成的紧凑平台。"
+        },
+        "lead": [
+          {
+            "en": "Project Overview",
+            "zh": "项目概览"
+          },
+          {
+            "en": "Autavia Type 4 was developed as a course-based multirotor prototype. The project connected sensing, state estimation, planning and low-level flight control within one onboard workflow.",
+            "zh": "Autavia Type 4 作为课程多旋翼原型开展研发，将感知、状态估计、规划与底层飞行控制接入同一机载流程。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "stack",
+        "title": {
+          "en": "A complete onboard autonomy stack.",
+          "zh": "完整的机载自主飞行栈。"
+        },
+        "lead": [
+          {
+            "en": "System Integration",
+            "zh": "系统集成"
+          },
+          {
+            "en": "PX4 provides flight control, ROS Noetic coordinates software nodes, MAVROS bridges the autopilot, and the onboard computer runs perception and planning.",
+            "zh": "PX4 负责飞行控制，ROS Noetic 协调软件节点，MAVROS 连接飞控，机载计算平台运行感知与规划。"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "State estimation",
+              "zh": "状态估计"
+            },
+            "body": {
+              "en": "VINS-Fusion combines visual and inertial observations for local pose estimation.",
+              "zh": "VINS-Fusion 融合视觉与惯性观测，输出局部位姿。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Trajectory generation",
+              "zh": "轨迹生成"
+            },
+            "body": {
+              "en": "EGO-Planner produces collision-aware local trajectories from map and state inputs.",
+              "zh": "EGO-Planner 根据地图与状态输入生成避障局部轨迹。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Control interface",
+              "zh": "控制接口"
+            },
+            "body": {
+              "en": "px4ctrl converts trajectory references into commands for the flight-control stack.",
+              "zh": "px4ctrl 将轨迹参考转换为飞控系统可执行的控制指令。"
+            }
+          }
+        ],
+        "media": [
+          {
+            "asset": "type4-process.webp",
+            "caption": {
+              "en": "Integration workflow",
+              "zh": "集成流程"
+            }
+          }
+        ]
+      },
+      {
+        "id": "simulation",
+        "title": {
+          "en": "Software-in-the-loop before flight integration.",
+          "zh": "先完成软件闭环，再推进飞行集成。"
+        },
+        "lead": [
+          {
+            "en": "Validation Workflow",
+            "zh": "验证流程"
+          },
+          {
+            "en": "Simulation and recorded experiments were used to check node communication, state feedback, trajectory continuity and control response before further flight work.",
+            "zh": "通过仿真与过程记录检查节点通信、状态反馈、轨迹连续性与控制响应，为后续飞行工作提供依据。"
+          }
+        ],
+        "items": [],
+        "media": [
+          {
+            "asset": "type4-sim.webp",
+            "caption": {
+              "en": "Simulation environment",
+              "zh": "仿真环境"
+            }
+          }
+        ]
+      },
+      {
+        "id": "development",
+        "title": {
+          "en": "A reusable foundation for later autonomous platforms.",
+          "zh": "为后续自主平台建立可复用基础。"
+        },
+        "lead": [
+          {
+            "en": "Engineering Outcome",
+            "zh": "工程产出"
+          },
+          {
+            "en": "The project established practical experience in ROS-based integration, coordinate-frame management, sensor calibration and flight-stack debugging.",
+            "zh": "项目积累了 ROS 系统集成、坐标系管理、传感器标定与飞行栈调试经验。"
+          }
+        ],
+        "items": [],
+        "media": []
+      }
+    ],
+    "relatedResearch": [
+      "uav-perception-avoidance"
+    ],
+    "relatedInsights": [
+      "autonomous-mission-systems"
+    ]
+  },
+  {
+    "slug": "apollo-lx1",
+    "family": "Apollo",
+    "domain": "mobility",
+    "year": "2020–2022",
+    "stage": {
+      "en": "Concept & demo",
+      "zh": "概念与演示"
+    },
+    "title": {
+      "en": "Apollo LX1 Series",
+      "zh": "Apollo LX1 Series"
+    },
+    "subtitle": {
+      "en": "Vehicle active-safety concept platform",
+      "zh": "车辆主动安全概念平台"
+    },
+    "summary": {
+      "en": "A modular active-safety direction built around forward-risk sensing, sensor fusion and a tiered system stack.",
+      "zh": "围绕前向风险感知、传感融合与分层系统能力构建的模块化主动安全方向。"
+    },
+    "hero": "apollo-hero.webp",
+    "facts": [],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "Organising vehicle safety as a product system.",
+          "zh": "以产品化方式， 组织车辆安全能力。"
+        },
+        "lead": [
+          {
+            "en": "Product Direction",
+            "zh": "产品方向"
+          },
+          {
+            "en": "Apollo LX1 explores how forward-risk sensing, road-scene perception and active intervention can be organised into a coherent product family. The project uses the LLY2.0 and LLY2.0+ system stacks to connect sensing, computing, warning logic and demonstration scenarios.",
+            "zh": "Apollo LX1 探索如何将前向风险感知、道路场景理解与主动干预组织为完整产品体系。项目通过 LLY2.0 与 LLY2.0+ 系统栈连接传感、计算、预警逻辑与演示场景。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "architecture",
+        "title": {
+          "en": "A clear path from road scene to driver support.",
+          "zh": "从道路场景感知， 连接至驾驶辅助。"
+        },
+        "lead": [
+          {
+            "en": "Sense · Understand · Respond",
+            "zh": "感知 · 理解 · 响应"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Road-scene sensing",
+              "zh": "道路场景感知"
+            },
+            "body": {
+              "en": "Camera and millimetre-wave radar concepts provide complementary range and visual information.",
+              "zh": "摄像头与毫米波雷达概念提供互补的距离和视觉信息。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Object & lane context",
+              "zh": "目标与车道信息"
+            },
+            "body": {
+              "en": "The system direction covers pedestrians, obstacles, preceding vehicles, lane markings and road signs.",
+              "zh": "系统方向覆盖行人、障碍物、前车、车道标线与道路标志。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Risk assessment",
+              "zh": "风险评估"
+            },
+            "body": {
+              "en": "Perception results are organised into forward-risk and following scenarios.",
+              "zh": "感知结果被组织为前向风险与跟车场景。"
+            }
+          },
+          {
+            "label": "04",
+            "title": {
+              "en": "Warning & intervention",
+              "zh": "预警与干预"
+            },
+            "body": {
+              "en": "Visual warning and braking demonstrations communicate the intended active-safety workflow.",
+              "zh": "视觉预警与制动演示用于呈现主动安全工作流程。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "stack",
+        "title": {
+          "en": "Two capability levels, one product language.",
+          "zh": "两级能力配置， 共享一套产品语言。"
+        },
+        "lead": [
+          {
+            "en": "LLY2.0 System Family",
+            "zh": "LLY2.0 系统家族"
+          },
+          {
+            "en": "Project visuals also define a dedicated processing module and multi-branch thermal-management concept for the system stack.",
+            "zh": "项目视觉资料同时定义了专用计算模块与多分支散热概念。"
+          }
+        ],
+        "items": [
+          {
+            "label": "LLY2.0",
+            "title": {
+              "en": "Core active-safety stack",
+              "zh": "核心主动安全系统栈"
+            },
+            "body": {
+              "en": "",
+              "zh": ""
+            }
+          },
+          {
+            "label": "LLY2.0+",
+            "title": {
+              "en": "Expanded perception stack",
+              "zh": "扩展感知系统栈"
+            },
+            "body": {
+              "en": "",
+              "zh": ""
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "demos",
+        "title": {
+          "en": "System ideas become visible interactions.",
+          "zh": "系统构想转化为 可见的交互演示。"
+        },
+        "lead": [
+          {
+            "en": "Prototype Films",
+            "zh": "原型影像"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "evolution",
+        "title": {
+          "en": "From a single demonstration to a system family.",
+          "zh": "从单一演示， 走向系统家族。"
+        },
+        "lead": [
+          {
+            "en": "Design Language",
+            "zh": "设计语言"
+          },
+          {
+            "en": "Apollo established an early LCX AUTOS product-release language: dark visual identity, named system generations, capability tiers and demonstrable use cases. This framework later informed the wider mobility-safety portfolio.",
+            "zh": "Apollo 建立了 LCX AUTOS 早期产品发布语言，包括深色视觉识别、系统代际命名、能力分层与可演示场景。这套框架也影响了后续移动安全项目。"
+          }
+        ],
+        "items": [],
+        "media": [
+          {
+            "asset": "apollo-hero.webp",
+            "caption": {
+              "en": "APOLLO LX1",
+              "zh": "APOLLO LX1"
+            }
+          },
+          {
+            "asset": "apollo-detail.webp",
+            "caption": {
+              "en": "LLY2.0 / LLY2.0+",
+              "zh": "LLY2.0 / LLY2.0+"
+            }
+          },
+          {
+            "asset": "lineye.webp",
+            "caption": {
+              "en": "Human-state extension",
+              "zh": "人员状态方向延伸"
+            }
+          }
+        ]
+      }
+    ],
+    "relatedResearch": [],
+    "relatedInsights": [
+      "mobility-memory-and-safety"
+    ]
+  },
+  {
+    "slug": "l-in-eye",
+    "family": "L-IN EYE",
+    "domain": "mobility",
+    "year": "2022–2024",
+    "stage": {
+      "en": "Research prototype",
+      "zh": "研究原型"
+    },
+    "title": {
+      "en": "L-IN EYE",
+      "zh": "L-IN EYE"
+    },
+    "subtitle": {
+      "en": "Human-state monitoring system",
+      "zh": "人员状态监测系统"
+    },
+    "summary": {
+      "en": "A research prototype for fatigue and attention monitoring through ocular, facial and operating-state signals.",
+      "zh": "通过眼动、面部与操作状态信号开展疲劳及注意力监测的研究原型。"
+    },
+    "hero": "lineye.webp",
+    "facts": [],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "Observe the operator as part of the system.",
+          "zh": "将操作者状态， 纳入系统感知。"
+        },
+        "lead": [
+          {
+            "en": "Project Direction",
+            "zh": "项目方向"
+          },
+          {
+            "en": "L-IN EYE develops a multi-scenario fatigue and attention monitoring workflow around ocular features, facial motion and operating-state information. The system connects sensing hardware, feature extraction, state assessment, user interface and alert output.",
+            "zh": "L-IN EYE 围绕眼动特征、面部动作与操作状态信息，构建多场景疲劳及注意力监测流程。系统连接感知硬件、特征提取、状态评估、用户界面与预警输出。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "scenarios",
+        "title": {
+          "en": "One human-state layer, multiple operating contexts.",
+          "zh": "一套人员状态能力， 覆盖多种操作场景。"
+        },
+        "lead": [
+          {
+            "en": "Multi-Scenario Monitoring",
+            "zh": "多场景监测"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "UAV operation",
+              "zh": "无人机作业"
+            },
+            "body": {
+              "en": "Operator attention and fatigue during long-duration remote missions.",
+              "zh": "长时间远程任务中的操作者注意力与疲劳状态。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Aviation",
+              "zh": "航空运行"
+            },
+            "body": {
+              "en": "Human-state awareness for high-workload cockpit and support roles.",
+              "zh": "面向高工作负荷驾驶舱与保障岗位的人员状态感知。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Road driving",
+              "zh": "道路驾驶"
+            },
+            "body": {
+              "en": "Fatigue and attention monitoring within the intelligent-mobility safety stack.",
+              "zh": "智能移动安全系统中的疲劳与注意力监测。"
+            }
+          },
+          {
+            "label": "04",
+            "title": {
+              "en": "Industrial operation",
+              "zh": "工业操作"
+            },
+            "body": {
+              "en": "Continuous observation for production and equipment-control environments.",
+              "zh": "面向生产与设备操作环境的持续状态观察。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "architecture",
+        "title": {
+          "en": "A complete human-state monitoring loop.",
+          "zh": "完整的人员状态 监测闭环。"
+        },
+        "lead": [
+          {
+            "en": "Sensing to Intervention",
+            "zh": "从感知到干预"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "model",
+        "title": {
+          "en": "Eye movement, facial motion and operating context.",
+          "zh": "眼动、面部动作 与操作状态。"
+        },
+        "lead": [
+          {
+            "en": "Feature Recognition",
+            "zh": "特征识别"
+          },
+          {
+            "en": "The research route combines facial and ocular landmark localisation with eye-motion features and incremental model updates. The aim is a lightweight recognition workflow suited to real-time operator monitoring.",
+            "zh": "研究路线将面部与眼部关键点定位、眼动特征及增量模型更新结合，形成适用于实时操作者监测的轻量化识别流程。"
+          }
+        ],
+        "items": [
+          {
+            "label": "LANDMARKS",
+            "title": {
+              "en": "Face and eye localisation",
+              "zh": "面部与眼部定位"
+            },
+            "body": {
+              "en": "Key regions are located before detailed ocular features are extracted.",
+              "zh": "先定位关键区域，再提取细粒度眼动特征。"
+            }
+          },
+          {
+            "label": "FEATURES",
+            "title": {
+              "en": "Ocular behaviour",
+              "zh": "眼动行为"
+            },
+            "body": {
+              "en": "Fixation, blink and eye-motion patterns form the basis of state assessment.",
+              "zh": "注视、眨眼与眼球运动模式构成状态评估基础。"
+            }
+          },
+          {
+            "label": "LEARNING",
+            "title": {
+              "en": "Incremental adaptation",
+              "zh": "增量适应"
+            },
+            "body": {
+              "en": "Model updates support continued adaptation across users and scenarios.",
+              "zh": "模型更新支持不同使用者与场景下的持续适应。"
+            }
+          },
+          {
+            "label": "PRIVACY",
+            "title": {
+              "en": "Feature-level processing",
+              "zh": "特征级处理"
+            },
+            "body": {
+              "en": "The system direction emphasises compact feature processing for operator-state analysis.",
+              "zh": "系统方向强调面向操作者状态分析的紧凑特征处理。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "optics",
+        "title": {
+          "en": "Designed for difficult lighting conditions.",
+          "zh": "面向复杂光照条件， 优化成像链路。"
+        },
+        "lead": [
+          {
+            "en": "Imaging Hardware",
+            "zh": "成像硬件"
+          },
+          {
+            "en": "The hardware concept includes monocular infrared and dual-depth variants. A coated optical element and 940 nm narrow-band filter are used to manage glare and improve imaging consistency under strong backlight.",
+            "zh": "硬件概念包括单目红外与双目深度版本。系统采用镀膜光学元件和 940 nm 窄带滤光片，用于控制眩光并提升强背光条件下的成像一致性。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "journey",
+        "title": {
+          "en": "From system definition to internal testing.",
+          "zh": "从系统定义， 推进至内部测试。"
+        },
+        "lead": [
+          {
+            "en": "2023–2024",
+            "zh": "2023–2024"
+          }
+        ],
+        "items": [
+          {
+            "label": "2023.11",
+            "title": {
+              "en": "Team & scope",
+              "zh": "团队与范围"
+            },
+            "body": {
+              "en": "Initial project structure and application scope.",
+              "zh": "建立项目结构与应用范围。"
+            }
+          },
+          {
+            "label": "2023.12",
+            "title": {
+              "en": "System design",
+              "zh": "系统设计"
+            },
+            "body": {
+              "en": "Overall sensing and control architecture.",
+              "zh": "形成整体感知与控制架构。"
+            }
+          },
+          {
+            "label": "2024.04",
+            "title": {
+              "en": "Prototype development",
+              "zh": "原型开发"
+            },
+            "body": {
+              "en": "Central control and data workflow.",
+              "zh": "开发中央控制与数据流程。"
+            }
+          },
+          {
+            "label": "2024.08",
+            "title": {
+              "en": "Software integration",
+              "zh": "软件集成"
+            },
+            "body": {
+              "en": "Monitoring interface and recognition workflow.",
+              "zh": "集成监测界面与识别流程。"
+            }
+          },
+          {
+            "label": "2024.11",
+            "title": {
+              "en": "Internal testing",
+              "zh": "内部测试"
+            },
+            "body": {
+              "en": "System-level operation and application trials.",
+              "zh": "开展系统级运行与应用试验。"
+            }
+          }
+        ],
+        "media": []
+      }
+    ],
+    "relatedResearch": [],
+    "relatedInsights": [
+      "human-state-as-system-input"
+    ]
+  },
+  {
+    "slug": "litellight",
+    "family": "Rider Safety",
+    "domain": "rider",
+    "year": "2018",
+    "stage": {
+      "en": "Functional prototype",
+      "zh": "功能原型"
+    },
+    "title": {
+      "en": "Litellight AHB",
+      "zh": "Litellight AHB"
+    },
+    "subtitle": {
+      "en": "Steering-linked auxiliary lighting",
+      "zh": "转向联动辅助照明"
+    },
+    "summary": {
+      "en": "An early rider-safety prototype using a mechanical steering trigger to illuminate the direction of travel.",
+      "zh": "通过机械式转向触发机构照亮行驶方向的早期骑行安全原型。"
+    },
+    "hero": "litellight.webp",
+    "facts": [],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "Lighting follows the direction of travel.",
+          "zh": "让照明跟随 车辆转向。"
+        },
+        "lead": [
+          {
+            "en": "Rider-Safety Origin",
+            "zh": "骑行安全起点"
+          },
+          {
+            "en": "Litellight began with a simple observation: a fixed bicycle or e-bike headlamp leaves the inside of a turn poorly illuminated. The prototype links steering motion to an auxiliary light, extending the visible area through bends and low-light manoeuvres.",
+            "zh": "Litellight 源于一个直接观察：自行车与电动自行车的固定前灯在弯道内侧容易形成照明缺口。原型将转向动作与辅助灯连接，在弯道和低照度操作中扩展可视区域。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "mechanism",
+        "title": {
+          "en": "A steering input closes the lighting circuit.",
+          "zh": "转向输入， 直接闭合照明回路。"
+        },
+        "lead": [
+          {
+            "en": "Mechanical Control",
+            "zh": "机械控制"
+          },
+          {
+            "en": "When the steering column turns beyond the designed threshold, a mechanical contact completes the auxiliary-light circuit. The original prototype uses a threshold of approximately 15 degrees and requires no microcontroller.",
+            "zh": "当转向柱转过设定阈值，机械触点闭合辅助灯回路。原型设定阈值约为 15 度，整个触发过程无需微控制器。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "design",
+        "title": {
+          "en": "Every component supports a clear use case.",
+          "zh": "每项设计选择， 都服务于清晰场景。"
+        },
+        "lead": [
+          {
+            "en": "Simple, Durable, Serviceable",
+            "zh": "简洁、耐用、易维护"
+          }
+        ],
+        "items": [
+          {
+            "label": "CONTROL",
+            "title": {
+              "en": "Mechanical trigger",
+              "zh": "机械触发"
+            },
+            "body": {
+              "en": "Direct switching keeps the system understandable and easy to maintain.",
+              "zh": "直接开关方式便于理解，也有利于后续维护。"
+            }
+          },
+          {
+            "label": "LIGHT SOURCE",
+            "title": {
+              "en": "Halogen lamp",
+              "zh": "卤素光源"
+            },
+            "body": {
+              "en": "The original design favoured proven durability and strong penetration in rain and fog.",
+              "zh": "原始设计重视成熟耐用性，并考虑雨雾条件下的光线穿透能力。"
+            }
+          },
+          {
+            "label": "OPTICS",
+            "title": {
+              "en": "Reflector-assisted beam",
+              "zh": "反光碗辅助光型"
+            },
+            "body": {
+              "en": "Beam direction and coverage were refined through reflector selection and repeated adjustment.",
+              "zh": "通过反光碗选择与多轮调节优化光束方向和覆盖范围。"
+            }
+          }
+        ],
+        "media": []
+      },
+      {
+        "id": "prototype",
+        "title": {
+          "en": "Observation, assembly and repeated adjustment.",
+          "zh": "观察、组装 与持续调试。"
+        },
+        "lead": [
+          {
+            "en": "Eight Development Steps",
+            "zh": "八步研发过程"
+          }
+        ],
+        "items": [],
+        "media": [
+          {
+            "asset": "litellight.webp",
+            "caption": {
+              "en": "Prototype and presentation record",
+              "zh": "原型与展示记录"
+            }
+          },
+          {
+            "asset": "litellight-test.webp",
+            "caption": {
+              "en": "Low-light road test",
+              "zh": "低照度道路测试"
+            }
+          }
+        ]
+      },
+      {
+        "id": "testing",
+        "title": {
+          "en": "Test where the light will actually be used.",
+          "zh": "在真实使用环境中， 观察光束表现。"
+        },
+        "lead": [
+          {
+            "en": "Beam Evaluation",
+            "zh": "光束评估"
+          },
+          {
+            "en": "The prototype was evaluated indoors, on paved roads and on unpaved surfaces at dusk and night. The development record includes beam-angle and illumination-distance measurements, together with observations on surface reflectivity and reflector performance.",
+            "zh": "原型在室内、铺装道路与非铺装路面开展傍晚及夜间测试。研发记录包含光束角度、照射距离、路面反射差异与反光碗效果观察。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "evolution",
+        "title": {
+          "en": "A foundation for adaptive rider lighting.",
+          "zh": "为自适应骑行照明， 建立早期基础。"
+        },
+        "lead": [
+          {
+            "en": "Future Direction",
+            "zh": "后续方向"
+          },
+          {
+            "en": "The original project identifies clear extension paths: lens-based beam shaping, combined fog and cornering-light functions, electronic control and integration with broader rider-safety systems.",
+            "zh": "原始项目提出了明确的延伸方向，包括透镜光型设计、前雾灯与弯道灯集成、电子控制，以及与更完整骑行安全系统的连接。"
+          }
+        ],
+        "items": [],
+        "media": []
+      }
+    ],
+    "relatedResearch": [],
+    "relatedInsights": [
+      "mobility-memory-and-safety"
+    ]
+  },
+  {
+    "slug": "bblis",
+    "family": "Rider Safety",
+    "domain": "rider",
+    "year": "2019",
+    "stage": {
+      "en": "Early safety studies",
+      "zh": "早期安全研究"
+    },
+    "title": {
+      "en": "BBLIS",
+      "zh": "BBLIS"
+    },
+    "subtitle": {
+      "en": "Blind-zone and steering-visibility studies",
+      "zh": "盲区与转向可视性研究"
+    },
+    "summary": {
+      "en": "A group of early rider-safety studies examining blind-zone awareness and steering-linked rear-view visibility for non-motorised vehicles.",
+      "zh": "围绕非机动车盲区感知与转向联动后视可见性开展的一组早期骑行安全研究。"
+    },
+    "hero": "bblis.webp",
+    "facts": [
+      {
+        "label": {
+          "en": "Domain",
+          "zh": "领域"
+        },
+        "value": {
+          "en": "Micro-mobility safety",
+          "zh": "非机动车安全"
+        }
+      },
+      {
+        "label": {
+          "en": "Focus",
+          "zh": "研究重点"
+        },
+        "value": {
+          "en": "Blind zone · rear visibility",
+          "zh": "盲区 · 后向可视性"
+        }
+      },
+      {
+        "label": {
+          "en": "Output",
+          "zh": "产出形式"
+        },
+        "value": {
+          "en": "Concept studies and mechanism prototypes",
+          "zh": "概念研究与机构原型"
+        }
+      },
+      {
+        "label": {
+          "en": "Role",
+          "zh": "项目定位"
+        },
+        "value": {
+          "en": "Early safety-system exploration",
+          "zh": "早期安全系统探索"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "Improving awareness around the rider.",
+          "zh": "提升骑行者周边环境可见性。"
+        },
+        "lead": [
+          {
+            "en": "Project Scope",
+            "zh": "项目范围"
+          },
+          {
+            "en": "The BBLIS archive contains two related explorations: blind-zone warning for non-motorised vehicles and a steering-linked right-side mirror mechanism. They are presented as connected safety studies.",
+            "zh": "BBLIS 资料包含两项相关探索：非机动车盲区预警，以及转向联动的右侧后视机构。官网将其作为相互关联的安全研究呈现。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "blind-zone",
+        "title": {
+          "en": "Extend awareness beyond direct vision.",
+          "zh": "补充直接视野之外的信息。"
+        },
+        "lead": [
+          {
+            "en": "Blind-zone Study",
+            "zh": "盲区研究"
+          },
+          {
+            "en": "The concept examines how proximity sensing and a compact rider interface could support awareness of vehicles approaching from the rear-side area.",
+            "zh": "方案研究近距感知与紧凑提示界面如何帮助骑行者了解后侧接近目标。"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Detect",
+              "zh": "检测"
+            },
+            "body": {
+              "en": "Monitor the rear-side area with a compact sensing arrangement.",
+              "zh": "通过紧凑传感布置监测后侧区域。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Interpret",
+              "zh": "判断"
+            },
+            "body": {
+              "en": "Translate proximity and relative movement into a simple risk state.",
+              "zh": "将距离与相对运动转化为清晰风险状态。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Inform",
+              "zh": "提示"
+            },
+            "body": {
+              "en": "Provide a visible or audible cue without increasing rider workload.",
+              "zh": "通过视觉或声音提示降低骑行者认知负担。"
+            }
+          }
+        ],
+        "media": [
+          {
+            "asset": "bblis-diagram.webp",
+            "caption": {
+              "en": "Blind-zone concept diagram",
+              "zh": "盲区概念图"
+            }
+          }
+        ]
+      },
+      {
+        "id": "mirror",
+        "title": {
+          "en": "Maintain rear visibility through steering motion.",
+          "zh": "在转向过程中保持后向可视性。"
+        },
+        "lead": [
+          {
+            "en": "Steering-linked Mirror",
+            "zh": "转向联动后视机构"
+          },
+          {
+            "en": "A mechanical linkage study adjusts the right-side mirror angle with steering input, exploring a wider useful field of view during turning manoeuvres.",
+            "zh": "机械联动方案根据转向输入调整右侧后视镜角度，探索转弯过程中的有效后向视野。"
+          }
+        ],
+        "items": [],
+        "media": [
+          {
+            "asset": "bblis.webp",
+            "caption": {
+              "en": "Mechanism and presentation record",
+              "zh": "机构与展示记录"
+            }
+          }
+        ]
+      },
+      {
+        "id": "development",
+        "title": {
+          "en": "An early step toward integrated rider safety.",
+          "zh": "骑行安全系统化探索的早期一步。"
+        },
+        "lead": [
+          {
+            "en": "Development Direction",
+            "zh": "发展方向"
+          },
+          {
+            "en": "The studies provide a basis for future integration with active lighting, compact sensing and human-centred warning design.",
+            "zh": "这些研究为主动照明、紧凑感知与以人为中心的警示设计提供了早期基础。"
+          }
+        ],
+        "items": [],
+        "media": []
+      }
+    ],
+    "relatedResearch": [],
+    "relatedInsights": [
+      "mobility-memory-and-safety"
+    ]
+  },
+  {
+    "slug": "autavia-f1",
+    "family": "Autavia F1",
+    "domain": "education",
+    "year": "2018–2022",
+    "stage": {
+      "en": "Engineering programme",
+      "zh": "工程实践项目"
+    },
+    "title": {
+      "en": "Autavia F1 Engineering",
+      "zh": "Autavia F1 工程实践"
+    },
+    "subtitle": {
+      "en": "Design, manufacture and team delivery through miniature racing",
+      "zh": "以微型赛车连接设计、制造与团队交付"
+    },
+    "summary": {
+      "en": "A multi-year engineering programme covering aerodynamic design, CAD, manufacturing, testing, visual identity and team coordination through F1 in Schools.",
+      "zh": "依托 F1 in Schools 开展的多年工程实践，覆盖气动设计、CAD、制造、测试、视觉识别与团队协同。"
+    },
+    "hero": "f1-engineering.webp",
+    "facts": [
+      {
+        "label": {
+          "en": "Programme",
+          "zh": "项目体系"
+        },
+        "value": {
+          "en": "SL01 · SL21 · AFT22",
+          "zh": "SL01 · SL21 · AFT22"
+        }
+      },
+      {
+        "label": {
+          "en": "Disciplines",
+          "zh": "覆盖领域"
+        },
+        "value": {
+          "en": "Aerodynamics · CAD · Manufacturing",
+          "zh": "气动 · CAD · 制造"
+        }
+      },
+      {
+        "label": {
+          "en": "Delivery",
+          "zh": "交付内容"
+        },
+        "value": {
+          "en": "Race car · pit display · brand system",
+          "zh": "赛车 · 展位 · 品牌系统"
+        }
+      },
+      {
+        "label": {
+          "en": "Role",
+          "zh": "项目意义"
+        },
+        "value": {
+          "en": "Engineering process foundation",
+          "zh": "工程流程基础"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "overview",
+        "title": {
+          "en": "Learning engineering through complete delivery.",
+          "zh": "通过完整交付理解工程。"
+        },
+        "lead": [
+          {
+            "en": "Programme Overview",
+            "zh": "项目概览"
+          },
+          {
+            "en": "The programme connected technical design with schedule, manufacturing constraints, communication and team responsibility. Each generation refined both the vehicle and the delivery process.",
+            "zh": "项目将技术设计与进度、制造约束、沟通及团队责任连接起来。每一代方案同时改进赛车与交付流程。"
+          }
+        ],
+        "items": [],
+        "media": []
+      },
+      {
+        "id": "design",
+        "title": {
+          "en": "Aerodynamics translated into manufacturable geometry.",
+          "zh": "将气动思路转化为可制造几何。"
+        },
+        "lead": [
+          {
+            "en": "Vehicle Development",
+            "zh": "赛车研发"
+          },
+          {
+            "en": "The workflow covered concept sketches, CAD modelling, frontal-area control, wheel integration and iterative aerodynamic assessment.",
+            "zh": "研发流程覆盖概念草图、CAD 建模、迎风面积控制、车轮集成与迭代气动评估。"
+          }
+        ],
+        "items": [
+          {
+            "label": "01",
+            "title": {
+              "en": "Shape",
+              "zh": "造型"
+            },
+            "body": {
+              "en": "Develop a coherent body form within competition geometry constraints.",
+              "zh": "在竞赛几何约束下形成完整车身形态。"
+            }
+          },
+          {
+            "label": "02",
+            "title": {
+              "en": "Analyse",
+              "zh": "分析"
+            },
+            "body": {
+              "en": "Use airflow reasoning and comparative studies to refine key surfaces.",
+              "zh": "通过气流分析与方案对比优化关键曲面。"
+            }
+          },
+          {
+            "label": "03",
+            "title": {
+              "en": "Manufacture",
+              "zh": "制造"
+            },
+            "body": {
+              "en": "Prepare geometry for CNC machining, 3D printing, assembly and finishing.",
+              "zh": "为 CNC 加工、3D 打印、装配与表面处理准备模型。"
+            }
+          }
+        ],
+        "media": [
+          {
+            "asset": "f1-car.webp",
+            "caption": {
+              "en": "Vehicle and manufacturing record",
+              "zh": "赛车与制造记录"
+            }
+          }
+        ]
+      },
+      {
+        "id": "team",
+        "title": {
+          "en": "A technical product also needs a clear public language.",
+          "zh": "技术产品需要清晰的对外表达。"
+        },
+        "lead": [
+          {
+            "en": "Brand and Presentation",
+            "zh": "品牌与展示"
+          },
+          {
+            "en": "Vehicle graphics, uniforms, pit display, presentations and written material were developed as one communication system.",
+            "zh": "赛车图形、队服、展位、演示文稿与书面材料采用统一传播体系。"
+          }
+        ],
+        "items": [],
+        "media": [
+          {
+            "asset": "f1-engineering.webp",
+            "caption": {
+              "en": "Team engineering presentation",
+              "zh": "团队工程展示"
+            }
+          }
+        ]
+      },
+      {
+        "id": "journey",
+        "title": {
+          "en": "Three generations, one expanding engineering method.",
+          "zh": "三代项目，持续扩展工程方法。"
+        },
+        "lead": [
+          {
+            "en": "Series Journey",
+            "zh": "系列历程"
+          },
+          {
+            "en": "SL01 established the first complete delivery. SL21 strengthened product language and manufacturing discipline. AFT22 consolidated the programme into a broader engineering system.",
+            "zh": "SL01 建立首次完整交付，SL21 强化产品语言与制造纪律，AFT22 将项目进一步整合为更完整的工程系统。"
+          }
+        ],
+        "items": [],
+        "media": []
+      }
+    ],
+    "relatedResearch": [],
+    "relatedInsights": [
+      "sl01h-concept",
+      "sl22h-design-release",
+      "formula-one-2010"
+    ]
+  }
+]

@@ -1,0 +1,292 @@
+[
+  {
+    "slug": "tiltrotor-vibration-sensor",
+    "year": "2025",
+    "domain": "flight",
+    "type": "Paper",
+    "title": {
+      "en": "A self-powered vibration sensor for real-time vibration monitoring and aeroelastic instability detection in tiltrotor aircraft transition",
+      "zh": "面向倾转旋翼过渡阶段实时振动监测与气动弹性失稳检测的自供能振动传感器"
+    },
+    "authors": "Chengxiao Li; Yonggang Yang",
+    "venue": "AIP Advances 15, 095314 (2025)",
+    "doi": "10.1063/5.0288836",
+    "summary": {
+      "en": "A published study on a self-powered sensing approach for real-time vibration monitoring and aeroelastic-instability detection during tiltrotor transition.",
+      "zh": "研究面向倾转旋翼过渡阶段的实时振动监测与气动弹性失稳检测，提出自供能传感方法。"
+    },
+    "body": [
+      {
+        "en": "Research Context",
+        "zh": "研究背景"
+      },
+      {
+        "en": "Transition flight introduces changing aerodynamic loads and coupled vibration behaviour. Reliable sensing supports condition awareness and aeroelastic-risk detection.",
+        "zh": "过渡飞行阶段存在变化的气动载荷与耦合振动行为，可靠传感有助于状态感知与气动弹性风险识别。"
+      },
+      {
+        "en": "The paper develops and evaluates a self-powered vibration sensor for this operating context. The publication record is listed with its journal citation and DOI.",
+        "zh": "论文针对该运行场景开发并评估自供能振动传感器，页面保留期刊信息与 DOI。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-7-2",
+      "autavia-type-7-3"
+    ],
+    "fullText": {
+      "sourceLanguage": "en",
+      "html": {
+        "en": "tiltrotor-vibration-sensor.en.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "forest-inspection-planning",
+    "year": "2026",
+    "domain": "autonomy",
+    "type": "Technical Report",
+    "title": {
+      "en": "Multi-constraint mission planning and path optimisation for forest inspection",
+      "zh": "面向森林巡检的多约束任务规划与路径优化研究"
+    },
+    "authors": "LCX AUTOS Research",
+    "venue": "Technical report",
+    "doi": "",
+    "summary": {
+      "en": "A MATLAB-based study combining risk-weighted waypoint generation, route sequencing, constrained local planning and trajectory smoothing.",
+      "zh": "基于 MATLAB 的任务规划研究，连接风险加权航点生成、访问顺序优化、局部约束规划与轨迹平滑。"
+    },
+    "body": [
+      {
+        "en": "Problem Definition",
+        "zh": "问题定义"
+      },
+      {
+        "en": "The study models inspection as a closed-route problem with risk priority, no-fly regions, obstacle buffers, terrain cost and return margin.",
+        "zh": "研究将巡检任务建模为包含风险优先级、禁飞区域、障碍缓冲、地形代价与返航余量的闭合航迹问题。"
+      },
+      {
+        "en": "A staged workflow compares route-generation and path-optimisation methods in constructed scenarios, supporting system-level design decisions for Autavia Type 7-3.",
+        "zh": "分阶段流程在构造场景中对比航点与路径优化方法，为 Autavia Type 7-3 的系统设计提供支持。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-7-3"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "forest-inspection-planning.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "uav-perception-avoidance",
+    "year": "2024",
+    "domain": "autonomy",
+    "type": "Laboratory Report",
+    "title": {
+      "en": "UAV perception, relative positioning and collision-avoidance experiment",
+      "zh": "无人机感知、相对定位与避碰实验"
+    },
+    "authors": "LCX AUTOS Research",
+    "venue": "Course laboratory report",
+    "doi": "",
+    "summary": {
+      "en": "An experiment using GPS and ADS-B information to derive relative position, distance, bearing and elevation for aerial conflict awareness.",
+      "zh": "利用 GPS 与 ADS-B 信息计算相对位置、距离、方位角与仰角的空中冲突感知实验。"
+    },
+    "body": [
+      {
+        "en": "Method",
+        "zh": "方法"
+      },
+      {
+        "en": "The workflow converts WGS84 coordinates to ECEF and then to a local ENU frame. Relative geometry is used to derive distance, bearing and elevation.",
+        "zh": "流程将 WGS84 坐标转换至 ECEF，再转换为局部 ENU 坐标系，并据此计算距离、方位角与仰角。"
+      },
+      {
+        "en": "The experiment combines a 1090 MHz receiver, computer-side processing and Python implementation to examine the information chain from broadcast data to relative-state awareness.",
+        "zh": "实验结合 1090 MHz 接收、计算机处理与 Python 实现，梳理从广播数据到相对状态感知的信息链路。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-4"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "uav-perception-avoidance.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "uam-risk-framework",
+    "year": "2025",
+    "domain": "safety",
+    "type": "Research Manuscript",
+    "title": {
+      "en": "A multi-dimensional perceived-risk assessment framework for urban air mobility",
+      "zh": "面向城市空中交通的多维感知风险评估框架"
+    },
+    "authors": "LCX AUTOS Research",
+    "venue": "Research manuscript",
+    "doi": "",
+    "summary": {
+      "en": "An AHP-based framework organising urban-air-mobility risk across six first-level dimensions and nineteen indicators.",
+      "zh": "基于层次分析法构建城市空中交通风险框架，涵盖六个一级维度与十九项指标。"
+    },
+    "body": [
+      {
+        "en": "Framework",
+        "zh": "框架"
+      },
+      {
+        "en": "The manuscript structures perceived risk through technical, operational, environmental, human, social and regulatory dimensions.",
+        "zh": "研究从技术、运行、环境、人因、社会与监管等维度组织感知风险。"
+      },
+      {
+        "en": "The framework is intended to support scenario comparison, risk communication and early-stage system planning for urban air-mobility services.",
+        "zh": "该框架可用于城市空中交通服务的场景比较、风险沟通与早期系统规划。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-7-3"
+    ],
+    "fullText": {
+      "sourceLanguage": "en",
+      "html": {
+        "en": "uam-risk-framework.en.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "county-low-altitude-infrastructure",
+    "year": "2026",
+    "domain": "systems",
+    "type": "White Paper",
+    "title": {
+      "en": "County-level low-altitude mission capability infrastructure",
+      "zh": "县域低空经济任务能力基础设施建设方案"
+    },
+    "authors": "LCX AUTOS Research",
+    "venue": "System proposal",
+    "doi": "",
+    "summary": {
+      "en": "A system proposal connecting mission libraries, learning factories, equipment, training and operational capability for county-level low-altitude applications.",
+      "zh": "面向县域低空应用，将任务库、学习工厂、装备、培训与运营能力连接为一套系统方案。"
+    },
+    "body": [
+      {
+        "en": "System Scope",
+        "zh": "系统范围"
+      },
+      {
+        "en": "The proposal treats low-altitude capability as a combination of mission definition, training, equipment integration, operational procedures and local service delivery.",
+        "zh": "方案将低空能力拆解为任务定义、培训、装备集成、运行流程与本地服务交付。"
+      },
+      {
+        "en": "It provides a structured basis for discussing how educational, industrial and operational resources can support repeatable low-altitude missions.",
+        "zh": "方案为教育、产业与运营资源如何支撑可重复低空任务提供结构化讨论基础。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-6",
+      "autavia-type-7-3"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "county-low-altitude-infrastructure.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "flight-performance-calculation",
+    "year": "2024",
+    "domain": "flight",
+    "type": "Laboratory Report",
+    "title": {
+      "en": "Aircraft flight-performance calculation with MATLAB",
+      "zh": "基于 MATLAB 的飞行性能计算实验"
+    },
+    "authors": "LCX AUTOS Research",
+    "venue": "Flight-performance laboratory report",
+    "doi": "",
+    "summary": {
+      "en": "A computational study of aircraft performance using MATLAB workflows for atmosphere, aerodynamic and flight-condition calculations.",
+      "zh": "利用 MATLAB 完成大气、气动与飞行状态计算的飞行性能实验研究。"
+    },
+    "body": [
+      {
+        "en": "Calculation Workflow",
+        "zh": "计算流程"
+      },
+      {
+        "en": "The report organises input assumptions, atmosphere models, aerodynamic relationships and performance outputs into a repeatable calculation process.",
+        "zh": "报告将输入假设、大气模型、气动关系与性能输出组织为可重复的计算流程。"
+      },
+      {
+        "en": "The work supports later fixed-wing configuration studies by establishing a disciplined approach to parameter handling and result interpretation.",
+        "zh": "该工作为后续固定翼构型研究建立参数处理与结果解读方法。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-6"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "flight-performance-calculation.zh.html"
+      },
+      "origin": "original"
+    }
+  },
+  {
+    "slug": "flight-simulation-simulink",
+    "year": "2024",
+    "domain": "simulation",
+    "type": "Laboratory Report",
+    "title": {
+      "en": "Flight simulation and Simulink modelling experiment",
+      "zh": "飞行模拟与 Simulink 建模仿真实验"
+    },
+    "authors": "LCX AUTOS Research",
+    "venue": "Simulation laboratory report",
+    "doi": "",
+    "summary": {
+      "en": "A modelling exercise connecting X-Plane observation with point-mass and rigid-body models in Simulink.",
+      "zh": "连接 X-Plane 飞行观察与 Simulink 质点、刚体模型的建模实验。"
+    },
+    "body": [
+      {
+        "en": "Modelling Scope",
+        "zh": "建模范围"
+      },
+      {
+        "en": "The experiment compares simplified point-mass modelling with a more complete rigid-body representation, focusing on state definitions, equations and simulation behaviour.",
+        "zh": "实验对比简化质点模型与更完整的刚体模型，重点关注状态定义、方程与仿真表现。"
+      },
+      {
+        "en": "The workflow strengthens the connection between flight observation, mathematical representation and simulation implementation.",
+        "zh": "该流程强化飞行观察、数学表达与仿真实现之间的联系。"
+      }
+    ],
+    "relatedProjects": [
+      "autavia-type-6",
+      "autavia-type-4"
+    ],
+    "fullText": {
+      "sourceLanguage": "zh",
+      "html": {
+        "zh": "flight-simulation-simulink.zh.html"
+      },
+      "origin": "original"
+    }
+  }
+]

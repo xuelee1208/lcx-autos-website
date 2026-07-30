@@ -1,0 +1,481 @@
+<h1 id="项目概述">1 项目概述</h1>
+<p>本实验围绕无人机感知与避让中的空中目标相对定位问题展开。我完成的系统以PC为本机平台，接入GPS模块获取本机经纬高，同时接入ADS-B射频接收模块获取周围民航目标的Mode-S/ADS-B报文。程序将本机和他机的位置统一到WGS84坐标系后，先转换到ECEF地心地固坐标系，再以本机为参考点转换到ENU局部坐标系，最后输出东西向、南北向、垂直向距离、水平距离、三维斜距、方位角和仰角。</p>
+<p>实际调试时，我发现GPS模块在室内搜星不稳定，因此在不改变原有GPS串口读取逻辑的基础上，增加了命令行预设本机坐标模式。这样可以在GPS暂时无法定位时，仍然验证ADS-B接收、报文解码、坐标转换和距离计算这条完整软件链路。最终测试中，本机坐标采用天津附近位置：纬度39.085496275456194，经度117.30791413247451，高度0
+m；GPS串口保留为COM5，ADS-B接收串口为COM4。</p>
+<p>本项目的直接输出为命令行文本，每一行包含UTC时间戳、本机GPS位置、他机ADS-B识别码与位置、ENU坐标分量以及距离角度信息。通过这些字段可以判断目标相对本机的方向、远近和高度关系，为后续避让算法提供基础输入。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image2.png"/></p>
+<p>图1 系统总体数据流程图</p>
+<h1 id="实现方法">2 实现方法</h1>
+<h2 id="总体思路">2.1 总体思路</h2>
+<p>我将系统分为四个层次：第一层为串口数据读取，负责从GPS和ADS-B模块接收原始数据；第二层为报文解析，负责将NMEA语句和ADS-B十六进制报文转换成经纬高等结构化信息；第三层为坐标变换，负责将WGS84位置转换为ECEF并进一步转换为本机ENU坐标；第四层为结果输出，负责按照固定格式打印时间戳、位置、距离和角度。</p>
+<p>在程序结构上，我把本机位置和他机状态都抽象成数据模型。本机位置由GPSFix或预设坐标生成GeoPosition，他机状态由ADS-B解码器维护TargetState。主循环不断从两个队列读取最新数据，只要本机位置有效且某个ADS-B目标已经解算出位置，就进行相对位置计算并输出。</p>
+<h2 id="数据接口设计">2.2 数据接口设计</h2>
+<p>GPS模块输出标准NMEA语句，我主要解析GGA和RMC两类语句。GGA能够给出定位质量、经纬度和高度，RMC能够给出有效状态和经纬度。代码中先进行校验和检查，再把ddmm.mmmm格式的经纬度转为十进制度。</p>
+<p>ADS-B接收模块通过串口输出Mode-S报文的十六进制字符串。程序先从每一行中提取14位或28位十六进制载荷，再转换为二进制位串。对于DF17/DF18扩展电文，程序读取ICAO地址、ME字段和类型码TC，并依据TC选择呼号、位置或速度解码流程。</p>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>输出字段</strong></th>
+<th><strong>含义</strong></th>
+<th><strong>来源或计算方法</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>timestamp</td>
+<td>UTC时间戳</td>
+<td>主程序utc_iso()生成</td>
+</tr>
+<tr class="even">
+<td>GPS lat/lon/alt</td>
+<td>本机纬度、经度、高度</td>
+<td>GPS模块NMEA解算或命令行预设</td>
+</tr>
+<tr class="odd">
+<td>ADSB icao/callsign</td>
+<td>他机ICAO地址、呼号</td>
+<td>ADS-B DF17/DF18报文解析</td>
+</tr>
+<tr class="even">
+<td>ADSB lat/lon/alt</td>
+<td>他机纬度、经度、高度</td>
+<td>ADS-B CPR位置解码与高度字段解码</td>
+</tr>
+<tr class="odd">
+<td>E/N/U</td>
+<td>东、北、天三个局部分量</td>
+<td>WGS84→ECEF→ENU</td>
+</tr>
+<tr class="even">
+<td>dist_h/dist_3d</td>
+<td>水平距离与三维斜距</td>
+<td>ENU分量平方和</td>
+</tr>
+<tr class="odd">
+<td>bearing/elev</td>
+<td>方位角与仰角</td>
+<td>atan2计算</td>
+</tr>
+</tbody>
+</table>
+<p>表1 命令行输出字段说明</p>
+<h1 id="实现工具">3 实现工具</h1>
+<p>硬件部分包括PC、GPS模块、USB-TTL线、ADS-B天线和射频接收模块。PC负责运行Python程序并作为本机计算平台；GPS模块通过USB-TTL接入电脑串口，用于输出本机NMEA定位数据；ADS-B天线接收1090
+MHz航空广播信号，射频接收模块负责将接收到的Mode-S/ADS-B信息通过串口送入程序。</p>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>类别</strong></th>
+<th><strong>设备或软件</strong></th>
+<th><strong>用途</strong></th>
+<th><strong>实验配置</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>硬件</td>
+<td>PC</td>
+<td>运行Python程序，承担本机计算平台</td>
+<td>Windows，PowerShell命令行</td>
+</tr>
+<tr class="even">
+<td>硬件</td>
+<td>GPS模块</td>
+<td>输出本机NMEA定位数据</td>
+<td>COM5，默认9600 bps</td>
+</tr>
+<tr class="odd">
+<td>硬件</td>
+<td>USB-TTL线</td>
+<td>完成GPS模块与PC串口连接</td>
+<td>TX/RX交叉，GND共地</td>
+</tr>
+<tr class="even">
+<td>硬件</td>
+<td>ADS-B天线</td>
+<td>接收航空1090 MHz广播信号</td>
+<td>外场放置于无遮挡位置</td>
+</tr>
+<tr class="odd">
+<td>硬件</td>
+<td>射频接收模块</td>
+<td>输出Mode-S/ADS-B十六进制报文</td>
+<td>COM4，115200 bps</td>
+</tr>
+<tr class="even">
+<td>软件</td>
+<td>Python + pyserial</td>
+<td>串口读取、解码与坐标计算</td>
+<td>命令行运行main.py</td>
+</tr>
+<tr class="odd">
+<td>软件</td>
+<td>FlightRadar24</td>
+<td>对目标航班信息进行对照验证</td>
+<td>查询目标航班、高度和机型</td>
+</tr>
+</tbody>
+</table>
+<p>表2 实验工具与配置</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image3.jpg"/></p>
+<p>图2 GPS模块、USB-TTL与PC运行环境</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image4.jpg"/></p>
+<p>图3 ADS-B天线与射频接收模块外场布置</p>
+<h1 id="项目流程">4 项目流程</h1>
+<h2 id="硬件连接">4.1 硬件连接</h2>
+<p>我先完成GPS模块与USB-TTL线连接。GPS模块的TX接USB-TTL的RX，RX接TX，GND共地，供电电压按模块要求接入。随后将USB-TTL插入PC，并在设备管理器中确认串口号为COM5。ADS-B部分使用天线接入射频接收模块，再通过串口接入PC，实际测试时将该串口设置为COM4，波特率设置为115200
+bps。</p>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>模块</strong></th>
+<th><strong>连接方式</strong></th>
+<th><strong>串口参数</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPS模块</td>
+<td>GPS TX→USB-TTL RX；GPS RX→USB-TTL TX；GND共地</td>
+<td>COM5，9600 bps</td>
+<td>正常外场可读取GGA/RMC；室内可用预设坐标测试算法</td>
+</tr>
+<tr class="even">
+<td>ADS-B接收模块</td>
+<td>天线→射频接收模块→PC串口</td>
+<td>COM4，115200 bps</td>
+<td>输出一行一个Mode-S/ADS-B十六进制报文</td>
+</tr>
+<tr class="odd">
+<td>PC程序</td>
+<td>PowerShell运行main.py</td>
+<td>print interval 1 s</td>
+<td>汇总时间戳、GPS、ADSB和距离结果</td>
+</tr>
+</tbody>
+</table>
+<p>表3 硬件连接与串口设置</p>
+<h2 id="软件部署与运行">4.2 软件部署与运行</h2>
+<p>软件部署主要包括安装pyserial、确认项目目录和启动主程序。为了避免GPS室内无定位导致主循环无法进入距离计算，我在main.py中增加了--own-lat、--own-lon、--own-alt三个参数。当这三个参数中的经纬度同时给出时，程序直接构造本机GeoPosition，同时仍保留GPS串口参数，便于切换回真实GPS模式。</p>
+<p>本次测试使用的运行命令为：</p>
+<blockquote>
+<p>py .\main.py --own-lat 39.085496275456194 --own-lon
+117.30791413247451 --own-alt 0 --gps-port COM5 --adsb-port COM4
+--adsb-baud 115200</p>
+</blockquote>
+<p>如果在空旷外场GPS模块已经稳定定位，也可以不输入预设经纬度，直接用GPS串口作为本机位置来源。两种模式的后续ADS-B解码、坐标转换和输出逻辑完全一致。</p>
+<h2 id="外场测试过程">4.3 外场测试过程</h2>
+<p>外场测试时，我将ADS-B天线放在相对开阔的位置，尽量减少车体、墙面和建筑物对1090
+MHz信号的遮挡。启动程序后，先观察是否出现“timestamp | GPS | ADSB |
+ENU/distance”的表头，再观察是否有ICAO地址、经纬度和高度输出。只要某一目标的ADS-B位置被解码出来，主程序就会按照约1
+s的间隔持续打印相对距离。</p>
+<p>为了验证解算结果，我同步打开FlightRadar24，对比程序输出的ICAO地址、目标高度和航班信息。实验中收到的目标ICAO为780BFA，程序解出的高度约5396.8
+m；FlightRadar24中对应目标显示为中国国际航空CCA1516，机型Airbus
+A330-343，注册号B-5913，气压高度17700 ft。1700 ft换算为5394.96
+m，与程序输出的高度相差无几。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image5.jpg"/></p>
+<p>图4 外场测试全景与程序运行画面</p>
+<h1 id="算法解析">5 算法解析</h1>
+<h2 id="gps位置解算">5.1 GPS位置解算</h2>
+<p>GPS部分的输入是NMEA语句。代码中的parse_nmea_sentence()先判断语句是否以“$”开头，并进行校验和检查。对于GGA语句，我读取定位质量字段，只有质量值大于0才认为定位有效；对于RMC语句，我读取状态字段，只有状态为A才认为数据有效。</p>
+<p>NMEA中的经纬度不是十进制度，而是ddmm.mmmm或dddmm.mmmm格式。我的转换方法是先取整得到度，再把剩余的分转换为度，最后根据N/S/E/W确定正负号。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image6.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image7.png"/></p>
+<h2 id="ads-b消息结构与解码">5.2 ADS-B消息结构与解码</h2>
+<p>ADS-B空中位置报文通常以112 bit
+Mode-S扩展电文形式出现。程序先提取28位十六进制载荷，并把它转换为112位二进制序列。对于DF17/DF18报文，前5
+bit是下行格式DF，随后3 bit为能力或控制字段，bit 9到bit 32为24
+bit地址，bit 33到bit 88为ME消息域，最后24 bit为校验域。</p>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>字段</strong></th>
+<th><strong>bit范围</strong></th>
+<th><strong>长度</strong></th>
+<th><strong>程序中的读取方式</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DF</td>
+<td>1–5</td>
+<td>5 bit</td>
+<td>bits[0:5]</td>
+<td>下行格式，DF17/DF18用于ADS-B扩展电文</td>
+</tr>
+<tr class="even">
+<td>CA/CF</td>
+<td>6–8</td>
+<td>3 bit</td>
+<td>bits[5:8]</td>
+<td>能力或控制字段</td>
+</tr>
+<tr class="odd">
+<td>AA</td>
+<td>9–32</td>
+<td>24 bit</td>
+<td>hex[2:8]</td>
+<td>ICAO地址，用于区分目标飞机</td>
+</tr>
+<tr class="even">
+<td>ME</td>
+<td>33–88</td>
+<td>56 bit</td>
+<td>bits[32:88]</td>
+<td>ADS-B消息域，包含呼号、位置或速度等信息</td>
+</tr>
+<tr class="odd">
+<td>PI</td>
+<td>89–112</td>
+<td>24 bit</td>
+<td>hex[22:28]</td>
+<td>校验/奇偶信息</td>
+</tr>
+</tbody>
+</table>
+<p>表4 ADS-B 112 bit报文字段划分</p>
+<p>ME字段前5
+bit为类型码TC。我的代码按照TC进行分支：TC=1~4时解码飞机呼号；TC=9~18或20~22时解码空中位置和气压高度；TC=19时解码地速、航迹角和垂直速度。这样可以把同一ICAO目标收到的多类报文整合为一个TargetState。</p>
+<p>高度解码采用Q-bit高度编码。当Q-bit等于1时，将高度字段重组为整数N，然后按25
+ft分辨率恢复气压高度，最后转换为米。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image8.png"/></p>
+<p>位置解码使用CPR压缩位置算法。每个空中位置报文包含奇偶标志、17
+bit纬度CPR和17
+bit经度CPR。程序会缓存同一ICAO地址的最近偶帧和奇帧，当二者时间差小于设定阈值时优先进行全局CPR解算；如果只有一个帧可用，则使用本机或上一目标位置作为局部参考，以便在实时接收场景下尽快得到目标位置。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image9.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image10.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image11.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image12.png"/></p>
+<h2 id="wgs84到ecef坐标转换">5.3 WGS84到ECEF坐标转换</h2>
+<p>GPS和ADS-B解码得到的都是WGS84大地坐标，不能直接做欧氏距离计算。为避免纬度和经度单位不一致带来的误差，我先将本机和他机的经纬高转换为ECEF坐标。程序中使用WGS84椭球参数：长半轴a=6378137.0
+m，扁率f=1/298.257223563，第一偏心率平方e²=f(2-f)。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image13.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image14.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image15.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image16.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image17.png"/></p>
+<h2 id="ecef到enu坐标转换">5.4 ECEF到ENU坐标转换</h2>
+<p>ECEF坐标仍是地心坐标，不能直观表达目标相对本机的方向。因此我以本机位置为参考原点，将目标ECEF坐标减去本机ECEF坐标，得到差向量，再用本机纬度和经度构造旋转矩阵，将差向量转换到东-北-天坐标系。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image18.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image19.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image20.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image21.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image22.png"/></p>
+<p>图5 坐标转换与距离计算流程</p>
+<h2 id="距离方位角和仰角计算">5.5 距离、方位角和仰角计算</h2>
+<p>得到ENU分量后，距离和角度可以直接由三角关系得到。E为正表示目标在本机东侧，N为正表示目标在北侧，U为正表示目标在上方。方位角从正北方向开始顺时针计量，因此使用atan2(E,N)而不是atan2(N,E)。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image23.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image24.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image25.png"/></p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image26.png"/></p>
+<p>代码中还对方位角进行了0~360°归一化。如果atan2得到负角度，就加上360°，这样输出更符合航空导航中“从北顺时针”的习惯。</p>
+<h2 id="代码设计逻辑">5.6 代码设计逻辑</h2>
+<p>代码采用生产者-消费者结构，GPS读取线程和ADS-B读取线程分别把结果放入队列，主线程负责取出最新数据并计算距离。这样做的好处是串口读取不会阻塞坐标计算，也能避免单个设备暂时无数据时影响整个程序。</p>
+<p>main.py中build_parser()负责定义命令行参数；gps_worker()调用GPSReader持续读取有效定位；adsb_worker()从串口读取十六进制报文；ADSBDecoder.decode_line()负责按DF、TC和CPR解析目标状态；relative_position_enu()负责坐标转换和距离角度计算；format_target_line()负责按实验要求输出最终文本。</p>
+<h1 id="附件">6 附件</h1>
+<h2 id="程序代码">6.1 程序代码</h2>
+<p>完整工程按功能划分为main.py、sensors、adsb、navigation和models几个部分。下面列出与实验任务关系最直接的核心代码，便于说明程序实现逻辑。</p>
+<h2>（1）命令行参数与预设本机位置：</h2>
+<blockquote>
+<p>def build_parser() -&gt; argparse.ArgumentParser:</p>
+<p>parser = argparse.ArgumentParser(description="GPS + ADS-B
+relative-distance monitor")</p>
+<p>parser.add_argument("--gps-port", default=DEFAULT_GPS_PORT)</p>
+<p>parser.add_argument("--adsb-port", default=DEFAULT_ADSB_PORT)</p>
+<p>parser.add_argument("--gps-baud", type=int,
+default=DEFAULT_GPS_BAUD)</p>
+<p>parser.add_argument("--adsb-baud", type=int,
+default=DEFAULT_ADSB_BAUD)</p>
+<p>parser.add_argument("--print-interval", type=float, default=1.0)</p>
+<p>parser.add_argument("--target-icao", default=None)</p>
+<p>parser.add_argument("--own-lat", type=float, default=None,</p>
+<p>help="Preset ownship latitude in decimal degrees")</p>
+<p>parser.add_argument("--own-lon", type=float, default=None,</p>
+<p>help="Preset ownship longitude in decimal degrees")</p>
+<p>parser.add_argument("--own-alt", type=float, default=0.0,</p>
+<p>help="Preset ownship altitude in meters")</p>
+<p>return parser</p>
+<p>if use_preset_ownship:</p>
+<p>latest_ownship = GeoPosition(</p>
+<p>latitude_deg=float(args.own_lat),</p>
+<p>longitude_deg=float(args.own_lon),</p>
+<p>altitude_m=float(args.own_alt),</p>
+<p>timestamp=time.time(),</p>
+<p>source="preset_cli",</p>
+<p>)</p>
+</blockquote>
+<h2>（2）ADS-B串口读取线程：</h2>
+<blockquote>
+<p>def adsb_worker(port: str, baudrate: int, out_queue:
+"queue.Queue[str]",</p>
+<p>stop_event: threading.Event, timeout: float = 0.2) -&gt; None:</p>
+<p>import serial</p>
+<p>with serial.Serial(port, int(baudrate), timeout=float(timeout)) as
+ser:</p>
+<p>while not stop_event.is_set():</p>
+<p>raw = ser.readline(512)</p>
+<p>if not raw:</p>
+<p>continue</p>
+<p>line = raw.decode("ascii", errors="ignore").strip()</p>
+<p>if line:</p>
+<p>out_queue.put(line)</p>
+</blockquote>
+<h2>（3）WGS84到ECEF和ENU转换：</h2>
+<blockquote>
+<p>def wgs84_to_ecef(latitude_deg: float, longitude_deg: float,</p>
+<p>altitude_m: float = 0.0) -&gt; ECEFPoint:</p>
+<p>lat = math.radians(latitude_deg)</p>
+<p>lon = math.radians(longitude_deg)</p>
+<p>sin_lat = math.sin(lat)</p>
+<p>cos_lat = math.cos(lat)</p>
+<p>N = WGS84_A / math.sqrt(1.0 - WGS84_E2 * sin_lat * sin_lat)</p>
+<p>x = (N + altitude_m) * cos_lat * math.cos(lon)</p>
+<p>y = (N + altitude_m) * cos_lat * math.sin(lon)</p>
+<p>z = (N * (1.0 - WGS84_E2) + altitude_m) * sin_lat</p>
+<p>return ECEFPoint(x, y, z)</p>
+<p>def ecef_to_enu(point: ECEFPoint, reference_latitude_deg: float,</p>
+<p>reference_longitude_deg: float,</p>
+<p>reference_altitude_m: float = 0.0) -&gt; ENUVector:</p>
+<p>reference = wgs84_to_ecef(reference_latitude_deg,</p>
+<p>reference_longitude_deg,</p>
+<p>reference_altitude_m)</p>
+<p>dx = point.x_m - reference.x_m</p>
+<p>dy = point.y_m - reference.y_m</p>
+<p>dz = point.z_m - reference.z_m</p>
+<p>east = -sin_lon * dx + cos_lon * dy</p>
+<p>north = -sin_lat * cos_lon * dx - sin_lat * sin_lon * dy + cos_lat *
+dz</p>
+<p>up = cos_lat * cos_lon * dx + cos_lat * sin_lon * dy + sin_lat *
+dz</p>
+<p>return ENUVector(east, north, up)</p>
+</blockquote>
+<h2>（4）相对距离、方位角和仰角计算：</h2>
+<blockquote>
+<p>def relative_position_enu(own_latitude_deg, own_longitude_deg,
+own_altitude_m,</p>
+<p>target_latitude_deg, target_longitude_deg,</p>
+<p>target_altitude_m) -&gt; RelativePosition:</p>
+<p>enu = wgs84_to_enu(target_latitude_deg, target_longitude_deg,</p>
+<p>target_altitude_m,</p>
+<p>own_latitude_deg, own_longitude_deg, own_altitude_m)</p>
+<p>horizontal = math.hypot(enu.east_m, enu.north_m)</p>
+<p>slant = math.sqrt(enu.east_m ** 2 + enu.north_m ** 2 + enu.up_m **
+2)</p>
+<p>bearing = math.degrees(math.atan2(enu.east_m, enu.north_m))</p>
+<p>if bearing &lt; 0.0:</p>
+<p>bearing += 360.0</p>
+<p>elevation = math.degrees(math.atan2(enu.up_m, horizontal))</p>
+<p>return RelativePosition(enu.east_m, enu.north_m, enu.up_m,</p>
+<p>horizontal, slant, bearing, elevation)</p>
+</blockquote>
+<h2 id="实验结果">6.2 实验结果</h2>
+<p>在测试中，程序成功输出了同一目标的连续距离信息。下面是其中三条稳定输出，三条数据的经纬高和距离保持一致，说明在目标状态未更新时程序会按间隔重复输出最近一次有效目标状态。</p>
+<blockquote>
+<p>2026-06-23T20:20:53.331+00:00 | GPS lat=39.0854963 lon=117.3079141
+alt=0.0m | ADSB icao=781DA5 callsign=- lat=38.2980652 lon=117.2001615
+alt=11917.7m spd=- trk=- | ENU E=-9443.3m N=-87567.9m U=11309.0m |
+dist_h=88075.6m dist_3d=88798.6m bearing=186.2deg elev=7.3deg</p>
+<p>2026-06-23T20:20:54.341+00:00 | GPS lat=39.0854963 lon=117.3079141
+alt=0.0m | ADSB icao=781DA5 callsign=- lat=38.2980652 lon=117.2001615
+alt=11917.7m spd=- trk=- | ENU E=-9443.3m N=-87567.9m U=11309.0m |
+dist_h=88075.6m dist_3d=88798.6m bearing=186.2deg elev=7.3deg</p>
+<p>2026-06-23T20:20:55.348+00:00 | GPS lat=39.0854963 lon=117.3079141
+alt=0.0m | ADSB icao=781DA5 callsign=- lat=38.2980652 lon=117.2001615
+alt=11917.7m spd=- trk=- | ENU E=-9443.3m N=-87567.9m U=11309.0m |
+dist_h=88075.6m dist_3d=88798.6m bearing=186.2deg elev=7.3deg</p>
+</blockquote>
+<table class="fulltext-table">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>项目</strong></th>
+<th><strong>数值</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>本机位置</td>
+<td>lat=39.0854963，lon=117.3079141，alt=0.0 m</td>
+<td>命令行预设本机坐标</td>
+</tr>
+<tr class="even">
+<td>他机位置</td>
+<td>lat=38.2980652，lon=117.2001615，alt=11917.7 m</td>
+<td>ADS-B解码结果</td>
+</tr>
+<tr class="odd">
+<td>ICAO地址</td>
+<td>781DA5</td>
+<td>ADS-B目标识别码</td>
+</tr>
+<tr class="even">
+<td>ENU分量</td>
+<td>E=-9443.3 m，N=-87567.9 m，U=11309.0 m</td>
+<td>目标位于本机西侧、南侧和上方</td>
+</tr>
+<tr class="odd">
+<td>水平距离</td>
+<td>88075.6 m（约88.08 km）</td>
+<td>由E、N计算</td>
+</tr>
+<tr class="even">
+<td>三维斜距</td>
+<td>88798.6 m（约88.80 km）</td>
+<td>由E、N、U计算</td>
+</tr>
+<tr class="odd">
+<td>方位角</td>
+<td>186.2°</td>
+<td>从本机正北顺时针计算，目标在正南略偏西方向</td>
+</tr>
+<tr class="even">
+<td>仰角</td>
+<td>7.3°</td>
+<td>目标相对本机地平面的仰角</td>
+</tr>
+</tbody>
+</table>
+<p>表5 实测输出结果整理</p>
+<p>从ENU分量看，E为负说明目标在本机西侧约9.44
+km，N为负说明目标在本机南侧约87.57 km，U为正说明目标在本机上方约11.31
+km。方位角186.2°与“南偏西”方向相符，三维斜距约88.8
+km也符合地面ADS-B接收天线在开阔环境下能够接收到高空民航客机的情况。</p>
+<p><img loading="lazy" src="/media/fulltext/uav-perception-avoidance/image27.png"/></p>
+<p>图6 FlightRadar24中同一ADS-B目标的航班信息验证</p>
+<p>验证图中目标为中国国际航空CCA848，机型为Airbus
+A350-941，注册号B-329K，航线为伦敦盖特威克机场到上海浦东机场。该界面显示气压高度39100
+ft，换算约为11917.7 m，与程序中的alt=11917.7
+m一致。因此，我认为这次接收到的是正常的民航ADS-B信号，程序的高度解码和坐标转换结果具有合理性。</p>
+<p>本次输出中的callsign、速度和航迹角显示为“-”，这并不代表ADS-B信号异常。ADS-B不同类型的报文分开发送，当前位置帧可以先解出经纬高，呼号帧和速度帧需要程序在后续接收到对应TC后才能补充到TargetState中。外场接收信号强弱、天线遮挡和报文丢包都会影响这些字段是否完整。</p>
+<p>综合测试结果可以看出，我完成了从串口读取、ADS-B报文解析、WGS84到ECEF、ECEF到ENU、距离方位计算到命令行输出的完整流程。后续如果继续扩展，可以加入目标轨迹缓存、最近目标筛选、告警阈值和图形化显示，从而进一步接近无人机感知与避让场景中的实时态势感知需求。</p>

@@ -1,0 +1,52 @@
+{
+  "version": "0.4",
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "routes": {
+    "home": [
+      "/[lang]/"
+    ],
+    "solutions": [
+      "/[lang]/solutions/"
+    ],
+    "projects": [
+      "/[lang]/projects/",
+      "/[lang]/projects/autavia-type-7-3/",
+      "/[lang]/projects/autavia-type-7-2/",
+      "/[lang]/projects/autavia-type-7-1/",
+      "/[lang]/projects/autavia-type-6/",
+      "/[lang]/projects/autavia-type-4/",
+      "/[lang]/projects/apollo-lx1/",
+      "/[lang]/projects/l-in-eye/",
+      "/[lang]/projects/litellight/",
+      "/[lang]/projects/bblis/",
+      "/[lang]/projects/autavia-f1/"
+    ],
+    "research": [
+      "/[lang]/research/",
+      "/[lang]/research/tiltrotor-vibration-sensor/",
+      "/[lang]/research/forest-inspection-planning/",
+      "/[lang]/research/uav-perception-avoidance/",
+      "/[lang]/research/uam-risk-framework/",
+      "/[lang]/research/county-low-altitude-infrastructure/",
+      "/[lang]/research/flight-performance-calculation/",
+      "/[lang]/research/flight-simulation-simulink/"
+    ],
+    "insights": [
+      "/[lang]/insights/",
+      "/[lang]/insights/wingtip-vortices-engineering-note/",
+      "/[lang]/insights/formula-one-2010/",
+      "/[lang]/insights/tu-334-history/",
+      "/[lang]/insights/sl01h-concept/",
+      "/[lang]/insights/sl22h-design-release/",
+      "/[lang]/insights/mobility-memory-and-safety/",
+      "/[lang]/insights/human-state-as-system-input/",
+      "/[lang]/insights/autonomous-mission-systems/"
+    ],
+    "about": [
+      "/[lang]/about/"
+    ]
+  }
+}
