@@ -52,8 +52,24 @@ export default async function ProjectPage({ params }: { params: Promise<{lang: s
               <div className="lead-stack">{section.lead.map((p,i)=><p key={i}>{t(p,lang)}</p>)}</div>
               {section.items.length > 0 && <div className="block-grid">{section.items.map((item,i)=>
                 <div className="info-block" key={i}><span className="number">{item.label || String(i+1).padStart(2,"0")}</span><h3>{t(item.title,lang)}</h3><p>{t(item.body,lang)}</p></div>)}</div>}
-              {section.media.length > 0 && <div className="media-grid">{section.media.map((media,i)=>
-                <figure className="media-figure" key={i}><img src={`/media/images/${media.asset}`} alt={t(media.caption,lang)} loading="lazy"/><figcaption>{t(media.caption,lang)}</figcaption></figure>)}</div>}
+              {section.media.length > 0 && <div className={`media-grid${section.media.some((media) => media.kind === "video") ? " media-grid--video" : ""}`}>{section.media.map((media,i)=>
+                <figure className={`media-figure${media.kind === "video" ? " media-figure--video" : ""}`} key={i}>
+                  {media.kind === "video" ? (
+                    <video
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster={media.poster ? `/media/images/${media.poster}` : undefined}
+                      aria-label={t(media.caption,lang)}
+                    >
+                      <source src={`/media/video/${media.asset}`} type="video/mp4" />
+                      {lang === "en" ? "Your browser does not support embedded video." : "当前浏览器不支持嵌入式视频播放。"}
+                    </video>
+                  ) : (
+                    <img src={`/media/images/${media.asset}`} alt={t(media.caption,lang)} loading="lazy"/>
+                  )}
+                  <figcaption>{t(media.caption,lang)}</figcaption>
+                </figure>)}</div>}
             </div>
           </div>
         </section>

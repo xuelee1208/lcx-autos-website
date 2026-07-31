@@ -1478,7 +1478,35 @@
           }
         ],
         "items": [],
-        "media": []
+        "media": [
+          {
+            "kind": "video",
+            "asset": "apollo-product-film.mp4",
+            "poster": "apollo-product-film-poster.webp",
+            "caption": {
+              "en": "Apollo LX1 product concept film",
+              "zh": "Apollo LX1 产品概念片"
+            }
+          },
+          {
+            "kind": "video",
+            "asset": "apollo-system-demo.mp4",
+            "poster": "apollo-system-demo-poster.webp",
+            "caption": {
+              "en": "LLY2.0 system demonstration",
+              "zh": "LLY2.0 系统演示"
+            }
+          },
+          {
+            "kind": "video",
+            "asset": "apollo-aeb-city.mp4",
+            "poster": "apollo-aeb-city-poster.webp",
+            "caption": {
+              "en": "Urban AEB scenario demonstration",
+              "zh": "城市 AEB 场景演示"
+            }
+          }
+        ]
       },
       {
         "id": "evolution",

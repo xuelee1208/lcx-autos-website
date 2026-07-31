@@ -4,7 +4,12 @@ export type Locale = (typeof locales)[number];
 export type Bilingual = { en: string; zh: string };
 export type ProjectFact = { label: Bilingual; value: Bilingual };
 export type ProjectItem = { label?: string; title: Bilingual; body: Bilingual };
-export type MediaItem = { asset: string; caption: Bilingual };
+export type MediaItem = {
+  kind?: "image" | "video";
+  asset: string;
+  poster?: string;
+  caption: Bilingual;
+};
 export type ProjectSection = {
   id: string;
   title: Bilingual;
