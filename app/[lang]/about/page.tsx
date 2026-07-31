@@ -2,10 +2,19 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { about, hasLocale, t } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{lang: string}> }): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "zh" ? "关于" : "About" };
+  if (!hasLocale(lang)) return {};
+  return createPageMetadata({
+    lang,
+    title: lang === "zh" ? "关于" : "About",
+    description: lang === "zh"
+      ? "了解 LCX AUTOS 的品牌使命、工程方法与创始人 Sebastian Lee。"
+      : "Learn about the mission, engineering approach and founder of LCX AUTOS.",
+    pathname: "/about/",
+  });
 }
 
 export default async function AboutPage({ params }: { params: Promise<{lang: string}> }) {

@@ -3,10 +3,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { hasLocale, research, t } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{lang: string}> }): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "zh" ? "研究" : "Research" };
+  if (!hasLocale(lang)) return {};
+  return createPageMetadata({
+    lang,
+    title: lang === "zh" ? "研究" : "Research",
+    description: lang === "zh"
+      ? "LCX AUTOS 的论文、技术报告与仿真研究全文。"
+      : "Published research, technical reports and simulation studies from LCX AUTOS.",
+    pathname: "/research/",
+  });
 }
 
 export default async function ResearchPage({ params }: { params: Promise<{lang: string}> }) {

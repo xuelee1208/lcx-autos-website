@@ -1,6 +1,6 @@
 {
-  "version": "0.5",
-  "updated": "2026-07-30",
+  "version": "0.6",
+  "updated": "2026-07-31",
   "brand": {
     "name": "LCX AUTOS",
     "tagline": {
@@ -29,7 +29,7 @@
   "domains": {
     "preferred": "lcxautos.com",
     "alternative": "lcx-autos.com",
-    "status": "Pending availability and registration"
+    "status": "Production on Vercel with lcxautos.com as the canonical domain"
   },
   "profileExclusions": [
     "school",

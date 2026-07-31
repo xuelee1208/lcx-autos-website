@@ -3,10 +3,17 @@ import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { ProjectExplorer } from "@/components/ProjectExplorer";
 import { hasLocale, projects } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{lang: string}> }): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "zh" ? "项目" : "Projects", description: lang === "zh" ? "LCX AUTOS 工程项目库" : "LCX AUTOS engineering project library" };
+  if (!hasLocale(lang)) return {};
+  return createPageMetadata({
+    lang,
+    title: lang === "zh" ? "项目" : "Projects",
+    description: lang === "zh" ? "LCX AUTOS 工程项目库，涵盖自主飞行、移动安全与工程实践。" : "LCX AUTOS engineering project library across autonomous flight, mobility safety and engineering practice.",
+    pathname: "/projects/",
+  });
 }
 
 export default async function ProjectsPage({ params }: { params: Promise<{lang: string}> }) {

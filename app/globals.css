@@ -277,3 +277,26 @@ button { font: inherit; }
   .fulltext-content h2 { font-size: 27px; }
   .fulltext-content h3 { font-size: 21px; }
 }
+
+/* Production performance refinements */
+.story-section,
+.fulltext-reader,
+.solution-panel {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 760px;
+}
+
+@media (prefers-reduced-data: reduce) {
+  .hero-visual,
+  .project-hero-image {
+    display: none;
+  }
+  .hero-copy,
+  .project-hero-copy {
+    width: 100%;
+  }
+}
+
+.privacy-copy { max-width: 820px; }
+.privacy-copy h2 { margin: 48px 0 14px; font-size: 30px; letter-spacing: -.025em; }
+.privacy-copy p { font-size: 18px; line-height: 1.85; color: #2c394b; }

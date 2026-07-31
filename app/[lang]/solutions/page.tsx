@@ -3,10 +3,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { hasLocale, projects, solutions, t } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{lang: string}> }): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "zh" ? "解决方案" : "Solutions" };
+  if (!hasLocale(lang)) return {};
+  return createPageMetadata({
+    lang,
+    title: lang === "zh" ? "解决方案" : "Solutions",
+    description: lang === "zh"
+      ? "自主飞行、智能移动、骑行安全与工程智能解决方案。"
+      : "Engineering solutions across autonomous flight, intelligent mobility, rider safety and engineering intelligence.",
+    pathname: "/solutions/",
+  });
 }
 
 export default async function SolutionsPage({ params }: { params: Promise<{lang: string}> }) {

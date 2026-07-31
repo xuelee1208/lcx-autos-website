@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
 import { PageShell } from "@/components/PageShell";
 import { RelatedProjects } from "@/components/RelatedProjects";
 import { getProject, hasLocale, insights, projects, research, t } from "@/lib/content";
+import { absoluteUrl, createPageMetadata, localizedPath } from "@/lib/seo";
 
 export function generateStaticParams() {
   return ["en","zh"].flatMap((lang) => projects.map((project) => ({ lang, slug: project.slug })));
@@ -14,7 +16,12 @@ export async function generateMetadata({ params }: { params: Promise<{lang: stri
   if (!hasLocale(lang)) return {};
   const project = getProject(slug);
   if (!project) return {};
-  return { title: t(project.title,lang), description: t(project.summary,lang) };
+  return createPageMetadata({
+    lang,
+    title: t(project.title,lang),
+    description: t(project.summary,lang),
+    pathname: `/projects/${slug}/`,
+  });
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{lang: string; slug: string}> }) {
@@ -25,8 +32,22 @@ export default async function ProjectPage({ params }: { params: Promise<{lang: s
   const related = projects.filter((p) => p.family === project.family && p.slug !== project.slug);
   const projectResearch = research.filter((x) => project.relatedResearch.includes(x.slug));
   const projectInsights = insights.filter((x) => project.relatedInsights.includes(x.slug));
+  const projectUrl = absoluteUrl(localizedPath(lang, `/projects/${slug}/`));
+  const projectJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: t(project.title,lang),
+    description: t(project.summary,lang),
+    url: projectUrl,
+    image: absoluteUrl(`/media/images/${project.hero}`),
+    dateCreated: project.year,
+    inLanguage: lang === "zh" ? "zh-CN" : "en",
+    creator: { "@id": "https://lcxautos.com/#organization" },
+    about: project.domain,
+  };
   return (
     <PageShell lang={lang}>
+      <JsonLd data={projectJsonLd} />
       <section className="project-hero">
         <div className="shell project-hero-inner">
           <div className="project-hero-copy">
@@ -35,7 +56,7 @@ export default async function ProjectPage({ params }: { params: Promise<{lang: s
             <h1>{t(project.title,lang)}</h1>
             <p className="summary">{t(project.summary,lang)}</p>
           </div>
-          <div className="project-hero-image"><img src={`/media/images/${project.hero}`} alt={t(project.title,lang)}/></div>
+          <div className="project-hero-image"><img src={`/media/images/${project.hero}`} alt={t(project.title,lang)} fetchPriority="high" decoding="async"/></div>
         </div>
       </section>
       <section className="section"><div className="shell">
@@ -50,26 +71,18 @@ export default async function ProjectPage({ params }: { params: Promise<{lang: s
             <div className="story-content">
               <h2>{t(section.title,lang)}</h2>
               <div className="lead-stack">{section.lead.map((p,i)=><p key={i}>{t(p,lang)}</p>)}</div>
-              {section.items.length > 0 && <div className="block-grid">{section.items.map((item,i)=>
-                <div className="info-block" key={i}><span className="number">{item.label || String(i+1).padStart(2,"0")}</span><h3>{t(item.title,lang)}</h3><p>{t(item.body,lang)}</p></div>)}</div>}
-              {section.media.length > 0 && <div className={`media-grid${section.media.some((media) => media.kind === "video") ? " media-grid--video" : ""}`}>{section.media.map((media,i)=>
-                <figure className={`media-figure${media.kind === "video" ? " media-figure--video" : ""}`} key={i}>
-                  {media.kind === "video" ? (
-                    <video
-                      controls
-                      playsInline
-                      preload="metadata"
-                      poster={media.poster ? `/media/images/${media.poster}` : undefined}
-                      aria-label={t(media.caption,lang)}
-                    >
-                      <source src={`/media/video/${media.asset}`} type="video/mp4" />
-                      {lang === "en" ? "Your browser does not support embedded video." : "当前浏览器不支持嵌入式视频播放。"}
-                    </video>
-                  ) : (
-                    <img src={`/media/images/${media.asset}`} alt={t(media.caption,lang)} loading="lazy"/>
-                  )}
-                  <figcaption>{t(media.caption,lang)}</figcaption>
-                </figure>)}</div>}
+              {section.items.length > 0 && <div className="block-grid">{section.items.map((item,i)=><div className="info-block" key={i}><span className="number">{item.label || String(i+1).padStart(2,"0")}</span><h3>{t(item.title,lang)}</h3><p>{t(item.body,lang)}</p></div>)}</div>}
+              {section.media.length > 0 && <div className={`media-grid${section.media.some((media) => media.kind === "video") ? " media-grid--video" : ""}`}>{section.media.map((media,i)=><figure className={`media-figure${media.kind === "video" ? " media-figure--video" : ""}`} key={i}>
+                {media.kind === "video" ? (
+                  <video controls playsInline preload="metadata" poster={media.poster ? `/media/images/${media.poster}` : undefined} aria-label={t(media.caption,lang)}>
+                    <source src={`/media/video/${media.asset}`} type="video/mp4" />
+                    {lang === "en" ? "Your browser does not support embedded video." : "当前浏览器不支持嵌入式视频播放。"}
+                  </video>
+                ) : (
+                  <img src={`/media/images/${media.asset}`} alt={t(media.caption,lang)} loading="lazy" decoding="async"/>
+                )}
+                <figcaption>{t(media.caption,lang)}</figcaption>
+              </figure>)}</div>}
             </div>
           </div>
         </section>

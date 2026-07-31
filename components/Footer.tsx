@@ -12,6 +12,7 @@ export function Footer({ lang }: { lang: Locale }) {
         <div className="footer-links">
           <a href="mailto:18221668367@163.com">18221668367@163.com</a>
           <Link href={`/${lang}/about/`}>{lang === "en" ? "About the studio" : "关于工作室"}</Link>
+          <Link href={`/${lang}/privacy/`}>{lang === "en" ? "Privacy notice" : "隐私说明"}</Link>
         </div>
       </div>
       <div className="shell footer-bottom">

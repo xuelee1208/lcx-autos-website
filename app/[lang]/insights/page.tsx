@@ -3,10 +3,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { hasLocale, insights, t } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{lang: string}> }): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "zh" ? "洞察" : "Insights" };
+  if (!hasLocale(lang)) return {};
+  return createPageMetadata({
+    lang,
+    title: lang === "zh" ? "洞察" : "Insights",
+    description: lang === "zh"
+      ? "LCX AUTOS 的工程文章、技术分析与设计思考全文。"
+      : "Engineering notes, technical analysis and design thinking from LCX AUTOS.",
+    pathname: "/insights/",
+  });
 }
 
 export default async function InsightsPage({ params }: { params: Promise<{lang: string}> }) {

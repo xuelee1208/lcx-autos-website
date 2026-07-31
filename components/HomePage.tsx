@@ -22,7 +22,7 @@ export function HomePage({ lang }: { lang: Locale }) {
             </div>
           </div>
           <div className="hero-visual" aria-hidden="true">
-            <img src="/media/images/autavia-type7-3.webp" alt="" />
+            <img src="/media/images/autavia-type7-3.webp" alt="" fetchPriority="high" decoding="async" />
           </div>
         </div>
       </section>
